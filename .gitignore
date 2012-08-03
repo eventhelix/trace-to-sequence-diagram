@@ -1,3 +1,11 @@
+#################
+## EventStudio
+#################
+*.htm
+trace.fdl
+TraceProject Sequence Diagram/*.*
+sequence-diagram.pdf
+context-diagram.pdf
 
 #################
 ## Eclipse
