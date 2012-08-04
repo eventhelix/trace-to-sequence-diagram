@@ -1,5 +1,5 @@
 ﻿[PyScripter]
-Version=2.4.3.0
+Version=2.5.3.0
 
 [Project]
 ClassName=TProjectRootNode
@@ -15,14 +15,18 @@ FileName=$[Project-Path]config.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]fdl.py
+FileName=$[Project-Path]customize.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node2]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]fdl.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node3]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]trace2sequence.py
 
 [Project\ChildNodes\Node0\ChildNodes]
-Count=3
+Count=4
 
 [Project\ChildNodes\Node1]
 ClassName=TProjectRunConfiguationsNode

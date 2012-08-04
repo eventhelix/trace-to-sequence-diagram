@@ -23,7 +23,15 @@ import fdl
 import os
 import customize
 
+# util begin
 
+def distinct(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if x not in seen and not seen_add(x)]
+
+
+# util end
 
 class TraceParser:
     """
@@ -135,8 +143,19 @@ class Document:
                          statement.
         """
         declType = 'eternal' if objType == 'any' else 'dynamic'
-        return reduce(lambda declaration, entity, objType=objType: declaration + ' ' + entity + ',', \
-            entities, declType + ':')[:-1] + '\n'
+
+        def createEntityWithParent(entity):
+            """
+            Create a string fragment of an object and its parent. This method is called to assemble the
+            full declaration.
+            :param entity: The entity for generating the fragment is passed as a parameter.
+            :rvalue: string fragment for forming the complete declaration.
+            """
+            from customize import objectParents
+            parent = objectParents.get(entity, objectParents['default-component'])
+            return '{0} in {1}'.format(entity, parent)
+        entitiesWithParent = map(createEntityWithParent, entities)
+        return declType + ': ' + ', '.join(entitiesWithParent) + '\n'
 
     def generateStyleAndTheme(self):
         retStr = ''
@@ -163,6 +182,9 @@ class Document:
         # generate a new statement.
         entityList = []
         previousType = ''
+        parents = distinct(customize.objectParents.values())
+        parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
+        header += parentDeclaration
         for obj, objtype in self.traceParser.objectDict.items():
             if Document.hasTypeChanged(previousType, objtype):
                 header += self.generateDeclaration(previousType, entityList)

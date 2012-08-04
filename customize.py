@@ -7,15 +7,28 @@
 .. moduleauthor:: EventHelix.com Inc.
 
 """
+from collections import OrderedDict
+
 # Specify the entity that generated the traces.
 tracedEntity = 'RLC'
 
 # Add messages that need to be bookmarked in the PDF file. This is useful
 # as it lets to quickly navigate through the sequence diagram output of
 # a trace. Note that bookmarks are defined as a set for efficient lookup.
-bookmarks = {
+bookmarks = frozenset({
     'RandomAccessMessage',
     'RRCConnectionSetupComplete',
     'InitialUEMessage',
     'ReleaseConnection'
-}
+})
+
+objectParents = OrderedDict({
+    'Mobile'            : 'UE',
+    'DSP_01'            : 'PHY',
+    'DSP_23'            : 'PHY',
+    'RLC'               : 'eNodeB',
+    'MessageRouter'     : 'eNodeB',
+    'MobileManager'     : 'eNodeB',
+    'CoreNetwork'       : 'EPC',
+    'default-component' : 'Component'
+})
