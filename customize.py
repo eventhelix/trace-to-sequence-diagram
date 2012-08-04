@@ -22,13 +22,14 @@ bookmarks = frozenset({
     'ReleaseConnection'
 })
 
-objectParents = OrderedDict({
-    'Mobile'            : 'UE',
-    'DSP_01'            : 'PHY',
-    'DSP_23'            : 'PHY',
-    'RLC'               : 'eNodeB',
-    'MessageRouter'     : 'eNodeB',
-    'MobileManager'     : 'eNodeB',
-    'CoreNetwork'       : 'EPC',
-    'default-component' : 'Component'
-})
+objectParents = OrderedDict([
+    # Tuples of object and it's parent
+    ('Mobile','UE'),
+    ('DSP_01','PHY'),
+    ('DSP_23','PHY'),
+    ('RLC', 'BSC'),
+    ('MessageRouter', 'BSC'),
+    ('MobileManager', 'BSC'),
+    ('CoreNetwork', 'EPC'),
+    ('default-component', 'Component')
+])
