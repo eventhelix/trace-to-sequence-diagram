@@ -21,6 +21,7 @@ import re
 import config
 import fdl
 import os
+import customize
 
 
 
@@ -202,7 +203,7 @@ class Document:
         bookmarkText = statement.attributes[bookmarkAttribute]
 
         # If the bookmarking text is found, prefix the bookmark as heading statement
-        if  bookmarkText in config.bookmarks:
+        if  bookmarkText in customize.bookmarks:
             bookmarkStr = config.indent+ str.format(config.bookmarkTemplate, bookmark = bookmarkText)+'\n'
             self.ofile.write(bookmarkStr)
 

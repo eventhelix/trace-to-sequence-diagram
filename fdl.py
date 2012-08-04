@@ -8,6 +8,7 @@
 
 import re
 import config
+import customize
 from collections import OrderedDict
 
 def trimSplit(s, sep):
@@ -81,7 +82,7 @@ class Stack:
     def currentObject(self):
         """
         Return the currently active object. If no object is present on the
-        stack, the default object defined in traceEntity in the config.py file
+        stack, the default object defined in traceEntity in the customize.py file
         is returned.
 
         :rtype: string name of the currently active object.
@@ -89,7 +90,7 @@ class Stack:
         if self.length() != 0:
             return self.top().attributes['called']
         else:
-            return config.tracedEntity
+            return customize.tracedEntity
 
 # Stack object rebuilds the stack from the trace messages.
 stack = Stack()
