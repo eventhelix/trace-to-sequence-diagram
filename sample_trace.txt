@@ -7,7 +7,9 @@
 [16-Apr-2011 03:05:02.112][Mobile.cpp:89]moved-to Setting up RRC Connection
 [16-Apr-2011 03:05:02.112][Mobile.cpp:100]begun RRC Connection Setup
 [16-Apr-2011 03:05:02.112][Mobile.cpp:105]allocated TrafficDSP(id=23)
-[16-Apr-2011 03:05:02.112][Mobile.cpp:110]sent RRCConnectionSetup(s_tmsi=5) to DSP_23
+[16-Apr-2011 03:05:02.112][Mobile.cpp:141]called Mobile::SendRRCConnection()
+[16-Apr-2011 03:05:02.112][Mobile.cpp:220]sent RRCConnectionSetup(s_tmsi=5) to DSP_23
+[16-Apr-2011 03:05:02.112][Mobile.cpp:118]returned from Mobile::SendRRCConnection
 [16-Apr-2011 03:05:02.112][Mobile.cpp:117]started AwaitRRCConnection
 [16-Apr-2011 03:05:02.112][Mobile.cpp:118]returned (val=5) from Mobile::OnRRCConnectionRequest
 [16-Apr-2011 03:05:02.112][MobileManager.cpp:115]returned from MobileManager::OnRRCConnectionRequest

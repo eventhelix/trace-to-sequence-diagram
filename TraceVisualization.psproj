@@ -32,7 +32,7 @@ ClassName=TProjectRunConfiguationNode
 Name=Debug
 
 [Project\ChildNodes\Node1\ChildNodes\Node0\RunConfig]
-ScriptName=C:\Users\Sandeep\Documents\Scripts\tracing\trace2sequence.py
+ScriptName=trace2sequence.py
 EngineType=peRemote
 ReinitializeBeforeRun=TRUE
 Parameters=-i sample_trace.txt

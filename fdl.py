@@ -81,7 +81,7 @@ class Stack:
     def currentObject(self):
         """
         Return the currently active object. If no object is present on the
-        stack, the default object defined in traceEntity in the config.py fi;e
+        stack, the default object defined in traceEntity in the config.py file
         is returned.
 
         :rtype: string name of the currently active object.
@@ -230,6 +230,14 @@ def MethodInvoke(traceType, traceText):
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
         stack.push(statement)
+
+        # Ignore a method invoke if the caller and the called are the same
+        # This way the internal method details do not clutter the diagram.
+        # Note however that the method thas still been pushed on to the stack.
+        # This will be needed later for ignoring the return trace from internal
+        # methods
+        if statement.attributes['caller'] == statement.attributes['called']:
+            statement = None
     return statement
 
 class ReturnStatement(Statement):
@@ -262,6 +270,11 @@ def MethodReturn(traceType, traceText):
             statement.attributes = returnGroup.groupdict()
             if 'params' in statement.attributes:
                 statement.attributes['params'] = formatParams(statement.attributes['params'])
+            # Ignore a method return if the caller and the called are the same
+            # This way the internal method details do not clutter the diagram.
+            # Note that method invoke was also ignored by the MethodInvoke function.
+            if methodStatement.attributes['caller'] == methodStatement.attributes['called']:
+                statement = None
     return statement
 
 
