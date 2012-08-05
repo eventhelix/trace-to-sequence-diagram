@@ -51,3 +51,30 @@ The config.py file lets you configure the trace to sequence diagram (FDL) mappin
 * Timer start, stop and expiry
 * Resource allocation and freeing
 
+We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
+of regular expressions. So lets visit these topics before we go any further.
+
+### Learning FDL - The Sequence Diagram Markup Language
+
+FDL (Feature Description Language) will be used to generate sequence diagrams. For a quick overview of FDL, refer to the
+[FDL sequence diagram tutorial](http://www.eventhelix.com/EventStudio/sequence-diagram-tutorial.pdf).
+
+### Python Regular Expressions
+
+The Python website has a good [introduction to regular expressions](http://docs.python.org/library/re.html). [PythonRegEx.com](http://www.pythonregex.com/)
+is great for testing your regular expressions.
+
+### Templates and Regular Expressions
+
+If you browse config.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
+are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
+defining the regular expressions.
+
+Refer to the example below. invokeRegex regular expression extracts named fields, called, method and params. These fields along
+with the caller are used in the FDL template.
+
+		# Regular expression for parsing the function/method entry trace body
+		invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+
+		# FDL mapping template for function/method entry
+		invokeTemplate = '{caller} invokes {called}.{method}{params}'
