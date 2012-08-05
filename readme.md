@@ -21,6 +21,8 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 
 		eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'
 
+		**Note:** If you get "'C:\Program' is not recognized as an internal or external command, operable program or batch file" error, check if
+		the EventStudio path is correctly specifiedl
 		
 1. Type cmd in the Run menu to invoke the Windows command prompt.
 1. Navigate to the directory where to downloaded the Python scripts for this project.
@@ -33,6 +35,9 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 	* **component-level-sequence-diagram.pdf** - A high level sequence diagram that shows high level interactions
 	* **context-diagram.pdf** - A context diagram of the object interactions.
 	* **xml-export.xml** - XML representation of the object interactions. Use this XML output to develop your custom tools.
+
+**Note:** If you get "‘C:\Program’ is not recognized as an internal or external command, operable program or batch file" error, check if
+the EventStudio path is correctly specifiedl
 
 ## Step 2: Customize Regular Expressions to Map Traces to FDL (config.py)
 
@@ -78,3 +83,53 @@ with the caller are used in the FDL template.
 
 		# FDL mapping template for function/method entry
 		invokeTemplate = '{caller} invokes {called}.{method}{params}'
+
+## Step 3: High Level Object Grouping and Bookmarks (customize.py)
+
+Generated sequence diagrams can get complex in two ways:
+1. Diagrams are long and extend into several pages
+2. Too many interactive objects are present on a sequence diagram
+
+###Bookmarks
+The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to naviage quickly to different parts 
+of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:
+
+		# Add messages that need to be bookmarked in the PDF file. This is useful
+		# as it lets to quickly navigate through the sequence diagram output of
+		# a trace. PDF quick navigation bookmarks will be added whenever the messages
+		# listed below are seen in the trace message.
+		bookmarks = frozenset({
+			'RandomAccessMessage',
+			'RRCConnectionSetupComplete',
+			'InitialUEMessage',
+			'ReleaseConnection'
+		})
+
+###Specify Object Groupings
+The second issue highlighted above is addressed by grouping objects. You specify the parents for objects in the customize.py file.
+EventStudio uses this information to generate a high level sequence diagram (component-level-sequence-diagram.pdf).
+
+An excerpt from customize.py illustrates this:
+
+		# EventStudio can generate a high level sequence diagram that can abstract
+		# out a set of classes as a high level entity. This abstraction is useful in 
+		# understanding the trace output at a higher level of abstraction.
+		#
+		# List the interacting entities along with their parent. For example, the 
+		# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
+		# This means EventStudio will generate trace output at two levels:
+		# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
+		# - A high level sequence diagram where PHY axis abstracts out the interactions
+		#   involving DSP_01 and DSP_23   
+		objectParents = OrderedDict([
+			# Tuples of object and it's parent
+			# (entity, parent)
+			('Mobile','UE'),
+			('DSP_01','PHY'),
+			('DSP_23','PHY'),
+			('RLC', 'BSC'),
+			('MessageRouter', 'BSC'),
+			('MobileManager', 'BSC'),
+			('CoreNetwork', 'EPC'),
+			('default-component', 'Component')
+		])
