@@ -23,7 +23,7 @@ import fdl
 import os
 import customize
 
-# util begin
+# utilities
 
 def distinct(seq):
     seen = set()
@@ -31,7 +31,7 @@ def distinct(seq):
     return [ x for x in seq if x not in seen and not seen_add(x)]
 
 
-# util end
+# trace parser
 
 class TraceParser:
     """
