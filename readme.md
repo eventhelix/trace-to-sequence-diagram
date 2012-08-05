@@ -42,12 +42,12 @@ match the trace output in sample_trace.txt you can skip this step.
 In most cases however, there will be changes needed in config.py to map your trace format to the FDL input needed by EventStudio.
 
 The config.py file lets you configure the trace to sequence diagram (FDL) mapping for:
-	* Remarks that are shown on the right side of a sequence diagram
-	* Message interactions
-	* Method invoke and return
-	* Object creation and deletion
-	* Action taken by an object
-	* State transition
-	* Timer start, stop and expiry
-	* Resource allocation and freeing
+* Remarks that are shown on the right side of a sequence diagram
+* Message interactions
+* Method invoke and return
+* Object creation and deletion
+* Action taken by an object
+* State transition
+* Timer start, stop and expiry
+* Resource allocation and freeing
 
