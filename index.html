@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Trace-to-sequence-diagram : Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Trace-to-sequence-diagram</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eventhelix/trace-to-sequence-diagram">View on GitHub</a>
+
+          <h1 id="project_title">Trace-to-sequence-diagram</h1>
+          <h2 id="project_tagline">Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eventhelix/trace-to-sequence-diagram/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Trace Log to Sequence Diagram Conversion</h1>
+
+<p>Browsing through the code traces is an exercise in frustration. Applications produce hugh logs that take
+hours to analyze. The Python scripts presented here let you visualize the traces as sequence diagrams. Interactions
+between objects are presented visually.</p>
+
+<h2>Step 1: Sample Trace to Sequence Diagram Conversion</h2>
+
+<p>Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:</p>
+
+<ol>
+<li>Download and install  a free 45 day trial of <a href="http://www.EventHelix.com/EventStudio">EventStudio System Designer</a>.</li>
+<li>Download and install <a href="http://www.python.org/getit/releases/2.7/">Python 2.7</a>
+</li>
+<li>Download and extract the <a href="https://github.com/eventhelix/trace-to-sequence-diagram">trace to sequence diagram Python scripts</a>
+
+<ul>
+<li>Click the <a href="https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master">ZIP</a> button to download files.</li>
+<li>Alternatively click the "Clone in Windows" button. This would require downloading <a href="http://windows.github.com/">GitHub for Windows</a>
+</li>
+</ul>
+</li>
+<li>
+<p>Before we proceed, please confirm the EventStudio path setting in the config.py file:</p>
+
+<ul>
+<li>
+<p>On machines running 64 bit Windows, the eventStudioPath Python variable should be set as:</p>
+
+<p>eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'</p>
+</li>
+<li>
+<p>On 32 bits Windows platforms, eventStudioPath should be set as:</p>
+
+<p>eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'</p>
+
+<p><strong>Note:</strong> If you get "'C:\Program' is not recognized as an internal or external command, operable program or batch file" error, check if
+the EventStudio path is correctly specifiedl</p>
+</li>
+</ul>
+</li>
+<li><p>Type cmd in the Run menu to invoke the Windows command prompt.</p></li>
+<li><p>Navigate to the directory where to downloaded the Python scripts for this project.</p></li>
+<li>
+<p>On the command line now type:</p>
+
+<p><strong>trace2sequence.py -i sample_trace.txt</strong>  </p>
+</li>
+<li>
+<p>Click on the following generated diagrams:</p>
+
+<ul>
+<li>
+<strong>sequence-diagram.pdf</strong> - A sequence diagram showing object level interations</li>
+<li>
+<strong>component-level-sequence-diagram.pdf</strong> - A high level sequence diagram that shows high level interactions</li>
+<li>
+<strong>context-diagram.pdf</strong> - A context diagram of the object interactions.</li>
+<li>
+<strong>xml-export.xml</strong> - XML representation of the object interactions. Use this XML output to develop your custom tools.</li>
+</ul>
+</li>
+</ol><p><strong>Note:</strong> If you get "‘C:\Program’ is not recognized as an internal or external command, operable program or batch file" error, check if
+the EventStudio path is correctly specifiedl</p>
+
+<h2>Step 2: Customize Regular Expressions to Map Traces to FDL (config.py)</h2>
+
+<p>By now you would have seen a sequence diagram generated from the sample trace output. If you can modify your traces to 
+match the trace output in sample_trace.txt you can skip this step.</p>
+
+<p>In most cases however, there will be changes needed in config.py to map your trace format to the FDL input needed by EventStudio.</p>
+
+<p>The config.py file lets you configure the trace to sequence diagram (FDL) mapping for:</p>
+
+<ul>
+<li>Remarks that are shown on the right side of a sequence diagram</li>
+<li>Message interactions</li>
+<li>Method invoke and return</li>
+<li>Object creation and deletion</li>
+<li>Action taken by an object</li>
+<li>State transition</li>
+<li>Timer start, stop and expiry</li>
+<li>Resource allocation and freeing</li>
+</ul><p>We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
+of regular expressions. So lets visit these topics before we go any further.</p>
+
+<h3>Learning FDL - The Sequence Diagram Markup Language</h3>
+
+<p>FDL (Feature Description Language) will be used to generate sequence diagrams. For a quick overview of FDL, refer to the
+<a href="http://www.eventhelix.com/EventStudio/sequence-diagram-tutorial.pdf">FDL sequence diagram tutorial</a>.</p>
+
+<h3>Python Regular Expressions</h3>
+
+<p>The Python website has a good <a href="http://docs.python.org/library/re.html">introduction to regular expressions</a>. <a href="http://www.pythonregex.com/">PythonRegEx.com</a>
+is great for testing your regular expressions.</p>
+
+<h3>Templates and Regular Expressions</h3>
+
+<p>If you browse config.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
+are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
+defining the regular expressions.</p>
+
+<p>Refer to the example below. invokeRegex regular expression extracts named fields, called, method and params. These fields along
+with the caller are used in the FDL template.</p>
+
+<pre><code>    # Regular expression for parsing the function/method entry trace body
+    invokeRegex = '(?P&lt;called&gt;\w+)(\.|::)(?P&lt;method&gt;\w+)\s*(\((?P&lt;params&gt;\w+)\))?'
+
+    # FDL mapping template for function/method entry
+    invokeTemplate = '{caller} invokes {called}.{method}{params}'
+</code></pre>
+
+<h2>Step 3: High Level Object Grouping and Bookmarks (customize.py)</h2>
+
+<p>Generated sequence diagrams can get complex in two ways:
+1. Diagrams are long and extend into several pages
+2. Too many interactive objects are present on a sequence diagram</p>
+
+<h3>Bookmarks</h3>
+
+<p>The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to naviage quickly to different parts 
+of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:</p>
+
+<pre><code>    # Add messages that need to be bookmarked in the PDF file. This is useful
+    # as it lets to quickly navigate through the sequence diagram output of
+    # a trace. PDF quick navigation bookmarks will be added whenever the messages
+    # listed below are seen in the trace message.
+    bookmarks = frozenset({
+        'RandomAccessMessage',
+        'RRCConnectionSetupComplete',
+        'InitialUEMessage',
+        'ReleaseConnection'
+    })
+</code></pre>
+
+<h3>Specify Object Groupings</h3>
+
+<p>The second issue highlighted above is addressed by grouping objects. You specify the parents for objects in the customize.py file.
+EventStudio uses this information to generate a high level sequence diagram (component-level-sequence-diagram.pdf).</p>
+
+<p>An excerpt from customize.py illustrates this:</p>
+
+<pre><code>    # EventStudio can generate a high level sequence diagram that can abstract
+    # out a set of classes as a high level entity. This abstraction is useful in 
+    # understanding the trace output at a higher level of abstraction.
+    #
+    # List the interacting entities along with their parent. For example, the 
+    # tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
+    # This means EventStudio will generate trace output at two levels:
+    # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
+    # - A high level sequence diagram where PHY axis abstracts out the interactions
+    #   involving DSP_01 and DSP_23   
+    objectParents = OrderedDict([
+        # Tuples of object and it's parent
+        # (entity, parent)
+        ('Mobile','UE'),
+        ('DSP_01','PHY'),
+        ('DSP_23','PHY'),
+        ('RLC', 'BSC'),
+        ('MessageRouter', 'BSC'),
+        ('MobileManager', 'BSC'),
+        ('CoreNetwork', 'EPC'),
+        ('default-component', 'Component')
+    ])
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Trace-to-sequence-diagram maintained by <a href="https://github.com/eventhelix">eventhelix</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
