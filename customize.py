@@ -34,7 +34,7 @@ bookmarks = frozenset({
 # - A high level sequence diagram where PHY axis abstracts out the interactions
 #   involving DSP_01 and DSP_23   
 objectParents = OrderedDict([
-    # Tuples of object and it's parent
+    # Tuples of object and its parent
     # (entity, parent)
     ('Mobile','UE'),
     ('DSP_01','PHY'),

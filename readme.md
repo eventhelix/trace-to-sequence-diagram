@@ -1,6 +1,6 @@
 # Trace Log to Sequence Diagram Conversion
 
-Browsing through the code traces is an exercise in frustration. Applications produce hugh logs that take
+Browsing through the code traces is an exercise in frustration. Applications produce huge logs that take
 hours to analyze. The Python scripts presented here let you visualize the traces as sequence diagrams. Interactions
 between objects are presented visually.
 
@@ -8,7 +8,7 @@ between objects are presented visually.
 
 Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:
 
-1. Download and install  a free 45 day trial of [EventStudio System Designer](http://www.EventHelix.com/EventStudio).
+1. Download and install a free 45 day trial of [EventStudio System Designer](http://www.EventHelix.com/EventStudio).
 1. Download and install [Python 2.7](http://www.python.org/getit/releases/2.7/)
 1. Download and extract the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram)
    * Click the [ZIP](https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master) button to download files.
@@ -31,13 +31,11 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 	**trace2sequence.py -i sample_trace.txt**  
 
 1. Click on the following generated diagrams:
-	* **sequence-diagram.pdf** - A sequence diagram showing object level interations
+	* **sequence-diagram.pdf** - A sequence diagram showing object level interactions
 	* **component-level-sequence-diagram.pdf** - A high level sequence diagram that shows high level interactions
 	* **context-diagram.pdf** - A context diagram of the object interactions.
 	* **xml-export.xml** - XML representation of the object interactions. Use this XML output to develop your custom tools.
 
-**Note:** If you get "‘C:\Program’ is not recognized as an internal or external command, operable program or batch file" error, check if
-the EventStudio path is correctly specifiedl
 
 ## Step 2: Customize Regular Expressions to Map Traces to FDL (config.py)
 
@@ -57,7 +55,7 @@ The config.py file lets you configure the trace to sequence diagram (FDL) mappin
 * Resource allocation and freeing
 
 We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
-of regular expressions. So lets visit these topics before we go any further.
+of regular expressions. So let's visit these topics before we go any further.
 
 ### Learning FDL - The Sequence Diagram Markup Language
 
@@ -91,7 +89,7 @@ Generated sequence diagrams can get complex in two ways:
 2. Too many interactive objects are present on a sequence diagram
 
 ###Bookmarks
-The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to naviage quickly to different parts 
+The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to navigate quickly to different parts 
 of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:
 
 		# Add messages that need to be bookmarked in the PDF file. This is useful
