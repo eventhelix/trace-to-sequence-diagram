@@ -36,12 +36,12 @@ bookmarks = frozenset({
 objectParents = OrderedDict([
     # Tuples of object and its parent
     # (entity, parent)
-    ('Mobile','UE'),
     ('DSP_01','PHY'),
     ('DSP_23','PHY'),
     ('RLC', 'BSC'),
     ('MessageRouter', 'BSC'),
     ('MobileManager', 'BSC'),
+    ('Mobile','UE'),
     ('CoreNetwork', 'EPC'),
     ('default-component', 'Component')
 ])
