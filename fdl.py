@@ -271,6 +271,7 @@ def MethodReturn(traceType, traceText):
             statement.attributes = returnGroup.groupdict()
             if 'params' in statement.attributes:
                 statement.attributes['params'] = formatParams(statement.attributes['params'])
+            statement.attributes['caller'] = methodStatement.attributes['caller']
             # Ignore a method return if the caller and the called are the same
             # This way the internal method details do not clutter the diagram.
             # Note that method invoke was also ignored by the MethodInvoke function.

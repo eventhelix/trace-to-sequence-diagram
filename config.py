@@ -47,13 +47,13 @@ messageTemplate = '{message} {params} :{source} -> {destination}'
 invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry
-invokeTemplate = '{caller} invokes {called}.{method}{params}'
+invokeTemplate = '{method} {params} :{caller} -> {called}'
 
 # Regular expression for parsing the function/method exit trace body
 returnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
 
 # FDL mapping template for function/method exit
-returnTemplate = '{called}.{method} returns {params}'
+returnTemplate = 'return {params}:{called} -> {caller}'
 
 # Regular expression for parsing the object creation trace body
 createRegex = '(?P<created>\w+)\s*(\((?P<params>.*)\))?'
