@@ -35,11 +35,11 @@ def formatParams(paramString):
     :rtype: string that is suitable for FDL statements.
     """
     avPairStr = ''
-    if paramString != None and len(paramString) != 0 and config.attributeValueSeparator in paramString:
+    if paramString != None and len(paramString) != 0 and customize.attributeValueSeparator in paramString:
         avPairStr = '('
-        avpairList = [trimSplit(item, config.attributeValueSeparator) for item in paramString.split(config.avpairSeparator)]
+        avpairList = [trimSplit(item, customize.attributeValueSeparator) for item in paramString.split(customize.avpairSeparator)]
         for att,val in avpairList:
-            avPairStr += str.format(config.paramTemplate, attribute=att, value=val)
+            avPairStr += str.format(customize.paramTemplate, attribute=att, value=val)
             avPairStr += ','
         avPairStr = avPairStr[:-1]
         avPairStr += ')'
@@ -122,8 +122,8 @@ class Statement:
     def bookmarkAttribute(self):
         """
         Override this method to return a string that should be compared with the
-        config.py file's bookmarks. If the string returned by this method
-        is contained in the config.py's bookmarks, a bookmark entry will be
+        customize.py file's bookmarks. If the string returned by this method
+        is contained in the customize.py's bookmarks, a bookmark entry will be
         generated in the PDF sequence diagram.
         """
         return ''
@@ -146,7 +146,7 @@ class MessageStatement(Statement):
     receive processing.
     """
     def convertToFDL(self):
-        return str.format(config.messageTemplate, **self.attributes)
+        return str.format(customize.messageTemplate, **self.attributes)
 
     def entityList(self):
         return [('source','any'),('destination','any')]
@@ -155,13 +155,13 @@ class MessageStatement(Statement):
         return 'message'
 
 # Compile the regular expression for received message extraction from the trace body.
-messageReceiveRegex = re.compile(config.messageRxRegex)
+messageReceiveRegex = re.compile(customize.messageRxRegex)
 
 def MessageReceive(traceType, traceText):
     """
     Parse the traceText from a message receive trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the help
-    of the regular expression defined in config.py file.
+    of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -177,12 +177,12 @@ def MessageReceive(traceType, traceText):
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
 
-messageSentRegex = re.compile(config.messageTxRegex)
+messageSentRegex = re.compile(customize.messageTxRegex)
 def MessageSent(traceType, traceText):
     """
     Parse the traceText from a message sent trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the help
-    of the regular expression defined in config.py file.
+    of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -203,7 +203,7 @@ class InvokeStatement(Statement):
     Represents the FDL method invoke statement.
     """
     def convertToFDL(self):
-        return str.format(config.invokeTemplate, **self.attributes)
+        return str.format(customize.invokeTemplate, **self.attributes)
 
     def entityList(self):
         return [('caller','any'),('called', 'any')]
@@ -211,12 +211,12 @@ class InvokeStatement(Statement):
     def bookmarkAttribute(self):
         return 'method'
 
-invokeRegex = re.compile(config.invokeRegex)
+invokeRegex = re.compile(customize.invokeRegex)
 def MethodInvoke(traceType, traceText):
     """
     Parse the traceText of a method invoke and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -246,17 +246,17 @@ class ReturnStatement(Statement):
     Represents the FDL method return statement.
     """
     def convertToFDL(self):
-        return str.format(config.returnTemplate, **self.attributes)
+        return str.format(customize.returnTemplate, **self.attributes)
 
     def entityList(self):
         return [('called','any')]
 
-returnRegex = re.compile(config.returnRegex)
+returnRegex = re.compile(customize.returnRegex)
 def MethodReturn(traceType, traceText):
     """
     Parse the traceText of a "method return" and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -285,17 +285,17 @@ class CreateStatement(Statement):
     Represents the FDL object create statement.
     """
     def convertToFDL(self):
-        return str.format(config.createTemplate, **self.attributes)
+        return str.format(customize.createTemplate, **self.attributes)
 
     def entityList(self):
         return [('creator','any'), ('created', 'dynamic-created')]
 
-createRegex = re.compile(config.createRegex)
+createRegex = re.compile(customize.createRegex)
 def CreateObject(traceType, traceText):
     """
     Parse the traceText of an object create and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -316,17 +316,17 @@ class DeleteStatement(Statement):
     Represents the FDL object delete statement.
     """
     def convertToFDL(self):
-        return str.format(config.deleteTemplate, **self.attributes)
+        return str.format(customize.deleteTemplate, **self.attributes)
 
     def entityList(self):
         return [('deletor','any'), ('deleted', 'dynamic-deleted')]
 
-deleteRegex = re.compile(config.deleteRegex)
+deleteRegex = re.compile(customize.deleteRegex)
 def DeleteObject(traceType, traceText):
     """
     Parse the traceText of an object delete and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -340,7 +340,7 @@ def DeleteObject(traceType, traceText):
         statement.attributes['deletor'] = stack.currentObject()
     return statement
 
-timerRegex = re.compile(config.timerRegex)
+timerRegex = re.compile(customize.timerRegex)
 
 class TimerStatement(Statement):
     """
@@ -355,7 +355,7 @@ class StartTimerStatement(TimerStatement):
     Represents FDL timer start.
     """
     def convertToFDL(self):
-        return str.format(config.startTimerTemplate, **self.attributes)
+        return str.format(customize.startTimerTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -364,7 +364,7 @@ def StartTimer(traceType, traceText):
     """
     Parse the traceText of a timer start and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -383,7 +383,7 @@ class StopTimerStatement(TimerStatement):
     Represents FDL stop statement.
     """
     def convertToFDL(self):
-        return str.format(config.stopTimerTemplate, **self.attributes)
+        return str.format(customize.stopTimerTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -392,7 +392,7 @@ def StopTimer(traceType, traceText):
     """
     Parse the traceText of a timer stop and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -411,7 +411,7 @@ class ExpiredTimerStatement(TimerStatement):
     Represents FDL timeout statement.
     """
     def convertToFDL(self):
-        return str.format(config.expiredTimerTemplate, **self.attributes)
+        return str.format(customize.expiredTimerTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -420,7 +420,7 @@ def ExpiredTimer(traceType, traceText):
     """
     Parse the traceText of a timer expiry and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -439,7 +439,7 @@ class ActionStatement(Statement):
     Represents the FDL action statement.
     """
     def convertToFDL(self):
-        return str.format(config.actionTemplate, **self.attributes)
+        return str.format(customize.actionTemplate, **self.attributes)
 
     def entityList(self):
         return [('actor','any')]
@@ -452,7 +452,7 @@ def Action(traceType, traceText):
     """
     Parse the traceText of any action and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -469,7 +469,7 @@ class StateChangeStatement(Statement):
     Represents the FDL state change statement.
     """
     def convertToFDL(self):
-        return str.format(config.stateChangeTemplate, **self.attributes)
+        return str.format(customize.stateChangeTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -481,7 +481,7 @@ def StateChange(traceType, traceText):
     """
     Parse the traceText of a state change and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -498,7 +498,7 @@ class AllocateStatement(Statement):
     Represents the resource allocation FDL statement.
     """
     def convertToFDL(self):
-        return str.format(config.allocateTemplate, **self.attributes)
+        return str.format(customize.allocateTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -510,7 +510,7 @@ def AllocatedResource(traceType, traceText):
     """
     Parse the traceText of a resource allocation and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -526,7 +526,7 @@ class FreeStatement(Statement):
     Represents the resource free FDL statement.
     """
     def convertToFDL(self):
-        return str.format(config.freeTemplate, **self.attributes)
+        return str.format(customize.freeTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -538,7 +538,7 @@ def FreedResource(traceType, traceText):
     """
     Parse the traceText of a resource free trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -554,7 +554,7 @@ class BeginActionStatement(Statement):
     Represent an action start FDL statement.
     """
     def convertToFDL(self):
-        return str.format(config.beginActionTemplate, **self.attributes)
+        return str.format(customize.beginActionTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -566,7 +566,7 @@ def BeginAction(traceType, traceText):
     """
     Parse the traceText of an action start trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body
@@ -582,7 +582,7 @@ class EndActionStatement(Statement):
     Represents the action end FDL statement.
     """
     def convertToFDL(self):
-        return str.format(config.endActionTemplate, **self.attributes)
+        return str.format(customize.endActionTemplate, **self.attributes)
 
     def entityList(self):
         return [('object','any')]
@@ -594,7 +594,7 @@ def EndAction(traceType, traceText):
     """
     Parse the traceText of an end action and return a statement object.
     The raw string trace body is parsed into a message statement object with the
-    help of the regular expression defined in config.py file.
+    help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
     :param traceText: string containing the raw trace body

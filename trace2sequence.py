@@ -6,7 +6,7 @@
                 (1) Read the log file and feed the individual lines into the
                 trace parser.
                 (2) The traces are mapped to statement objects using the regular
-                expressions defined in config.py. The parsed traces are stored as
+                expressions defined in customize.py. The parsed traces are stored as
                 FDL statements.
                 (3) FDL file is generated (trace.fdl).
                 (4) EventStudio is invoked on the TraceProject.scn scenario project.
@@ -44,7 +44,7 @@ class TraceParser:
         """
         self.statementList = []
         self.objectDict = OrderedDict([])
-        self.regex = re.compile(config.traceRegex)
+        self.regex = re.compile(customize.traceRegex)
         self.attributes = {}
 
     def parseTraceLine(self, line):
@@ -72,7 +72,7 @@ class TraceParser:
             # If trace parsing was successful, add a remark to the trace and then
             # save the parsed statement.
             if statement != None:
-                statement.remarks = str.format(config.remarkTemplate, **self.attributes)
+                statement.remarks = str.format(customize.remarkTemplate, **self.attributes)
                 self.saveStatement(statement)
 
     def saveStatement(self, statement):
@@ -159,11 +159,11 @@ class Document:
 
     def generateStyleAndTheme(self):
         retStr = ''
-        if config.styleTemplate != None:
-            retStr += config.styleTemplate + '\n\n'
+        if customize.styleTemplate != None:
+            retStr += customize.styleTemplate + '\n\n'
 
-        if config.themeTemplate != None:
-            retStr += config.themeTemplate + '\n\n'
+        if customize.themeTemplate != None:
+            retStr += customize.themeTemplate + '\n\n'
 
         return retStr
 
@@ -195,7 +195,7 @@ class Document:
             header += self.generateDeclaration(previousType, entityList)
 
         # Generate the start of a feature block
-        if config.themeTemplate == None:
+        if customize.themeTemplate == None:
             header += '\nfeature "generated flow"\n'
         else:
             header += '\n{MyTheme} feature "generated flow"\n'
@@ -212,8 +212,8 @@ class Document:
 
     def checkAndGenerateBookmark(self, statement):
         """
-        Private method. Traces to be bookmarked should be specified in config.py file. A PDF bookmark
-        should be generated if a trace segment matches the config.py bookmark specification.
+        Private method. Traces to be bookmarked should be specified in customize.py file. A PDF bookmark
+        should be generated if a trace segment matches the customize.py bookmark specification.
         This method checks and prefixes a bookmark.
         :param statement: Statement to be checked for a bookmark.
         """
@@ -226,7 +226,7 @@ class Document:
 
         # If the bookmarking text is found, prefix the bookmark as heading statement
         if  bookmarkText in customize.bookmarks:
-            bookmarkStr = config.indent+ str.format(config.bookmarkTemplate, bookmark = bookmarkText)+'\n'
+            bookmarkStr = config.indent+ str.format(customize.bookmarkTemplate, bookmark = bookmarkText)+'\n'
             self.ofile.write(bookmarkStr)
 
     def generateBody(self):
