@@ -159,11 +159,11 @@ class Document:
 
     def generateStyleAndTheme(self):
         retStr = ''
-        if customize.styleTemplate != None:
-            retStr += customize.styleTemplate + '\n\n'
+        if config.styleTemplate != None:
+            retStr += config.styleTemplate + '\n\n'
 
-        if customize.themeTemplate != None:
-            retStr += customize.themeTemplate + '\n\n'
+        if config.themeTemplate != None:
+            retStr += config.themeTemplate + '\n\n'
 
         return retStr
 
@@ -195,7 +195,7 @@ class Document:
             header += self.generateDeclaration(previousType, entityList)
 
         # Generate the start of a feature block
-        if customize.themeTemplate == None:
+        if config.themeTemplate == None:
             header += '\nfeature "generated flow"\n'
         else:
             header += '\n{MyTheme} feature "generated flow"\n'
