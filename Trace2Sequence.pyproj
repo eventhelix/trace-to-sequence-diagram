@@ -32,5 +32,8 @@
     <Compile Include="fdl.py" />
     <Compile Include="trace2sequence.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sample_trace.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
