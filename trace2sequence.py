@@ -72,7 +72,7 @@ class TraceParser:
             # If trace parsing was successful, add a remark to the trace and then
             # save the parsed statement.
             if statement != None:
-                statement.remarks = str.format(customize.remarkTemplate, **self.attributes)
+                statement.attributeUpdate(self.attributes)
                 self.saveStatement(statement)
 
     def saveStatement(self, statement):

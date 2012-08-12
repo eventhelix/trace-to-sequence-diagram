@@ -102,6 +102,8 @@ class Statement:
     def __init__(self):
         self.attributes = {}
         self.remarks = ''
+        self.module = ''
+        self.component = ''
 
 
     def convertToFDL(self):
@@ -139,6 +141,17 @@ class Statement:
         fdlText = config.indent + self.convertToFDL() + '\n'+ config.indent
         fdlText += self.remarks + '\n\n'
         return fdlText
+
+    def attributeUpdate(self, traceAttributes):
+        """
+        This method is called when the messages are being parsed. The statement object
+        extracts the relevant attributes from this method.
+        :param traceAttributes: List of attributes extracted from the trace.
+        """
+        self.remarks = str.format(customize.remarkTemplate, **traceAttributes)
+        self.module = traceAttributes['module']
+        self.component = traceAttributes['component']
+
 
 class MessageStatement(Statement):
     """
