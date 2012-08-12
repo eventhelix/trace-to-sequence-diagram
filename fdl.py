@@ -102,8 +102,6 @@ class Statement:
     def __init__(self):
         self.attributes = {}
         self.remarks = ''
-        self.module = ''
-        self.component = ''
 
 
     def convertToFDL(self):
@@ -117,7 +115,7 @@ class Statement:
         """
         Override this method to return a list containing the entities derived
         from the trace command. For example, a message list will return two
-        entiries while an action statement will return one entity.
+        entries while an action statement will return one entity.
         """
         return []
 
@@ -149,8 +147,7 @@ class Statement:
         :param traceAttributes: List of attributes extracted from the trace.
         """
         self.remarks = str.format(customize.remarkTemplate, **traceAttributes)
-        self.module = traceAttributes['module']
-        self.component = traceAttributes['component']
+
 
 
 class MessageStatement(Statement):

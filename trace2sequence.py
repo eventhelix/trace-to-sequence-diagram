@@ -83,7 +83,7 @@ class TraceParser:
         """
         # Store the statement object
         self.statementList.append(statement)
-
+        firstObj = None
         # In addition to saving the object also store the objects that
         # are beign referenced inside an object dictionary. The object dictionary
         # will be used to generate the eternal and dynamic object statements
@@ -92,34 +92,15 @@ class TraceParser:
         # The entityList override of the statement is used to obtain this information
         for entity, entityType in statement.entityList():
             obj = statement.attributes[entity]
+            if firstObj == None:
+                firstObj = obj
             if obj in self.objectDict:
                 if self.objectDict[obj] == 'any':
                     self.objectDict[obj] = entityType
             else:
                 self.objectDict[obj] = entityType
 
-# EventStudio can generate a high level sequence diagram that can abstract
-# out a set of classes as a high level entity. This abstraction is useful in 
-# understanding the trace output at a higher level of abstraction.
-#
-# List the interacting entities along with their parent. For example, the 
-# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
-# This means EventStudio will generate trace output at two levels:
-# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
-# - A high level sequence diagram where PHY axis abstracts out the interactions
-#   involving DSP_01 and DSP_23   
-objectParents = OrderedDict([
-    # Tuples of object and its parent
-    # (entity, parent)
-    ('DSP_01','PHY'),
-    ('DSP_23','PHY'),
-    ('RLC', 'BSC'),
-    ('MessageRouter', 'BSC'),
-    ('MobileManager', 'BSC'),
-    ('Mobile','UE'),
-    ('CoreNetwork', 'EPC'),
-    ('default-component', 'Component')
-])
+        customize.objectParents[firstObj] = self.attributes['component']
 
 class Document:
     """
@@ -173,7 +154,7 @@ class Document:
             :param entity: The entity for generating the fragment is passed as a parameter.
             :rvalue: string fragment for forming the complete declaration.
             """
-            parent = objectParents.get(entity, customize.defaultEntity['component'])
+            parent = customize.objectParents.get(entity, customize.defaultEntity['component'])
             return '{0} in {1}'.format(entity, parent)
 
         entitiesWithParent = map(createEntityWithParent, entities)
@@ -204,7 +185,7 @@ class Document:
         # generate a new statement.
         entityList = []
         previousType = ''
-        parents = distinct(objectParents.values())
+        parents = distinct(customize.objectParents.values())
         parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
         header += parentDeclaration
         for obj, objtype in self.traceParser.objectDict.items():
@@ -302,6 +283,7 @@ def main():
     traceParser = TraceParser()
     for line in args.input_file:
         traceParser.parseTraceLine(line)
+
 
     # Generate the FDL file
     doc = Document(traceParser, args.output_file)
