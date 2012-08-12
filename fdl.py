@@ -158,11 +158,13 @@ class MessageStatement(Statement):
     def convertToFDL(self):
         return str.format(customize.messageTemplate, **self.attributes)
 
-    def entityList(self):
-        return [('source','any'),('destination','any')]
-
     def bookmarkAttribute(self):
         return 'message'
+
+class MessageReceiveStatement(MessageStatement):
+
+    def entityList(self):
+        return [('destination','any'),('source','any')]
 
 # Compile the regular expression for received message extraction from the trace body.
 messageReceiveRegex = re.compile(customize.messageRxRegex)
@@ -180,12 +182,17 @@ def MessageReceive(traceType, traceText):
     statement = None
     messageGroup = messageReceiveRegex.search(traceText)
     if messageGroup != None:
-         statement = MessageStatement()
+         statement = MessageReceiveStatement()
          statement.attributes = messageGroup.groupdict()
          statement.attributes['destination'] = stack.currentObject()
          if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
+
+class MessageSendStatement(MessageStatement):
+
+    def entityList(self):
+        return [('source','any'),('destination','any')]
 
 messageSentRegex = re.compile(customize.messageTxRegex)
 def MessageSent(traceType, traceText):
@@ -201,7 +208,7 @@ def MessageSent(traceType, traceText):
     statement = None
     messageGroup = messageSentRegex.search(traceText)
     if messageGroup != None:
-         statement = MessageStatement()
+         statement = MessageSendStatement()
          statement.attributes = messageGroup.groupdict()
          statement.attributes['source'] = stack.currentObject()
          if 'params' in statement.attributes:
@@ -216,7 +223,7 @@ class InvokeStatement(Statement):
         return str.format(customize.invokeTemplate, **self.attributes)
 
     def entityList(self):
-        return [('caller','any'),('called', 'any')]
+        return [('called','any'),('caller', 'any')]
 
     def bookmarkAttribute(self):
         return 'method'

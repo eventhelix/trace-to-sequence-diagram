@@ -12,7 +12,7 @@
 [16-Apr-2011 03:05:02.112][RRC.UE][Mobile.cpp:118]returned from Mobile::SendRRCConnection
 [16-Apr-2011 03:05:02.112][RRC.UE][Mobile.cpp:117]started AwaitRRCConnection
 [16-Apr-2011 03:05:02.112][RRC.UE][Mobile.cpp:118]returned (val=5) from Mobile::OnRRCConnectionRequest
-[16-Apr-2011 03:05:02.112][Framework.Messaging][Framework Dispatcher][MobileManager.cpp:115]returned from MobileManager::OnRRCConnectionRequest
+[16-Apr-2011 03:05:02.112][Framework Dispatcher][MobileManager.cpp:115]returned from MobileManager::OnRRCConnectionRequest
 [16-Apr-2011 03:05:02.112][Framework.Messaging][MessageRouter.cpp:35]returned from MessageRouter::OnRandomAccessMessage
 [16-Apr-2011 03:05:02.121][Framework.Messaging][MessageHandler.cpp:563]received UTReturnData(s_tmsi=5,status=SUCCESS) from DSP_23
 [16-Apr-2011 03:05:02.121][Framework.Messaging][MessageRouter.cpp:210]called MessageRouter::OnUTReturnData()
