@@ -61,18 +61,15 @@ bookmarks = frozenset({
 # This means EventStudio will generate trace output at two levels:
 # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
 # - A high level sequence diagram where PHY axis abstracts out the interactions
-#   involving DSP_01 and DSP_23   
+#   involving DSP_01 and DSP_23
+# Just include the parent information for external actors in the system. Object parents
+# for internal actors are extracted from the trace contents.
 objectParents = OrderedDict([
     # Tuples of object and its parent
     # (entity, parent)
     ('DSP_01','PHY'),
     ('DSP_23','PHY'),
-    ('RLC', 'BSC'),
-    ('MessageRouter', 'BSC'),
-    ('MobileManager', 'BSC'),
-    ('Mobile','UE'),
     ('CoreNetwork', 'EPC'),
-    ('default-component', 'Component')
 
 ])
 
@@ -150,7 +147,7 @@ avpairSeparator = ','
 paramTemplate = '"{attribute}" = "{value}"'
 
 defaultEntity = {
-    'object':       'Object',
+    'object':       'MessageHandler',
     'component':    'Component',
     'module':       'Module'
  }
