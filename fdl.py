@@ -90,7 +90,7 @@ class Stack:
         if self.length() != 0:
             return self.top().attributes['called']
         else:
-            return customize.tracedEntity
+            return customize.defaultEntity['object']
 
 # Stack object rebuilds the stack from the trace messages.
 stack = Stack()

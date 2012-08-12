@@ -98,6 +98,28 @@ class TraceParser:
             else:
                 self.objectDict[obj] = entityType
 
+# EventStudio can generate a high level sequence diagram that can abstract
+# out a set of classes as a high level entity. This abstraction is useful in 
+# understanding the trace output at a higher level of abstraction.
+#
+# List the interacting entities along with their parent. For example, the 
+# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
+# This means EventStudio will generate trace output at two levels:
+# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
+# - A high level sequence diagram where PHY axis abstracts out the interactions
+#   involving DSP_01 and DSP_23   
+objectParents = OrderedDict([
+    # Tuples of object and its parent
+    # (entity, parent)
+    ('DSP_01','PHY'),
+    ('DSP_23','PHY'),
+    ('RLC', 'BSC'),
+    ('MessageRouter', 'BSC'),
+    ('MobileManager', 'BSC'),
+    ('Mobile','UE'),
+    ('CoreNetwork', 'EPC'),
+    ('default-component', 'Component')
+])
 
 class Document:
     """
@@ -151,9 +173,9 @@ class Document:
             :param entity: The entity for generating the fragment is passed as a parameter.
             :rvalue: string fragment for forming the complete declaration.
             """
-            from customize import objectParents
-            parent = objectParents.get(entity, objectParents['default-component'])
+            parent = objectParents.get(entity, customize.defaultEntity['component'])
             return '{0} in {1}'.format(entity, parent)
+
         entitiesWithParent = map(createEntityWithParent, entities)
         return declType + ': ' + ', '.join(entitiesWithParent) + '\n'
 
@@ -182,7 +204,7 @@ class Document:
         # generate a new statement.
         entityList = []
         previousType = ''
-        parents = distinct(customize.objectParents.values())
+        parents = distinct(objectParents.values())
         parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
         header += parentDeclaration
         for obj, objtype in self.traceParser.objectDict.items():
