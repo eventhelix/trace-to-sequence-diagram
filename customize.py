@@ -13,7 +13,7 @@ from collections import OrderedDict
 # The trace messages follow this high level format. The current regular expression
 # assumes that all traces are of the format:
 #
-# [time][module.component][file]type body
+# [time][component][file]type body
 #
 # time:         The trace begins with time information in square brackets
 #

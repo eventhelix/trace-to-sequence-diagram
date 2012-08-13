@@ -25,7 +25,7 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 		the EventStudio path is correctly specifiedl
 		
 1. Type cmd in the Run menu to invoke the Windows command prompt.
-1. Navigate to the directory where to downloaded the Python scripts for this project.
+1. Navigate to the directory where to the Python scripts for this project were downloaded.
 1. On the command line now type:
 
 	**trace2sequence.py -i sample_trace.txt**  
@@ -37,7 +37,7 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 	* **xml-export.xml** - XML representation of the object interactions. Use this XML output to develop your custom tools.
 
 
-## Step 2: Customize Regular Expressions to Map Traces to FDL (config.py)
+## Step 2: Customize Regular Expressions to Map Traces to FDL (customize.py)
 
 By now you would have seen a sequence diagram generated from the sample trace output. If you can modify your traces to 
 match the trace output in sample_trace.txt you can skip this step.
@@ -69,13 +69,13 @@ is great for testing your regular expressions.
 
 ### Templates and Regular Expressions
 #### Trace Template
-The first order of business defining a regular expression that extracts information from the trace format. A example
-regular expression that extracts trace information from sample_trace.text is defined in customize.py:
+We start with defining a regular expression that extracts information from the trace format. A
+regular expression that extracts trace information from sample_trace.txt is shown below:
 
 		# The trace messages follow this high level format. The current regular expression
 		# assumes that all traces are of the format:
 		#
-		# [time][module.component][file]type body
+		# [time][component][file]type body
 		#
 		# time:         The trace begins with time information in square brackets
 		#
@@ -110,7 +110,7 @@ with the caller are used in the FDL template.
 		invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 		# FDL mapping template for function/method entry
-		invokeTemplate = '{caller} invokes {called}.{method}{params}'
+		invokeTemplate = '{method} {params} :{caller} -> {called}'
 
 ## Step 3: High Level Object Grouping and Bookmarks (customize.py)
 
