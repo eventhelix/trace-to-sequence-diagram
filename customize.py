@@ -17,11 +17,7 @@ from collections import OrderedDict
 #
 # time:         The trace begins with time information in square brackets
 #
-# module:       Higher level entity that is generating the trace. Typically, modules
-#               would contain components (see the next item).
-#
-# component:    Entity contained in the module that is generating this trace. Typically, a
-#               group of classes that work together would be treated as a component.
+# component:    A group of classes that work together would be treated as a component.
 #               Module and component level information will be used to generate higher
 #               level diagrams that provide an overview of the feature, without going
 #               down to the class level.
@@ -38,7 +34,7 @@ from collections import OrderedDict
 #               expression definitions for parsing of the body for different
 #               trace types.
 
-traceRegex = '\[(?P<time>.*)\]\s*\[(?P<module>.*)\.(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
 
 # Add messages that need to be bookmarked in the PDF file. This is useful
@@ -148,6 +144,5 @@ paramTemplate = '"{attribute}" = "{value}"'
 
 defaultEntity = {
     'object':       'MessageHandler',
-    'component':    'Component',
-    'module':       'Module'
+    'component':    'Component'
  }
