@@ -68,8 +68,38 @@ The Python website has a good [introduction to regular expressions](http://docs.
 is great for testing your regular expressions.
 
 ### Templates and Regular Expressions
+#### Trace Template
+The first order of business defining a regular expression that extracts information from the trace format. A example
+regular expression that extracts trace information from sample_trace.text is defined in customize.py:
 
-If you browse config.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
+		# The trace messages follow this high level format. The current regular expression
+		# assumes that all traces are of the format:
+		#
+		# [time][module.component][file]type body
+		#
+		# time:         The trace begins with time information in square brackets
+		#
+		# component:    A group of classes that work together would be treated as a component.
+		#               Module and component level information will be used to generate higher
+		#               level diagrams that provide an overview of the feature, without going
+		#               down to the class level.
+		#
+		# file:         The next square bracket contains filename, line number information.
+		#
+		# type:         Defines the type of a trace. The type here is used to determine the
+		#               mapping to an FDL statement. Refer to the traceMapper dictionary in
+		#               fdl.py. This file maps the type to the a function that will handle
+		#               the parsing of the body.
+		#
+		# body:         This is the text following the type statement. Parsing of this text
+		#               depends upon the type of the trace. This file contains the regular
+		#               expression definitions for parsing of the body for different
+		#               trace types.
+
+		traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+
+#### Statement Templates
+If you browse customize.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
 are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
 defining the regular expressions.
 
@@ -118,16 +148,13 @@ An excerpt from customize.py illustrates this:
 		# This means EventStudio will generate trace output at two levels:
 		# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
 		# - A high level sequence diagram where PHY axis abstracts out the interactions
-		#   involving DSP_01 and DSP_23   
+		#   involving DSP_01 and DSP_23
+		# Just include the parent information for external actors in the system. Object parents
+		# for internal actors are extracted from the trace contents.
 		objectParents = OrderedDict([
-			# Tuples of object and it's parent
+			# Tuples of object and its parent
 			# (entity, parent)
-			('Mobile','UE'),
 			('DSP_01','PHY'),
 			('DSP_23','PHY'),
-			('RLC', 'BSC'),
-			('MessageRouter', 'BSC'),
-			('MobileManager', 'BSC'),
 			('CoreNetwork', 'EPC'),
-			('default-component', 'Component')
 		])
