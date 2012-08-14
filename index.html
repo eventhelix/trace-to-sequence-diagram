@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Trace-to-sequence-diagram : Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs." />
+    <meta name="description" content="Trace Log to Sequence Diagram Generation : Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Trace-to-sequence-diagram</title>
+    <title>Trace Log to Sequence Diagram Generation</title>
   </head>
 
   <body>
@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/eventhelix/trace-to-sequence-diagram">View on GitHub</a>
 
-          <h1 id="project_title">Trace-to-sequence-diagram</h1>
+          <h1 id="project_title">Trace Log to Sequence Diagram Generation</h1>
           <h2 id="project_tagline">Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs.</h2>
 
             <section id="downloads">
@@ -33,7 +33,7 @@
       <section id="main_content" class="inner">
         <h1>Trace Log to Sequence Diagram Conversion</h1>
 
-<p>Browsing through the code traces is an exercise in frustration. Applications produce hugh logs that take
+<p>Browsing through the code traces is an exercise in frustration. Applications produce huge logs that take
 hours to analyze. The Python scripts presented here let you visualize the traces as sequence diagrams. Interactions
 between objects are presented visually.</p>
 
@@ -42,7 +42,7 @@ between objects are presented visually.</p>
 <p>Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:</p>
 
 <ol>
-<li>Download and install  a free 45 day trial of <a href="http://www.EventHelix.com/EventStudio">EventStudio System Designer</a>.</li>
+<li>Download and install a free 45 day trial of <a href="http://www.EventHelix.com/EventStudio">EventStudio System Designer</a>.</li>
 <li>Download and install <a href="http://www.python.org/getit/releases/2.7/">Python 2.7</a>
 </li>
 <li>Download and extract the <a href="https://github.com/eventhelix/trace-to-sequence-diagram">trace to sequence diagram Python scripts</a>
@@ -73,7 +73,7 @@ the EventStudio path is correctly specifiedl</p>
 </ul>
 </li>
 <li><p>Type cmd in the Run menu to invoke the Windows command prompt.</p></li>
-<li><p>Navigate to the directory where to downloaded the Python scripts for this project.</p></li>
+<li><p>Navigate to the directory where to the Python scripts for this project were downloaded.</p></li>
 <li>
 <p>On the command line now type:</p>
 
@@ -84,7 +84,7 @@ the EventStudio path is correctly specifiedl</p>
 
 <ul>
 <li>
-<strong>sequence-diagram.pdf</strong> - A sequence diagram showing object level interations</li>
+<strong>sequence-diagram.pdf</strong> - A sequence diagram showing object level interactions</li>
 <li>
 <strong>component-level-sequence-diagram.pdf</strong> - A high level sequence diagram that shows high level interactions</li>
 <li>
@@ -93,10 +93,7 @@ the EventStudio path is correctly specifiedl</p>
 <strong>xml-export.xml</strong> - XML representation of the object interactions. Use this XML output to develop your custom tools.</li>
 </ul>
 </li>
-</ol><p><strong>Note:</strong> If you get "‘C:\Program’ is not recognized as an internal or external command, operable program or batch file" error, check if
-the EventStudio path is correctly specifiedl</p>
-
-<h2>Step 2: Customize Regular Expressions to Map Traces to FDL (config.py)</h2>
+</ol><h2>Step 2: Customize Regular Expressions to Map Traces to FDL (customize.py)</h2>
 
 <p>By now you would have seen a sequence diagram generated from the sample trace output. If you can modify your traces to 
 match the trace output in sample_trace.txt you can skip this step.</p>
@@ -115,7 +112,7 @@ match the trace output in sample_trace.txt you can skip this step.</p>
 <li>Timer start, stop and expiry</li>
 <li>Resource allocation and freeing</li>
 </ul><p>We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
-of regular expressions. So lets visit these topics before we go any further.</p>
+of regular expressions. So let's visit these topics before we go any further.</p>
 
 <h3>Learning FDL - The Sequence Diagram Markup Language</h3>
 
@@ -129,7 +126,41 @@ is great for testing your regular expressions.</p>
 
 <h3>Templates and Regular Expressions</h3>
 
-<p>If you browse config.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
+<h4>Trace Template</h4>
+
+<p>We start with defining a regular expression that extracts information from the trace format. A
+regular expression that extracts trace information from sample_trace.txt is shown below:</p>
+
+<pre><code>    # The trace messages follow this high level format. The current regular expression
+    # assumes that all traces are of the format:
+    #
+    # [time][component][file]type body
+    #
+    # time:         The trace begins with time information in square brackets
+    #
+    # component:    A group of classes that work together would be treated as a component.
+    #               Module and component level information will be used to generate higher
+    #               level diagrams that provide an overview of the feature, without going
+    #               down to the class level.
+    #
+    # file:         The next square bracket contains filename, line number information.
+    #
+    # type:         Defines the type of a trace. The type here is used to determine the
+    #               mapping to an FDL statement. Refer to the traceMapper dictionary in
+    #               fdl.py. This file maps the type to the a function that will handle
+    #               the parsing of the body.
+    #
+    # body:         This is the text following the type statement. Parsing of this text
+    #               depends upon the type of the trace. This file contains the regular
+    #               expression definitions for parsing of the body for different
+    #               trace types.
+
+    traceRegex = '\[(?P&lt;time&gt;.*)\]\s*\[(?P&lt;component&gt;.*)\]\[(?P&lt;file&gt;.*)\]\s*(?P&lt;type&gt;\S+)\s+(?P&lt;body&gt;.*)'
+</code></pre>
+
+<h4>Statement Templates</h4>
+
+<p>If you browse customize.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
 are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
 defining the regular expressions.</p>
 
@@ -140,7 +171,7 @@ with the caller are used in the FDL template.</p>
     invokeRegex = '(?P&lt;called&gt;\w+)(\.|::)(?P&lt;method&gt;\w+)\s*(\((?P&lt;params&gt;\w+)\))?'
 
     # FDL mapping template for function/method entry
-    invokeTemplate = '{caller} invokes {called}.{method}{params}'
+    invokeTemplate = '{method} {params} :{caller} -&gt; {called}'
 </code></pre>
 
 <h2>Step 3: High Level Object Grouping and Bookmarks (customize.py)</h2>
@@ -151,7 +182,7 @@ with the caller are used in the FDL template.</p>
 
 <h3>Bookmarks</h3>
 
-<p>The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to naviage quickly to different parts 
+<p>The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to navigate quickly to different parts 
 of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:</p>
 
 <pre><code>    # Add messages that need to be bookmarked in the PDF file. This is useful
@@ -182,18 +213,15 @@ EventStudio uses this information to generate a high level sequence diagram (com
     # This means EventStudio will generate trace output at two levels:
     # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
     # - A high level sequence diagram where PHY axis abstracts out the interactions
-    #   involving DSP_01 and DSP_23   
+    #   involving DSP_01 and DSP_23
+    # Just include the parent information for external actors in the system. Object parents
+    # for internal actors are extracted from the trace contents.
     objectParents = OrderedDict([
-        # Tuples of object and it's parent
+        # Tuples of object and its parent
         # (entity, parent)
-        ('Mobile','UE'),
         ('DSP_01','PHY'),
         ('DSP_23','PHY'),
-        ('RLC', 'BSC'),
-        ('MessageRouter', 'BSC'),
-        ('MobileManager', 'BSC'),
         ('CoreNetwork', 'EPC'),
-        ('default-component', 'Component')
     ])
 </code></pre>
       </section>
@@ -202,7 +230,7 @@ EventStudio uses this information to generate a high level sequence diagram (com
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Trace-to-sequence-diagram maintained by <a href="https://github.com/eventhelix">eventhelix</a></p>
+        <p class="copyright">Trace Log to Sequence Diagram Generation maintained by <a href="https://github.com/eventhelix">eventhelix</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
