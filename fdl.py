@@ -622,6 +622,7 @@ def EndAction(traceType, traceText):
     statement.attributes['action'] = traceText.strip()
     return statement
 
+
 # The trace messages follow this high level format. The current regular expression
 # assumes that all traces are of the format:
 # [time][file]type body
@@ -639,24 +640,21 @@ def EndAction(traceType, traceText):
 #       The following dictionary maps the trace type to a function that will
 #       extract the FDL statement from the message body.
 
-traceMapper = {
-   'received'   :   MessageReceive,
-   'sent'       :   MessageSent,
-   'called'     :   MethodInvoke,
-   'returned'   :   MethodReturn,
-   'state'   :      StateChange,
-   'created'    :   CreateObject,
-   'deleted'    :   DeleteObject,
-   'begun'      :   BeginAction,
-   'ended'      :   EndAction,
-   'started'    :   StartTimer,
-   'stopped'    :   StopTimer,
-   'expired'    :   ExpiredTimer,
-   'allocated'  :   AllocatedResource,
-   'freed'      :   FreedResource
+traceHandlerMapper = {
+   'MessageReceive'     :   MessageReceive,
+   'MessageSent'        :   MessageSent,
+   'MethodInvoke'       :   MethodInvoke,
+   'MethodReturn'       :   MethodReturn,
+   'StateChange'        :      StateChange,
+   'CreateObject'       :   CreateObject,
+   'DeleteObject'       :   DeleteObject,
+   'BeginAction'        :   BeginAction,
+   'EndAction'          :   EndAction,
+   'StartTimer'         :   StartTimer,
+   'StopTimer'          :   StopTimer,
+   'ExpiredTimer'       :   ExpiredTimer,
+   'AllocatedResource'  :   AllocatedResource,
+   'FreedResource'      :   FreedResource,
+   'Action'             :   Action
 }
 
-# The the trace type defaults to action if it is not found in the traceMapper
-# dictionary.
-
-defaultMapping = Action

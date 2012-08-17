@@ -61,11 +61,13 @@ class TraceParser:
             # The type named group parsed from the regular expression is used
             # to identify the function that will be parse the trace body
             traceType = self.attributes['type']
-            if traceType in fdl.traceMapper:
-                traceBodyParser = fdl.traceMapper[traceType]
+            if traceType in customize.traceMapper:
+                traceBodyHandler = customize.traceMapper[traceType]
             else:
-                traceBodyParser = fdl.defaultMapping
+                traceBodyHandler = customize.defaultMapping
 
+            traceBodyParser = fdl.traceHandlerMapper[traceBodyHandler]
+            
             # Invoke the function to parse the body of the trace.
             statement = traceBodyParser(traceType, self.attributes['body'])
 

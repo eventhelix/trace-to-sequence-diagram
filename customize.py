@@ -36,7 +36,28 @@ from collections import OrderedDict
 
 traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
+traceMapper = {
+   'received'   :   'MessageReceive',
+   'sent'       :   'MessageSent',
+   'called'     :   'MethodInvoke',
+   'returned'   :   'MethodReturn',
+   'state'   :      'StateChange',
+   'created'    :   'CreateObject',
+   'deleted'    :   'DeleteObject',
+   'begun'      :   'BeginAction',
+   'ended'      :   'EndAction',
+   'started'    :   'StartTimer',
+   'stopped'    :   'StopTimer',
+   'expired'    :   'ExpiredTimer',
+   'allocated'  :   'AllocatedResource',
+   'freed'      :   'FreedResource'
+}
 
+# The the trace type defaults to action if it is not found in the traceMapper
+# dictionary.
+
+defaultMapping = 'Action'
+            
 # Add messages that need to be bookmarked in the PDF file. This is useful
 # as it lets to quickly navigate through the sequence diagram output of
 # a trace. PDF quick navigation bookmarks will be added whenever the messages
