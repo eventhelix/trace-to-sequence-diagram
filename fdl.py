@@ -623,22 +623,9 @@ def EndAction(traceType, traceText):
     return statement
 
 
-# The trace messages follow this high level format. The current regular expression
-# assumes that all traces are of the format:
-# [time][file]type body
-# time: the trace begins with time information in square brackets
-# file: The next square bracket contains filename, line number information
-# type: Defines the type of a trace. The type here is used to determine the
-#       mapping to an FDL statement. Refer to the traceMapper dictionary in
-#       fdl.py. This file maps the type to the a function that will handle
-#       the parsing of the body.
-# body: This is the text following the type statement. Parsing of this text
-#       depends upon the type of the trace. This file contains the regular
-#       expression definitions for parsing of the body for different
-#       trace types.
-#
-#       The following dictionary maps the trace type to a function that will
-#       extract the FDL statement from the message body.
+# trace string to the handler mapping is a two step process. The user type string gets mapped
+# to trace handler string in customize.fdl. The second step is mapping the trace handler string
+# to trace handler function.
 
 traceHandlerMapper = {
    'MessageReceive'     :   MessageReceive,

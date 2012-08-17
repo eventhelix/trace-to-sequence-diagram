@@ -25,9 +25,9 @@ from collections import OrderedDict
 # file:         The next square bracket contains filename, line number information.
 #
 # type:         Defines the type of a trace. The type here is used to determine the
-#               mapping to an FDL statement. Refer to the traceMapper dictionary in
-#               fdl.py. This file maps the type to the a function that will handle
-#               the parsing of the body.
+#               mapping to an FDL statement. Refer to the traceMapper dictionary.
+#               traceMapper maps the type to the trace handler that will parse the
+#               trace body and extract information for generating an FDL statement.
 #
 # body:         This is the text following the type statement. Parsing of this text
 #               depends upon the type of the trace. This file contains the regular
@@ -36,6 +36,8 @@ from collections import OrderedDict
 
 traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
+# Map the type of the trace to the trace handler that will parse the trace body and 
+# extract the information needed for generating an FDL statement.
 traceMapper = {
    'received'   :   'MessageReceive',
    'sent'       :   'MessageSent',
@@ -55,7 +57,6 @@ traceMapper = {
 
 # The the trace type defaults to action if it is not found in the traceMapper
 # dictionary.
-
 defaultMapping = 'Action'
             
 # Add messages that need to be bookmarked in the PDF file. This is useful
