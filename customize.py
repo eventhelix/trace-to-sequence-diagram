@@ -58,6 +58,14 @@ traceMapper = {
 # dictionary.
 defaultMapping = 'Action'
 
+# === Statement regular expression and template definitions ===
+# This section describes regular expressions that extract the trace information
+# that is needed to define the FDL statements.
+# You will see that the trace extraction regular expressions and the FDL statement 
+# generation templates are defined to next to each other. You would rarely need to 
+# change the FDL generation templates but they give you a context for defining the 
+# regular expressions.
+
 # Regular expression for parsing the trace body when a message is being received
 messageRxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*from\s*(?P<source>\w+)'
 
@@ -122,7 +130,8 @@ endActionTemplate = '{object} ends action "{action}"'
 attributeValueSeparator = '='
 avpairSeparator = ','
 paramTemplate = '"{attribute}" = "{value}"'
-            
+
+# === External entity definition ===            
 # EventStudio can generate a high level sequence diagram that can abstract
 # out a set of classes as a high level entity. This abstraction is useful in 
 # understanding the trace output at a higher level of abstraction.
@@ -144,6 +153,15 @@ objectParents = OrderedDict([
 
 ])
 
+# The Python scripts typically extract the caller information from previous traces.
+# The default object and component are specified here.
+# --- default object ---
+# When a new message is being processed, the caller information is not available to
+# the script. In such cases the defaultEntity definition is used as the initiating
+# object. 
+# --- default component ---
+# The component definition is also specified here is used if the component
+# containing an object cannot be found.
 defaultEntity = {
     'object':       'MessageHandler',
     'component':    'Component'
