@@ -1,5 +1,5 @@
 """
-.. automodule:: config
+.. automodule:: customize
    :platform: Windows
    :synopsis: Customize the regular expressions that map to different elements
               of the sequence diagram.
@@ -8,7 +8,6 @@
 
 """
 from collections import OrderedDict
-
 
 # The trace messages follow this high level format. The current regular expression
 # assumes that all traces are of the format:
@@ -58,46 +57,6 @@ traceMapper = {
 # The the trace type defaults to action if it is not found in the traceMapper
 # dictionary.
 defaultMapping = 'Action'
-            
-# Add messages that need to be bookmarked in the PDF file. This is useful
-# as it lets to quickly navigate through the sequence diagram output of
-# a trace. PDF quick navigation bookmarks will be added whenever the messages
-# listed below are seen in the trace message.
-bookmarks = frozenset({
-    'RandomAccessMessage',
-    'RRCConnectionSetupComplete',
-    'InitialUEMessage',
-    'ReleaseConnection'
-})
-
-# EventStudio can generate a high level sequence diagram that can abstract
-# out a set of classes as a high level entity. This abstraction is useful in 
-# understanding the trace output at a higher level of abstraction.
-#
-# List the interacting entities along with their parent. For example, the 
-# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
-# This means EventStudio will generate trace output at two levels:
-# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
-# - A high level sequence diagram where PHY axis abstracts out the interactions
-#   involving DSP_01 and DSP_23
-# Just include the parent information for external actors in the system. Object parents
-# for internal actors are extracted from the trace contents.
-objectParents = OrderedDict([
-    # Tuples of object and its parent
-    # (entity, parent)
-    ('DSP_01','PHY'),
-    ('DSP_23','PHY'),
-    ('CoreNetwork', 'EPC'),
-
-])
-
-# FDL mapping template for the bookmarks
-bookmarkTemplate = 'heading "{bookmark}"'
-
-# Specifies how the per statement remark has to be generated. By default the
-# FDL remark contains the time and the file information (refer to traceRegex
-# defined above.
-remarkTemplate = r'(* {time} {file} *)'
 
 # Regular expression for parsing the trace body when a message is being received
 messageRxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*from\s*(?P<source>\w+)'
@@ -163,8 +122,48 @@ endActionTemplate = '{object} ends action "{action}"'
 attributeValueSeparator = '='
 avpairSeparator = ','
 paramTemplate = '"{attribute}" = "{value}"'
+            
+# EventStudio can generate a high level sequence diagram that can abstract
+# out a set of classes as a high level entity. This abstraction is useful in 
+# understanding the trace output at a higher level of abstraction.
+#
+# List the interacting entities along with their parent. For example, the 
+# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
+# This means EventStudio will generate trace output at two levels:
+# - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
+# - A high level sequence diagram where PHY axis abstracts out the interactions
+#   involving DSP_01 and DSP_23
+# Just include the parent information for external actors in the system. Object parents
+# for internal actors are extracted from the trace contents.
+objectParents = OrderedDict([
+    # Tuples of object and its parent
+    # (entity, parent)
+    ('DSP_01','PHY'),
+    ('DSP_23','PHY'),
+    ('CoreNetwork', 'EPC'),
+
+])
 
 defaultEntity = {
     'object':       'MessageHandler',
     'component':    'Component'
  }
+
+# Add messages that need to be bookmarked in the PDF file. This is useful
+# as it lets to quickly navigate through the sequence diagram output of
+# a trace. PDF quick navigation bookmarks will be added whenever the messages
+# listed below are seen in the trace message.
+bookmarks = frozenset({
+    'RandomAccessMessage',
+    'RRCConnectionSetupComplete',
+    'InitialUEMessage',
+    'ReleaseConnection'
+})
+
+# FDL mapping template for the bookmarks
+bookmarkTemplate = 'heading "{bookmark}"'
+
+# Specifies how the per statement remark has to be generated. By default the
+# FDL remark contains the time and the file information (refer to traceRegex
+# defined above.
+remarkTemplate = r'(* {time} {file} *)'
