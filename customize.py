@@ -35,7 +35,7 @@ from collections import OrderedDict
 
 traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
-# Map the type of the trace to the trace handler that will parse the trace body and 
+# Map the type of the trace to the trace handler that will parse the trace body and
 # extract the information needed for generating an FDL statement.
 traceMapper = {
    'received'   :   'MessageReceive',
@@ -61,9 +61,9 @@ defaultMapping = 'Action'
 # === Statement regular expression and template definitions ===
 # This section describes regular expressions that extract the trace information
 # that is needed to define the FDL statements.
-# You will see that the trace extraction regular expressions and the FDL statement 
-# generation templates are defined to next to each other. You would rarely need to 
-# change the FDL generation templates but they give you a context for defining the 
+# You will see that the trace extraction regular expressions and the FDL statement
+# generation templates are defined to next to each other. You would rarely need to
+# change the FDL generation templates but they give you a context for defining the
 # regular expressions.
 
 # Regular expression for parsing the trace body when a message is being received
@@ -79,13 +79,13 @@ messageTemplate = '{message} {params} :{source} -> {destination}'
 invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry
-invokeTemplate = '{method} {params} :{caller} -> {called}'
+invokeTemplate = '{caller} invokes {called}.{method}{params}'
 
 # Regular expression for parsing the function/method exit trace body
 returnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
 
 # FDL mapping template for function/method exit
-returnTemplate = 'return {params}:{called} -> {caller}'
+returnTemplate = '{called}.{method} returns {params}'
 
 # Regular expression for parsing the object creation trace body
 createRegex = '(?P<created>\w+)\s*(\((?P<params>.*)\))?'
@@ -131,12 +131,12 @@ attributeValueSeparator = '='
 avpairSeparator = ','
 paramTemplate = '"{attribute}" = "{value}"'
 
-# === External entity definition ===            
+# === External entity definition ===
 # EventStudio can generate a high level sequence diagram that can abstract
-# out a set of classes as a high level entity. This abstraction is useful in 
+# out a set of classes as a high level entity. This abstraction is useful in
 # understanding the trace output at a higher level of abstraction.
 #
-# List the interacting entities along with their parent. For example, the 
+# List the interacting entities along with their parent. For example, the
 # tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
 # This means EventStudio will generate trace output at two levels:
 # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
@@ -158,7 +158,7 @@ objectParents = OrderedDict([
 # --- default object ---
 # When a new message is being processed, the caller information is not available to
 # the script. In such cases the defaultEntity definition is used as the initiating
-# object. 
+# object.
 # --- default component ---
 # The component definition is also specified here is used if the component
 # containing an object cannot be found.
