@@ -8,7 +8,7 @@
 """
 
 # Path for identifying where the EventStudio execuable is installed.
-eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'
+eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
 
 # The EventStudio command line to be used to generate the sequence diagrams.
 eventStudioCommandLine = r'{eventStudio} TraceProject.scn /GenerateAll'
