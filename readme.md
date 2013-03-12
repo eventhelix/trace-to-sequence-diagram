@@ -19,7 +19,7 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 		eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
 	* On 32 bits Windows platforms, eventStudioPath should be set as:
 
-		eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'
+		eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
 
 		**Note:** If you get "'C:\Program' is not recognized as an internal or external command, operable program or batch file" error, check if
 		the EventStudio path is correctly specifiedl
