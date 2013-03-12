@@ -60,12 +60,12 @@ between objects are presented visually.</p>
 <li>
 <p>On machines running 64 bit Windows, the eventStudioPath Python variable should be set as:</p>
 
-<p>eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'</p>
+<p>eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'</p>
 </li>
 <li>
 <p>On 32 bits Windows platforms, eventStudioPath should be set as:</p>
 
-<p>eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'</p>
+<p>eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'</p>
 
 <p><strong>Note:</strong> If you get "'C:\Program' is not recognized as an internal or external command, operable program or batch file" error, check if
 the EventStudio path is correctly specifiedl</p>
@@ -171,7 +171,7 @@ with the caller are used in the FDL template.</p>
     invokeRegex = '(?P&lt;called&gt;\w+)(\.|::)(?P&lt;method&gt;\w+)\s*(\((?P&lt;params&gt;\w+)\))?'
 
     # FDL mapping template for function/method entry
-    invokeTemplate = '{method} {params} :{caller} -&gt; {called}'
+    invokeTemplate = '{caller} invokes {called}.{method}{params}'
 </code></pre>
 
 <h2>Step 3: High Level Object Grouping and Bookmarks (customize.py)</h2>
