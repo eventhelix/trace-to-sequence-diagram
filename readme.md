@@ -16,7 +16,7 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 1. Before we proceed, please confirm the EventStudio path setting in the config.py file:
 	* On machines running 64 bit Windows, the eventStudioPath Python variable should be set as:
 
-		eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'
+		eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
 	* On 32 bits Windows platforms, eventStudioPath should be set as:
 
 		eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 5\evstudio.exe"'
@@ -110,7 +110,7 @@ with the caller are used in the FDL template.
 		invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 		# FDL mapping template for function/method entry
-		invokeTemplate = '{method} {params} :{caller} -> {called}'
+		invokeTemplate = '{caller} invokes {called}.{method}{params}'
 
 ## Step 3: High Level Object Grouping and Bookmarks (customize.py)
 
