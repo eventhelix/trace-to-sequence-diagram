@@ -157,7 +157,7 @@ class Document:
             :rvalue: string fragment for forming the complete declaration.
             """
             parent = customize.objectParents.get(entity, customize.defaultEntity['component'])
-            return '{0} in {1}'.format(entity, parent)
+            return '"{0}" in "{1}"'.format(entity, parent)
 
         entitiesWithParent = map(createEntityWithParent, entities)
         return declType + ': ' + ', '.join(entitiesWithParent) + '\n'

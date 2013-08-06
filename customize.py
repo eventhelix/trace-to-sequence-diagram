@@ -73,55 +73,55 @@ messageRxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*from\s*(?P<source>\
 messageTxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*to\s*(?P<destination>\w+)'
 
 # FDL mapping template for messages (received and sent messages)
-messageTemplate = '{message} {params} :{source} -> {destination}'
+messageTemplate = '"{message}" {params} :"{source}" -> "{destination}"'
 
 # Regular expression for parsing the function/method entry trace body
 invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry
-invokeTemplate = '{caller} invokes {called}.{method}{params}'
+invokeTemplate = '"{caller}" invokes "{called}".{method}{params}'
 
 # Regular expression for parsing the function/method exit trace body
 returnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
 
 # FDL mapping template for function/method exit
-returnTemplate = '{called}.{method} returns {params}'
+returnTemplate = '"{called}".{method} returns {params}'
 
 # Regular expression for parsing the object creation trace body
 createRegex = '(?P<created>\w+)\s*(\((?P<params>.*)\))?'
 
 # FDL mapping template for object creation
-createTemplate = '{creator} creates {created}{params}'
+createTemplate = '"{creator}" creates "{created}"{params}'
 
 # Regular expression for object deletion
 deleteRegex = '(?P<deleted>\w+)'
 
 # FDL mapping template for object deletion
-deleteTemplate = '{deletor} deletes "{deleted}"'
+deleteTemplate = '"{deletor}" deletes "{deleted}"'
 
 # Any trace that does not map to a defined type is treated as an action trace.
 # FDL mapping for action traces is defined here. The trace type is also
 # included in the statement.
-actionTemplate = '{actor} takes action "{actionType} {action}"'
+actionTemplate = '"{actor}" takes action "{actionType} {action}"'
 
 # FDL mapping template for state change trace body
-stateChangeTemplate = '{object} state = "{state}"'
+stateChangeTemplate = '"{object}" state = "{state}"'
 
 # Regular expression for parsing the timer start, stop anmd expiry trace body.
 timerRegex = '(?P<timer>\w+)'
 
 # FDL mapping templates for time start, stop and expiry traces.
-startTimerTemplate = '{object} starts {timer}'
-stopTimerTemplate = '{object} stops {timer}'
+startTimerTemplate = '"{object}" starts {timer}'
+stopTimerTemplate = '"{object}" stops {timer}'
 expiredTimerTemplate = 'timeout {timer}'
 
 # FDL mapping for resource allocation and freeing traces.
-allocateTemplate = '{object} allocates "{resource}"'
-freeTemplate = '{object} frees "{resource}"'
+allocateTemplate = '"{object}" allocates "{resource}"'
+freeTemplate = '"{object}" frees "{resource}"'
 
 # FDL mapping for action start and end traces.
-beginActionTemplate = '{object} begins action "{action}"'
-endActionTemplate = '{object} ends action "{action}"'
+beginActionTemplate = '"{object}" begins action "{action}"'
+endActionTemplate = '"{object}" ends action "{action}"'
 
 # Many statements contain parameters, They are parsed as attribute-value pairs.
 # The attribute value pair separator and the attribute and value pair sepeator
