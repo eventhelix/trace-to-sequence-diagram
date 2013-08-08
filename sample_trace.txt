@@ -1,47 +1,47 @@
-[16-Apr-2011 03:05:02.111][Messaging][MessageHandler.cpp:563]received RandomAccessMessage(signalQuality=15) from DSP_01
-[16-Apr-2011 03:05:02.111][Messaging][MessageRouter.cpp:94]called MessageRouter::OnRandomAccessMessage()
-[16-Apr-2011 03:05:02.111][Messaging][MessageRouter.cpp:90]decoded RRCConnectionRequest(cause = Mobile Originated Data, s_tmsi=5)
-[16-Apr-2011 03:05:02.111][Dispatcher][MobileManager.cpp:92]called MobileManager::OnRRCConnectionRequest()
-[16-Apr-2011 03:05:02.112][Dispatcher][MobileManager.cpp:94]created Mobile(id=5)
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:110]called Mobile::OnRRCConnectionRequest()
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:89]moved-to Setting up RRC Connection
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:100]begun RRC Connection Setup
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:105]allocated TrafficDSP(id=23)
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:141]called Mobile::SendRRCConnection()
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:220]sent RRCConnectionSetup(s_tmsi=5) to DSP_23
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:118]returned from Mobile::SendRRCConnection
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:117]started AwaitRRCConnection
-[16-Apr-2011 03:05:02.112][UE][Mobile.cpp:118]returned (val=5) from Mobile::OnRRCConnectionRequest
-[16-Apr-2011 03:05:02.112][Dispatcher][MobileManager.cpp:115]returned from MobileManager::OnRRCConnectionRequest
-[16-Apr-2011 03:05:02.112][Messaging][MessageRouter.cpp:35]returned from MessageRouter::OnRandomAccessMessage
-[16-Apr-2011 03:05:02.121][Messaging][MessageHandler.cpp:563]received UTReturnData(s_tmsi=5,status=SUCCESS) from DSP_23
-[16-Apr-2011 03:05:02.121][Messaging][MessageRouter.cpp:210]called MessageRouter::OnUTReturnData()
-[16-Apr-2011 03:05:02.121][Messaging][MessageRouter.cpp:221]decoded RRCConnectionSetupComplete(s_tmsi=5,UTCapabilities=power:5;channel:6)
-[16-Apr-2011 03:05:02.121][UE][Mobile.cpp:1043]called Mobile::RRCConnectionSetupComplete()
-[16-Apr-2011 03:05:02.121][UE][Mobile.cpp:1050]stopped AwaitRRCConnection
-[16-Apr-2011 03:05:02.121][UE][Mobile.cpp:1099]state RRC Connected
-[16-Apr-2011 03:05:02.121][UE][Mobile.cpp:1104]returned from Mobile::RRCConnectionSetupComplete
-[16-Apr-2011 03:05:02.121][Messaging][MessageRouter.cpp:220]returned from MessageRouter::OnUTReturnData
-[16-Apr-2011 03:05:02.154][Messaging][MessageHandler.cpp:782]received UTReturnData(s_tmsi=5,status=SUCCESS) from DSP_23
-[16-Apr-2011 03:05:02.154][Messaging][MessageRouter.cpp:432]called MessageRouter::OnUTReturnData()
-[16-Apr-2011 03:05:02.154][Messaging][MessageRouter.cpp:439]decoded InitialUEMessage((s_tmsi=5,nasPayload=0x5544)
-[16-Apr-2011 03:05:02.154][UE][Mobile.cpp:321]called Mobile::OnInitialUEMessage()
-[16-Apr-2011 03:05:02.154][UE][Mobile.cpp:331]started InactivityTimer
-[16-Apr-2011 03:05:02.154][UE][Mobile.cpp:351]sent InitialUEMessage to CoreNetwork
-[16-Apr-2011 03:05:02.154][UE][Mobile.cpp:360]returned from Mobile::OnInitialUEMessage
-[16-Apr-2011 03:05:02.154][Messaging][MessageRouter.cpp:90]returned from MessageRouter::OnUTReturnData
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:530]expired InactivityTimer
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:455]called Mobile::OnInactivityTimeout
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:483]sent RequestConnectionRelease to CoreNetwork
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:495]returned from Mobile::OnInactivityTimeout
-[16-Apr-2011 03:05:03.201][Messaging][MessageHandler.cpp:1004]received ReleaseConnection from CoreNetwork
-[16-Apr-2011 03:05:03.201][Messaging][MessageRouter.cpp:436]called MessageRouter::OnCoreNetworkMessage()
-[16-Apr-2011 03:05:03.201][Dispatcher][MobileManager.cpp:543]called MobileManager::OnReleaseConnection()
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:1043]called Mobile::OnReleaseConnection()
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:1049]state Releasing RRC Connection
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:1063]freed TrafficDSP(id=23)
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:1073]ended RRC Connection Setup
-[16-Apr-2011 03:05:03.201][UE][Mobile.cpp:1088]returned (releaseNow=true) from Mobile::OnReleaseConnection
-[16-Apr-2011 03:05:03.201][Dispatcher][MobileManager.cpp:600]deleted Mobile(id=5)
-[16-Apr-2011 03:05:03.201][Dispatcher][MobileManager.cpp:602]returned from MobileManager::OnReleaseConnection
-[16-Apr-2011 03:05:03.201][Messaging][MessageRouter.cpp:501]returned from MessageRouter::OnCoreNetworkMessage
+[16-Apr-2011 03:05:02.111][MessageHandler][MessageHandler.cpp:563]received RandomAccessMessage(signalQuality=15) from DSP_01
+[16-Apr-2011 03:05:02.111][MessageRouter][MessageRouter.cpp:94]called MessageRouter::OnRandomAccessMessage()
+[16-Apr-2011 03:05:02.111][MessageRouter][MessageRouter.cpp:90]decoded RRCConnectionRequest(cause = Mobile Originated Data, s_tmsi=5)
+[16-Apr-2011 03:05:02.111][MobileManager][MobileManager.cpp:92]called MobileManager::OnRRCConnectionRequest()
+[16-Apr-2011 03:05:02.112][MobileManager][MobileManager.cpp:94]created Mobile(id=5)
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:110]called Mobile::OnRRCConnectionRequest()
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:89]moved-to Setting up RRC Connection
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:100]begun RRC Connection Setup
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:105]allocated TrafficDSP(id=23)
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:141]called Mobile::SendRRCConnection()
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:220]sent RRCConnectionSetup(s_tmsi=5) to DSP_23
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:118]returned from Mobile::SendRRCConnection
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:117]started AwaitRRCConnection
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:118]returned (val=5) from Mobile::OnRRCConnectionRequest
+[16-Apr-2011 03:05:02.112][MobileManager][MobileManager.cpp:115]returned from MobileManager::OnRRCConnectionRequest
+[16-Apr-2011 03:05:02.112][MessageRouter][MessageRouter.cpp:35]returned from MessageRouter::OnRandomAccessMessage
+[16-Apr-2011 03:05:02.121][MessageHandler][MessageHandler.cpp:563]received UTReturnData(s_tmsi=5,status=SUCCESS) from DSP_23
+[16-Apr-2011 03:05:02.121][MessageRouter][MessageRouter.cpp:210]called MessageRouter::OnUTReturnData()
+[16-Apr-2011 03:05:02.121][MessageRouter][MessageRouter.cpp:221]decoded RRCConnectionSetupComplete(s_tmsi=5,UTCapabilities=power:5;channel:6)
+[16-Apr-2011 03:05:02.121][Mobile][Mobile.cpp:1043]called Mobile::RRCConnectionSetupComplete()
+[16-Apr-2011 03:05:02.121][Mobile][Mobile.cpp:1050]stopped AwaitRRCConnection
+[16-Apr-2011 03:05:02.121][Mobile][Mobile.cpp:1099]state RRC Connected
+[16-Apr-2011 03:05:02.121][Mobile][Mobile.cpp:1104]returned from Mobile::RRCConnectionSetupComplete
+[16-Apr-2011 03:05:02.121][MessageRouter][MessageRouter.cpp:220]returned from MessageRouter::OnUTReturnData
+[16-Apr-2011 03:05:02.154][MessageHandler][MessageHandler.cpp:782]received UTReturnData(s_tmsi=5,status=SUCCESS) from DSP_23
+[16-Apr-2011 03:05:02.154][MessageRouter][MessageRouter.cpp:432]called MessageRouter::OnUTReturnData()
+[16-Apr-2011 03:05:02.154][MessageRouter][MessageRouter.cpp:439]decoded InitialUEMessage((s_tmsi=5,nasPayload=0x5544)
+[16-Apr-2011 03:05:02.154][Mobile][Mobile.cpp:321]called Mobile::OnInitialUEMessage()
+[16-Apr-2011 03:05:02.154][Mobile][Mobile.cpp:331]started InactivityTimer
+[16-Apr-2011 03:05:02.154][Mobile][Mobile.cpp:351]sent InitialUEMessage to CoreNetwork
+[16-Apr-2011 03:05:02.154][Mobile][Mobile.cpp:360]returned from Mobile::OnInitialUEMessage
+[16-Apr-2011 03:05:02.154][MessageRouter][MessageRouter.cpp:90]returned from MessageRouter::OnUTReturnData
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:530]expired InactivityTimer
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:455]called Mobile::OnInactivityTimeout
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:483]sent RequestConnectionRelease to CoreNetwork
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:495]returned from Mobile::OnInactivityTimeout
+[16-Apr-2011 03:05:03.201][MessageHandler][MessageHandler.cpp:1004]received ReleaseConnection from CoreNetwork
+[16-Apr-2011 03:05:03.201][MessageRouter][MessageRouter.cpp:436]called MessageRouter::OnCoreNetworkMessage()
+[16-Apr-2011 03:05:03.201][MobileManager][MobileManager.cpp:543]called MobileManager::OnReleaseConnection()
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:1043]called Mobile::OnReleaseConnection()
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:1049]state Releasing RRC Connection
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:1063]freed TrafficDSP(id=23)
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:1073]ended RRC Connection Setup
+[16-Apr-2011 03:05:03.201][Mobile][Mobile.cpp:1088]returned (releaseNow=true) from Mobile::OnReleaseConnection
+[16-Apr-2011 03:05:03.201][MobileManager][MobileManager.cpp:600]deleted Mobile(id=5)
+[16-Apr-2011 03:05:03.201][MobileManager][MobileManager.cpp:602]returned from MobileManager::OnReleaseConnection
+[16-Apr-2011 03:05:03.201][MessageRouter][MessageRouter.cpp:501]returned from MessageRouter::OnCoreNetworkMessage
