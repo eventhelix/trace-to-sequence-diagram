@@ -150,6 +150,7 @@ class Statement:
 
 
 
+
 class MessageStatement(Statement):
     """
     Represents the FDL message statement. This class is used in message sent and
@@ -169,13 +170,14 @@ class MessageReceiveStatement(MessageStatement):
 # Compile the regular expression for received message extraction from the trace body.
 messageReceiveRegex = re.compile(customize.messageRxRegex)
 
-def MessageReceive(traceType, traceText):
+def MessageReceive(traceType, traceGenerator, traceText):
     """
     Parse the traceText from a message receive trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the help
     of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -184,7 +186,7 @@ def MessageReceive(traceType, traceText):
     if messageGroup != None:
          statement = MessageReceiveStatement()
          statement.attributes = messageGroup.groupdict()
-         statement.attributes['destination'] = stack.currentObject()
+         statement.attributes['destination'] = traceGenerator
          if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
@@ -195,13 +197,14 @@ class MessageSendStatement(MessageStatement):
         return [('source','any'),('destination','any')]
 
 messageSentRegex = re.compile(customize.messageTxRegex)
-def MessageSent(traceType, traceText):
+def MessageSent(traceType, traceGenerator, traceText):
     """
     Parse the traceText from a message sent trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the help
     of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -210,7 +213,7 @@ def MessageSent(traceType, traceText):
     if messageGroup != None:
          statement = MessageSendStatement()
          statement.attributes = messageGroup.groupdict()
-         statement.attributes['source'] = stack.currentObject()
+         statement.attributes['source'] = traceGenerator
          if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
@@ -229,13 +232,14 @@ class InvokeStatement(Statement):
         return 'method'
 
 invokeRegex = re.compile(customize.invokeRegex)
-def MethodInvoke(traceType, traceText):
+def MethodInvoke(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a method invoke and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -244,7 +248,7 @@ def MethodInvoke(traceType, traceText):
     if invokeGroup != None:
         statement = InvokeStatement()
         statement.attributes = invokeGroup.groupdict()
-        statement.attributes['caller'] = stack.currentObject()
+        statement.attributes['caller'] = traceGenerator
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
         stack.push(statement)
@@ -269,13 +273,14 @@ class ReturnStatement(Statement):
         return [('called','any')]
 
 returnRegex = re.compile(customize.returnRegex)
-def MethodReturn(traceType, traceText):
+def MethodReturn(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a "method return" and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -308,13 +313,14 @@ class CreateStatement(Statement):
         return [('creator','any'), ('created', 'dynamic-created')]
 
 createRegex = re.compile(customize.createRegex)
-def CreateObject(traceType, traceText):
+def CreateObject(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an object create and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -323,7 +329,7 @@ def CreateObject(traceType, traceText):
     if createGroup != None:
         statement = CreateStatement()
         statement.attributes = createGroup.groupdict()
-        statement.attributes['creator'] = stack.currentObject()
+        statement.attributes['creator'] = traceGenerator
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
@@ -339,13 +345,14 @@ class DeleteStatement(Statement):
         return [('deletor','any'), ('deleted', 'dynamic-deleted')]
 
 deleteRegex = re.compile(customize.deleteRegex)
-def DeleteObject(traceType, traceText):
+def DeleteObject(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an object delete and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -354,7 +361,7 @@ def DeleteObject(traceType, traceText):
     if deleteGroup != None:
         statement = DeleteStatement()
         statement.attributes = deleteGroup.groupdict()
-        statement.attributes['deletor'] = stack.currentObject()
+        statement.attributes['deletor'] = traceGenerator
     return statement
 
 timerRegex = re.compile(customize.timerRegex)
@@ -377,13 +384,14 @@ class StartTimerStatement(TimerStatement):
     def entityList(self):
         return [('object','any')]
 
-def StartTimer(traceType, traceText):
+def StartTimer(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a timer start and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -391,7 +399,7 @@ def StartTimer(traceType, traceText):
     timerGroup = timerRegex.search(traceText)
     if timerGroup != None:
         statement = StartTimerStatement()
-        statement.attributes['object'] = stack.currentObject()
+        statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
     return statement
 
@@ -405,13 +413,14 @@ class StopTimerStatement(TimerStatement):
     def entityList(self):
         return [('object','any')]
 
-def StopTimer(traceType, traceText):
+def StopTimer(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a timer stop and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -419,7 +428,7 @@ def StopTimer(traceType, traceText):
     timerGroup = timerRegex.search(traceText)
     if timerGroup != None:
         statement = StopTimerStatement()
-        statement.attributes['object'] = stack.currentObject()
+        statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
     return statement
 
@@ -433,13 +442,14 @@ class ExpiredTimerStatement(TimerStatement):
     def entityList(self):
         return [('object','any')]
 
-def ExpiredTimer(traceType, traceText):
+def ExpiredTimer(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a timer expiry and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
@@ -447,7 +457,7 @@ def ExpiredTimer(traceType, traceText):
     timerGroup = timerRegex.search(traceText)
     if timerGroup != None:
         statement = ExpiredTimerStatement()
-        statement.attributes['object'] = stack.currentObject()
+        statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
     return statement
 
@@ -465,18 +475,19 @@ class ActionStatement(Statement):
         return 'action'
 
 
-def Action(traceType, traceText):
+def Action(traceType, traceGenerator, traceText):
     """
     Parse the traceText of any action and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = ActionStatement()
-    statement.attributes['actor'] = stack.currentObject()
+    statement.attributes['actor'] = traceGenerator
     statement.attributes['actionType'] = traceType
     statement.attributes['action'] = traceText.strip()
     return statement
@@ -494,18 +505,19 @@ class StateChangeStatement(Statement):
     def bookmarkAttribute(self):
         return 'state'
 
-def StateChange(traceType, traceText):
+def StateChange(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a state change and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = StateChangeStatement()
-    statement.attributes['object'] = stack.currentObject()
+    statement.attributes['object'] = traceGenerator
     statement.attributes['state'] = traceText.strip()
     return statement
 
@@ -523,18 +535,19 @@ class AllocateStatement(Statement):
     def bookmarkAttribute(self):
         return 'resource'
 
-def AllocatedResource(traceType, traceText):
+def AllocatedResource(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a resource allocation and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = AllocateStatement()
-    statement.attributes['object'] = stack.currentObject()
+    statement.attributes['object'] = traceGenerator
     statement.attributes['resource'] = traceText.strip()
     return statement
 
@@ -551,18 +564,19 @@ class FreeStatement(Statement):
     def bookmarkAttribute(self):
         return 'resource'
 
-def FreedResource(traceType, traceText):
+def FreedResource(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a resource free trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = FreeStatement()
-    statement.attributes['object'] = stack.currentObject()
+    statement.attributes['object'] = traceGenerator
     statement.attributes['resource'] = traceText.strip()
     return statement
 
@@ -579,18 +593,19 @@ class BeginActionStatement(Statement):
     def bookmarkAttribute(self):
         return 'action'
 
-def BeginAction(traceType, traceText):
+def BeginAction(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an action start trace and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = BeginActionStatement()
-    statement.attributes['object'] = stack.currentObject()
+    statement.attributes['object'] = traceGenerator
     statement.attributes['action'] = traceText.strip()
     return statement
 
@@ -607,18 +622,19 @@ class EndActionStatement(Statement):
     def bookmarkAttribute(self):
         return 'action'
 
-def EndAction(traceType, traceText):
+def EndAction(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an end action and return a statement object.
     The raw string trace body is parsed into a message statement object with the
     help of the regular expression defined in customize.py file.
 
     :param traceType: string containing the trace type
+    :param traceGenerator: object generating the trace
     :param traceText: string containing the raw trace body
     :rtype: statement object containing information about the trace.
     """
     statement = EndActionStatement()
-    statement.attributes['object'] = stack.currentObject()
+    statement.attributes['object'] = traceGenerator
     statement.attributes['action'] = traceText.strip()
     return statement
 
@@ -632,7 +648,7 @@ traceHandlerMapper = {
    'MessageSent'        :   MessageSent,
    'MethodInvoke'       :   MethodInvoke,
    'MethodReturn'       :   MethodReturn,
-   'StateChange'        :      StateChange,
+   'StateChange'        :   StateChange,
    'CreateObject'       :   CreateObject,
    'DeleteObject'       :   DeleteObject,
    'BeginAction'        :   BeginAction,

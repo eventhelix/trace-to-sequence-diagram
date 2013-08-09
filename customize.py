@@ -12,14 +12,11 @@ from collections import OrderedDict
 # The trace messages follow this high level format. The current regular expression
 # assumes that all traces are of the format:
 #
-# [time][component][file]type body
+# [time][entity][file]type body
 #
 # time:         The trace begins with time information in square brackets
 #
-# component:    A group of classes that work together would be treated as a component.
-#               Module and component level information will be used to generate higher
-#               level diagrams that provide an overview of the feature, without going
-#               down to the class level.
+# generator:    Entity generating the trace message
 #
 # file:         The next square bracket contains filename, line number information.
 #
@@ -33,7 +30,7 @@ from collections import OrderedDict
 #               expression definitions for parsing of the body for different
 #               trace types.
 
-traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+traceRegex = '\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
 # Map the type of the trace to the trace handler that will parse the trace body and
 # extract the information needed for generating an FDL statement.

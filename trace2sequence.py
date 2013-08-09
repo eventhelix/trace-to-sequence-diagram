@@ -69,7 +69,7 @@ class TraceParser:
             traceBodyParser = fdl.traceHandlerMapper[traceBodyHandler]
             
             # Invoke the function to parse the body of the trace.
-            statement = traceBodyParser(traceType, self.attributes['body'])
+            statement = traceBodyParser(traceType, self.attributes['generator'],self.attributes['body'])
 
             # If trace parsing was successful, add a remark to the trace and then
             # save the parsed statement.
@@ -102,7 +102,8 @@ class TraceParser:
             else:
                 self.objectDict[obj] = entityType
 
-        customize.objectParents[firstObj] = self.attributes['component']
+        #EventHelix
+        customize.objectParents[firstObj] = customize.defaultEntity['component']
 
 class Document:
     """
