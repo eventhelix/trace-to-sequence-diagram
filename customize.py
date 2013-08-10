@@ -16,7 +16,9 @@ from collections import OrderedDict
 #
 # time:         The trace begins with time information in square brackets
 #
-# generator:    Entity generating the trace message
+# generator:    Entity generating the trace message. This may be a generic entity name.
+#               For C++ methods use the calling objects class name. For C functions
+#               the C function generating the trace would be mentioned here.
 #
 # file:         The next square bracket contains filename, line number information.
 #
@@ -138,6 +140,29 @@ attributeValueSeparator = '='
 avpairSeparator = ','
 paramTemplate = '"{attribute}" = "{value}"'
 
+# Specifies how the per statement remark has to be generated. By default the
+# FDL remark contains the time and the file information (refer to traceRegex
+# defined above.
+remarkTemplate = r'(* {time} {file} *)'
+
+# === OPTIONAL CUSTOMIZATION ===
+
+# Add messages that need to be bookmarked in the PDF file. This is useful
+# as it lets to quickly navigate through the sequence diagram output of
+# a trace. PDF quick navigation bookmarks will be added whenever the messages
+# listed below are seen in the trace message.
+bookmarks = frozenset({
+    'RandomAccessMessage',
+    'RRCConnectionSetupComplete',
+    'InitialUEMessage',
+    'ReleaseConnection'
+})
+
+
+
+# FDL mapping template for the bookmarks
+bookmarkTemplate = 'heading "{bookmark}"'
+
 # === External entity definition ===
 # EventStudio can generate a high level sequence diagram that can abstract
 # out a set of classes as a high level entity. This abstraction is useful in
@@ -154,9 +179,6 @@ paramTemplate = '"{attribute}" = "{value}"'
 objectParents = OrderedDict([
     # Tuples of object and its parent
     # (entity, parent)
-    ('DSP_01','PHY'),
-    ('DSP_23','PHY'),
-    ('CoreNetwork', 'EPC'),
 
 ])
 
@@ -170,25 +192,8 @@ objectParents = OrderedDict([
 # The component definition is also specified here is used if the component
 # containing an object cannot be found.
 defaultEntity = {
-    'object':       'MessageHandler',
-    'component':    'Component'
  }
 
-# Add messages that need to be bookmarked in the PDF file. This is useful
-# as it lets to quickly navigate through the sequence diagram output of
-# a trace. PDF quick navigation bookmarks will be added whenever the messages
-# listed below are seen in the trace message.
-bookmarks = frozenset({
-    'RandomAccessMessage',
-    'RRCConnectionSetupComplete',
-    'InitialUEMessage',
-    'ReleaseConnection'
-})
 
-# FDL mapping template for the bookmarks
-bookmarkTemplate = 'heading "{bookmark}"'
 
-# Specifies how the per statement remark has to be generated. By default the
-# FDL remark contains the time and the file information (refer to traceRegex
-# defined above.
-remarkTemplate = r'(* {time} {file} *)'
+

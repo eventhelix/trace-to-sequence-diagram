@@ -87,7 +87,7 @@ class TraceParser:
         self.statementList.append(statement)
         firstObj = None
         # In addition to saving the object also store the objects that
-        # are beign referenced inside an object dictionary. The object dictionary
+        # are being referenced inside an object dictionary. The object dictionary
         # will be used to generate the eternal and dynamic object statements
         # needed for FDL.
         # Note that the objects to be saved depend upon the type of the statement.
@@ -102,8 +102,6 @@ class TraceParser:
             else:
                 self.objectDict[obj] = entityType
 
-        #EventHelix
-        customize.objectParents[firstObj] = customize.defaultEntity['component']
 
 class Document:
     """
@@ -157,8 +155,13 @@ class Document:
             :param entity: The entity for generating the fragment is passed as a parameter.
             :rvalue: string fragment for forming the complete declaration.
             """
-            parent = customize.objectParents.get(entity, customize.defaultEntity['component'])
-            return '"{0}" in "{1}"'.format(entity, parent)
+            parent = customize.objectParents.get(entity, '')
+
+            if parent != '':
+                entityWithParent = '"{0}" in "{1}"'.format(entity, parent)
+            else:
+                entityWithParent = entity
+            return entityWithParent
 
         entitiesWithParent = map(createEntityWithParent, entities)
         return declType + ': ' + ', '.join(entitiesWithParent) + '\n'
@@ -188,9 +191,12 @@ class Document:
         # generate a new statement.
         entityList = []
         previousType = ''
-        parents = distinct(customize.objectParents.values())
-        parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
-        header += parentDeclaration
+
+        if customize.objectParents:
+            parents = distinct(customize.objectParents.values())
+            parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
+            header += parentDeclaration
+
         for obj, objtype in self.traceParser.objectDict.items():
             if Document.hasTypeChanged(previousType, objtype):
                 header += self.generateDeclaration(previousType, entityList)
