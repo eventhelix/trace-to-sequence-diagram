@@ -195,10 +195,21 @@ def MethodInvoke(traceType, traceGenerator, traceText):
     :rtype: statement object containing information about the trace.
     """
     statement = None
-    invokeGroup = invokeRegex.search(traceText)
+    if '::'  in traceText:
+        # C++ method trace
+        invokeGroup = invokeMethodRegex.search(traceText)
+        statement.attributes = invokeGroup.groupdict()
+    else:
+        # c function trace
+        invokeGroup = invokeFunctionRegex.search(traceText)
+        statement.attributes = invokeGroup.groupdict()
+        # FDL requires an object name and method name. In C functions
+        # the function name (designated as method) is also used as
+        # the called object name
+        statement.attributes['called'] = statement.attributes['method']
+
     if invokeGroup != None:
         statement = InvokeStatement()
-        statement.attributes = invokeGroup.groupdict()
         statement.attributes['caller'] = traceGenerator
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])

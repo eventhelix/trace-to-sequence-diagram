@@ -12,7 +12,7 @@ from collections import OrderedDict
 # The trace messages follow this high level format. The current regular expression
 # assumes that all traces are of the format:
 #
-# [time][entity][file]type body
+# [time][generator][file]type body
 #
 # time:         The trace begins with time information in square brackets
 #
@@ -72,8 +72,13 @@ messageTxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*to\s*(?P<destinatio
 # FDL mapping template for messages (received and sent messages)
 messageTemplate = '"{message}" {params} :"{source}" -> "{destination}"'
 
-# Regular expression for parsing the function/method entry trace body
-invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+# Regular expression for parsing C++ method trace body. Trace body with :: is assumed
+# to be a C++ method.
+invokeMethodRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+
+# Regular expression for parsing C function trace body. Trace body without :: is assumed
+# to be a C function
+invokeFunctionRegex = '(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry
 invokeTemplate = '"{caller}" invokes "{called}".{method}{params}'
