@@ -7,6 +7,12 @@
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:89]moved-to Setting up RRC Connection
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:100]begun RRC Connection Setup
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:105]allocated TrafficDSP(id=23)
+[16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:105]called dsp_init(id=23)
+[16-Apr-2011 03:05:02.112][dsp_init][dsp.c:105]called mod_init(id=23)
+[16-Apr-2011 03:05:02.112][mod_init][dsp.c:105]returned (status) from mod_init
+[16-Apr-2011 03:05:02.112][dsp_init][dsp.c:105]called demod_init(id=23)
+[16-Apr-2011 03:05:02.112][demod_init][dsp.c:105]returned (status) from demod_init
+[16-Apr-2011 03:05:02.112][dsp_init][dsp.c:435]returned (status=SUCCESS) from dsp_init
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:141]called Mobile::SendRRCConnection()
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:220]sent RRCConnectionSetup(s_tmsi=5) to DSP_23
 [16-Apr-2011 03:05:02.112][Mobile][Mobile.cpp:118]returned from Mobile::SendRRCConnection
