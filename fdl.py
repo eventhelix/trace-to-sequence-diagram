@@ -45,55 +45,6 @@ def formatParams(paramString):
         avPairStr += ')'
     return avPairStr
 
-class Stack:
-    """
-    A class used to keep track of method invocations seen in the traces.
-    """
-    def __init__(self):
-        """
-        Initialize the stack.
-        """
-        self.stack = []
-
-    def push(self, item):
-        """
-        Push an item on to the stack.
-        """
-        self.stack.append(item)
-
-    def pop(self):
-        """
-        Pop an item from the stack.
-        """
-        return self.stack.pop()
-
-    def top(self):
-        """
-        Get the item at the top of the stack.
-        """
-        return self.stack[-1]
-
-    def length(self):
-        """
-        Get the stack length.
-        """
-        return len(self.stack)
-
-    def currentObject(self):
-        """
-        Return the currently active object. If no object is present on the
-        stack, the default object defined in traceEntity in the customize.py file
-        is returned.
-
-        :rtype: string name of the currently active object.
-        """
-        if self.length() != 0:
-            return self.top().attributes['called']
-        else:
-            return customize.defaultEntity['object']
-
-# Stack object rebuilds the stack from the trace messages.
-stack = Stack()
 
 class Statement:
     """
@@ -251,15 +202,6 @@ def MethodInvoke(traceType, traceGenerator, traceText):
         statement.attributes['caller'] = traceGenerator
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
-        stack.push(statement)
-
-        # Ignore a method invoke if the caller and the called are the same
-        # This way the internal method details do not clutter the diagram.
-        # Note however that the method thas still been pushed on to the stack.
-        # This will be needed later for ignoring the return trace from internal
-        # methods
-        if statement.attributes['caller'] == statement.attributes['called']:
-            statement = None
     return statement
 
 class ReturnStatement(Statement):
@@ -285,20 +227,12 @@ def MethodReturn(traceType, traceGenerator, traceText):
     :rtype: statement object containing information about the trace.
     """
     statement = None
-    if stack.length() != 0:
-        methodStatement = stack.pop()
-        returnGroup = returnRegex.search(traceText)
-        if returnGroup != None:
-            statement = ReturnStatement()
-            statement.attributes = returnGroup.groupdict()
-            if 'params' in statement.attributes:
-                statement.attributes['params'] = formatParams(statement.attributes['params'])
-            statement.attributes['caller'] = methodStatement.attributes['caller']
-            # Ignore a method return if the caller and the called are the same
-            # This way the internal method details do not clutter the diagram.
-            # Note that method invoke was also ignored by the MethodInvoke function.
-            if methodStatement.attributes['caller'] == methodStatement.attributes['called']:
-                statement = None
+    returnGroup = returnRegex.search(traceText)
+    if returnGroup != None:
+        statement = ReturnStatement()
+        statement.attributes = returnGroup.groupdict()
+        if 'params' in statement.attributes:
+            statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
 
 
