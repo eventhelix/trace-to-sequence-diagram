@@ -46,6 +46,7 @@ class TraceParser:
         self.objectDict = OrderedDict([])
         self.regex = re.compile(customize.traceRegex)
         self.attributes = {}
+        self.usingDefaultComponent = False
 
     def parseTraceLine(self, line):
         """
@@ -101,6 +102,10 @@ class TraceParser:
                     self.objectDict[obj] = entityType
             else:
                 self.objectDict[obj] = entityType
+            # Check if any object parent grouping is enabled. If it is enabled
+            # check if any of the entities will need to define a default component
+            if customize.objectParents and obj not in customize.objectParents:
+                self.usingDefaultComponent = True
 
 
 class Document:
@@ -155,9 +160,9 @@ class Document:
             :param entity: The entity for generating the fragment is passed as a parameter.
             :rvalue: string fragment for forming the complete declaration.
             """
-            parent = customize.objectParents.get(entity, '')
 
-            if parent != '':
+            if customize.objectParents:
+                parent = customize.objectParents.get(entity, 'Component')
                 entityWithParent = '"{0}" in "{1}"'.format(entity, parent)
             else:
                 entityWithParent = entity
@@ -196,6 +201,9 @@ class Document:
             parents = distinct(customize.objectParents.values())
             parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
             header += parentDeclaration
+
+            if self.traceParser.usingDefaultComponent:
+                header += 'component: "Component"\n'
 
         for obj, objtype in self.traceParser.objectDict.items():
             if Document.hasTypeChanged(previousType, objtype):

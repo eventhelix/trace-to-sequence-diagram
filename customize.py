@@ -182,18 +182,6 @@ objectParents = OrderedDict([
 
 ])
 
-# The Python scripts typically extract the caller information from previous traces.
-# The default object and component are specified here.
-# --- default object ---
-# When a new message is being processed, the caller information is not available to
-# the script. In such cases the defaultEntity definition is used as the initiating
-# object.
-# --- default component ---
-# The component definition is also specified here is used if the component
-# containing an object cannot be found.
-defaultEntity = {
- }
-
 
 
 
