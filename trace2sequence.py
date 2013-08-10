@@ -199,7 +199,7 @@ class Document:
 
         if customize.objectParents:
             parents = distinct(customize.objectParents.values())
-            parentDeclaration = 'component: ' + ', '.join(parents) + '\n'
+            parentDeclaration = 'component: ' + ', '.join(['"' + parent + '"' for parent in parents]) + '\n'
             header += parentDeclaration
 
             if self.traceParser.usingDefaultComponent:
