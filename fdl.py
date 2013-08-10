@@ -182,7 +182,9 @@ class InvokeStatement(Statement):
     def bookmarkAttribute(self):
         return 'method'
 
-invokeRegex = re.compile(customize.invokeRegex)
+invokeMethodRegex = re.compile(customize.invokeMethodRegex)
+invokeFunctionRegex = re.compile(customize.invokeFunctionRegex)
+
 def MethodInvoke(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a method invoke and return a statement object.
@@ -198,19 +200,23 @@ def MethodInvoke(traceType, traceGenerator, traceText):
     if '::'  in traceText:
         # C++ method trace
         invokeGroup = invokeMethodRegex.search(traceText)
-        statement.attributes = invokeGroup.groupdict()
+        cfunction = False
     else:
         # c function trace
         invokeGroup = invokeFunctionRegex.search(traceText)
-        statement.attributes = invokeGroup.groupdict()
-        # FDL requires an object name and method name. In C functions
-        # the function name (designated as method) is also used as
-        # the called object name
-        statement.attributes['called'] = statement.attributes['method']
+        cfunction = True
 
     if invokeGroup != None:
         statement = InvokeStatement()
+        statement.attributes = invokeGroup.groupdict()
         statement.attributes['caller'] = traceGenerator
+
+        if cfunction:
+            # FDL requires an object name and method name. In C functions
+            # the function name (designated as method) is also used as
+            # the called object name
+            statement.attributes['called'] = statement.attributes['method']
+
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
@@ -225,7 +231,9 @@ class ReturnStatement(Statement):
     def entityList(self):
         return [('called','any')]
 
-returnRegex = re.compile(customize.returnRegex)
+methodReturnRegex = re.compile(customize.methodReturnRegex)
+functionReturnRegex = re.compile(customize.functionReturnRegex)
+
 def MethodReturn(traceType, traceGenerator, traceText):
     """
     Parse the traceText of a "method return" and return a statement object.
@@ -238,10 +246,24 @@ def MethodReturn(traceType, traceGenerator, traceText):
     :rtype: statement object containing information about the trace.
     """
     statement = None
-    returnGroup = returnRegex.search(traceText)
+    if '::'  in traceText:
+        # C++ method trace
+        returnGroup = methodReturnRegex.search(traceText)
+        cfunction = False
+    else:
+        # c function trace
+        returnGroup = functionReturnRegex.search(traceText)
+        cfunction = True
+
     if returnGroup != None:
         statement = ReturnStatement()
         statement.attributes = returnGroup.groupdict()
+        if cfunction:
+            # FDL requires an object name and method name. In C functions
+            # the function name (designated as method) is also used as
+            # the called object name
+            statement.attributes['called'] = statement.attributes['method']
+
         if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
