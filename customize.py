@@ -80,11 +80,16 @@ invokeMethodRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\
 # to be a C function
 invokeFunctionRegex = '(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
-# FDL mapping template for function/method entry
+# FDL mapping template for function/method entry. 
 invokeTemplate = '"{caller}" invokes "{called}".{method}{params}'
 
-# Regular expression for parsing the function/method exit trace body
-returnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
+# Regular expression for parsing the C++ method exit trace body.Trace body with :: is assumed
+# to be a C++ method return
+methodReturnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
+
+# Regular expression for parsing the C function exit trace body.Trace body without :: is assumed
+# to be a C method return
+functionReturnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<method>\w+)'
 
 # FDL mapping template for function/method exit
 returnTemplate = '"{called}".{method} returns {params}'
