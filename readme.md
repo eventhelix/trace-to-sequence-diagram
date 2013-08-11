@@ -136,7 +136,7 @@ of the sequence diagram. So add your important messages into the bookmark list. 
 The second issue highlighted above may be addressed by grouping objects. You can optionally specify the parents for objects in the customize.py file.
 EventStudio can use this information to generate a high level sequence diagram (Component Level Interaction Diagram).
 
-An excerpt from customize.py illustrates this:
+An example of object grouping is shown in an excerpt from a sample customize.py :
 
 		# EventStudio can generate a high level sequence diagram that can abstract
 		# out a set of classes as a high level entity. This abstraction is useful in 
