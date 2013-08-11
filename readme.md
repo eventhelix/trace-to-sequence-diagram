@@ -72,31 +72,30 @@ is great for testing your regular expressions.
 We start with defining a regular expression that extracts information from the trace format. A
 regular expression that extracts trace information from sample_trace.txt is shown below:
 
-		# The trace messages follow this high level format. The current regular expression
-		# assumes that all traces are of the format:
-		#
-		# [time][component][file]type body
-		#
-		# time:         The trace begins with time information in square brackets
-		#
-		# component:    A group of classes that work together would be treated as a component.
-		#               Module and component level information will be used to generate higher
-		#               level diagrams that provide an overview of the feature, without going
-		#               down to the class level.
-		#
-		# file:         The next square bracket contains filename, line number information.
-		#
-		# type:         Defines the type of a trace. The type here is used to determine the
-		#               mapping to an FDL statement. Refer to the traceMapper dictionary in
-		#               fdl.py. This file maps the type to the a function that will handle
-		#               the parsing of the body.
-		#
-		# body:         This is the text following the type statement. Parsing of this text
-		#               depends upon the type of the trace. This file contains the regular
-		#               expression definitions for parsing of the body for different
-		#               trace types.
+	# The trace messages follow this high level format. The current regular expression
+	# assumes that all traces are of the format:
+	#
+	# [time][generator][file]type body
+	#
+	# time:         The trace begins with time information in square brackets
+	#
+	# generator:    Entity generating the trace message. This may be a generic entity name.
+	#               For C++ methods use the calling objects class name. For C functions
+	#               the C function generating the trace would be mentioned here.
+	#
+	# file:         The next square bracket contains filename, line number information.
+	#
+	# type:         Defines the type of a trace. The type here is used to determine the
+	#               mapping to an FDL statement. Refer to the traceMapper dictionary.
+	#               traceMapper maps the type to the trace handler that will parse the
+	#               trace body and extract information for generating an FDL statement.
+	#
+	# body:         This is the text following the type statement. Parsing of this text
+	#               depends upon the type of the trace. This file contains the regular
+	#               expression definitions for parsing of the body for different
+	#               trace types.
 
-		traceRegex = '\[(?P<time>.*)\]\s*\[(?P<component>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+	traceRegex = '\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
 #### Statement Templates
 If you browse customize.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
@@ -107,12 +106,12 @@ Refer to the example below. invokeRegex regular expression extracts named fields
 with the caller are used in the FDL template.
 
 		# Regular expression for parsing the function/method entry trace body
-		invokeRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+		invokeMethodRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 		# FDL mapping template for function/method entry
 		invokeTemplate = '{caller} invokes {called}.{method}{params}'
 
-## Step 3: High Level Object Grouping and Bookmarks (customize.py)
+## Optional Step 3: High Level Object Grouping and Bookmarks (customize.py)
 
 Generated sequence diagrams can get complex in two ways:
 1. Diagrams are long and extend into several pages
@@ -134,7 +133,7 @@ of the sequence diagram. So add your important messages into the bookmark list. 
 		})
 
 ###Specify Object Groupings
-The second issue highlighted above is addressed by grouping objects. You specify the parents for objects in the customize.py file.
+The second issue highlighted above may be addressed by grouping objects. You specify the parents for objects in the customize.py file.
 EventStudio uses this information to generate a high level sequence diagram (component-level-sequence-diagram.pdf).
 
 An excerpt from customize.py illustrates this:
