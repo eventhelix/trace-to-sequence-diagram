@@ -1,43 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Trace Log to Sequence Diagram Generation : Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs." />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Trace Log to Sequence Diagram Generation by eventhelix</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Trace Log to Sequence Diagram Generation</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Trace Log to Sequence Diagram Generation</h1>
+        <p>Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs.</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/eventhelix/trace-to-sequence-diagram">View on GitHub</a>
+        <p class="view"><a href="https://github.com/eventhelix/trace-to-sequence-diagram">View the Project on GitHub <small>eventhelix/trace-to-sequence-diagram</small></a></p>
 
-          <h1 id="project_title">Trace Log to Sequence Diagram Generation</h1>
-          <h2 id="project_tagline">Python scripts for converting trace log messages to sequence diagrams. Visually debug trace logs.</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/eventhelix/trace-to-sequence-diagram/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Trace Log to Sequence Diagram Conversion</h1>
+        <ul>
+          <li><a href="https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/eventhelix/trace-to-sequence-diagram/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/eventhelix/trace-to-sequence-diagram">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="trace-log-to-sequence-diagram-conversion" class="anchor" href="#trace-log-to-sequence-diagram-conversion"><span class="octicon octicon-link"></span></a>Trace Log to Sequence Diagram Conversion</h1>
 
 <p>Browsing through the code traces is an exercise in frustration. Applications produce huge logs that take
 hours to analyze. The Python scripts presented here let you visualize the traces as sequence diagrams. Interactions
 between objects are presented visually.</p>
 
-<h2>Step 1: Sample Trace to Sequence Diagram Conversion</h2>
+<h2>
+<a name="step-1-sample-trace-to-sequence-diagram-conversion" class="anchor" href="#step-1-sample-trace-to-sequence-diagram-conversion"><span class="octicon octicon-link"></span></a>Step 1: Sample Trace to Sequence Diagram Conversion</h2>
 
 <p>Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:</p>
 
@@ -93,7 +92,8 @@ the EventStudio path is correctly specifiedl</p>
 <strong>xml-export.xml</strong> - XML representation of the object interactions. Use this XML output to develop your custom tools.</li>
 </ul>
 </li>
-</ol><h2>Step 2: Customize Regular Expressions to Map Traces to FDL (customize.py)</h2>
+</ol><h2>
+<a name="step-2-customize-regular-expressions-to-map-traces-to-fdl-customizepy" class="anchor" href="#step-2-customize-regular-expressions-to-map-traces-to-fdl-customizepy"><span class="octicon octicon-link"></span></a>Step 2: Customize Regular Expressions to Map Traces to FDL (customize.py)</h2>
 
 <p>By now you would have seen a sequence diagram generated from the sample trace output. If you can modify your traces to 
 match the trace output in sample_trace.txt you can skip this step.</p>
@@ -114,51 +114,55 @@ match the trace output in sample_trace.txt you can skip this step.</p>
 </ul><p>We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
 of regular expressions. So let's visit these topics before we go any further.</p>
 
-<h3>Learning FDL - The Sequence Diagram Markup Language</h3>
+<h3>
+<a name="learning-fdl---the-sequence-diagram-markup-language" class="anchor" href="#learning-fdl---the-sequence-diagram-markup-language"><span class="octicon octicon-link"></span></a>Learning FDL - The Sequence Diagram Markup Language</h3>
 
 <p>FDL (Feature Description Language) will be used to generate sequence diagrams. For a quick overview of FDL, refer to the
 <a href="http://www.eventhelix.com/EventStudio/sequence-diagram-tutorial.pdf">FDL sequence diagram tutorial</a>.</p>
 
-<h3>Python Regular Expressions</h3>
+<h3>
+<a name="python-regular-expressions" class="anchor" href="#python-regular-expressions"><span class="octicon octicon-link"></span></a>Python Regular Expressions</h3>
 
 <p>The Python website has a good <a href="http://docs.python.org/library/re.html">introduction to regular expressions</a>. <a href="http://www.pythonregex.com/">PythonRegEx.com</a>
 is great for testing your regular expressions.</p>
 
-<h3>Templates and Regular Expressions</h3>
+<h3>
+<a name="templates-and-regular-expressions" class="anchor" href="#templates-and-regular-expressions"><span class="octicon octicon-link"></span></a>Templates and Regular Expressions</h3>
 
-<h4>Trace Template</h4>
+<h4>
+<a name="trace-template" class="anchor" href="#trace-template"><span class="octicon octicon-link"></span></a>Trace Template</h4>
 
 <p>We start with defining a regular expression that extracts information from the trace format. A
 regular expression that extracts trace information from sample_trace.txt is shown below:</p>
 
-<pre><code>    # The trace messages follow this high level format. The current regular expression
-    # assumes that all traces are of the format:
-    #
-    # [time][component][file]type body
-    #
-    # time:         The trace begins with time information in square brackets
-    #
-    # component:    A group of classes that work together would be treated as a component.
-    #               Module and component level information will be used to generate higher
-    #               level diagrams that provide an overview of the feature, without going
-    #               down to the class level.
-    #
-    # file:         The next square bracket contains filename, line number information.
-    #
-    # type:         Defines the type of a trace. The type here is used to determine the
-    #               mapping to an FDL statement. Refer to the traceMapper dictionary in
-    #               fdl.py. This file maps the type to the a function that will handle
-    #               the parsing of the body.
-    #
-    # body:         This is the text following the type statement. Parsing of this text
-    #               depends upon the type of the trace. This file contains the regular
-    #               expression definitions for parsing of the body for different
-    #               trace types.
+<pre><code># The trace messages follow this high level format. The current regular expression
+# assumes that all traces are of the format:
+#
+# [time][generator][file]type body
+#
+# time:         The trace begins with time information in square brackets
+#
+# generator:    Entity generating the trace message. This may be a generic entity name.
+#               For C++ methods use the calling objects class name. For C functions
+#               the C function generating the trace would be mentioned here.
+#
+# file:         The next square bracket contains filename, line number information.
+#
+# type:         Defines the type of a trace. The type here is used to determine the
+#               mapping to an FDL statement. Refer to the traceMapper dictionary.
+#               traceMapper maps the type to the trace handler that will parse the
+#               trace body and extract information for generating an FDL statement.
+#
+# body:         This is the text following the type statement. Parsing of this text
+#               depends upon the type of the trace. This file contains the regular
+#               expression definitions for parsing of the body for different
+#               trace types.
 
-    traceRegex = '\[(?P&lt;time&gt;.*)\]\s*\[(?P&lt;component&gt;.*)\]\[(?P&lt;file&gt;.*)\]\s*(?P&lt;type&gt;\S+)\s+(?P&lt;body&gt;.*)'
+traceRegex = '\[(?P&lt;time&gt;.*)\]\s*\[(?P&lt;generator&gt;.*)\]\[(?P&lt;file&gt;.*)\]\s*(?P&lt;type&gt;\S+)\s+(?P&lt;body&gt;.*)'
 </code></pre>
 
-<h4>Statement Templates</h4>
+<h4>
+<a name="statement-templates" class="anchor" href="#statement-templates"><span class="octicon octicon-link"></span></a>Statement Templates</h4>
 
 <p>If you browse customize.py, you will see that the trace extraction regular expressions and the FDL statement generation templates
 are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
@@ -168,19 +172,21 @@ defining the regular expressions.</p>
 with the caller are used in the FDL template.</p>
 
 <pre><code>    # Regular expression for parsing the function/method entry trace body
-    invokeRegex = '(?P&lt;called&gt;\w+)(\.|::)(?P&lt;method&gt;\w+)\s*(\((?P&lt;params&gt;\w+)\))?'
+    invokeMethodRegex = '(?P&lt;called&gt;\w+)(\.|::)(?P&lt;method&gt;\w+)\s*(\((?P&lt;params&gt;\w+)\))?'
 
     # FDL mapping template for function/method entry
     invokeTemplate = '{caller} invokes {called}.{method}{params}'
 </code></pre>
 
-<h2>Step 3: High Level Object Grouping and Bookmarks (customize.py)</h2>
+<h2>
+<a name="optional-step-3-high-level-object-grouping-and-bookmarks-customizepy" class="anchor" href="#optional-step-3-high-level-object-grouping-and-bookmarks-customizepy"><span class="octicon octicon-link"></span></a>Optional Step 3: High Level Object Grouping and Bookmarks (customize.py)</h2>
 
 <p>Generated sequence diagrams can get complex in two ways:
 1. Diagrams are long and extend into several pages
 2. Too many interactive objects are present on a sequence diagram</p>
 
-<h3>Bookmarks</h3>
+<h3>
+<a name="bookmarks" class="anchor" href="#bookmarks"><span class="octicon octicon-link"></span></a>Bookmarks</h3>
 
 <p>The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to navigate quickly to different parts 
 of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:</p>
@@ -197,12 +203,13 @@ of the sequence diagram. So add your important messages into the bookmark list. 
     })
 </code></pre>
 
-<h3>Specify Object Groupings</h3>
+<h3>
+<a name="specify-object-groupings" class="anchor" href="#specify-object-groupings"><span class="octicon octicon-link"></span></a>Specify Object Groupings</h3>
 
-<p>The second issue highlighted above is addressed by grouping objects. You specify the parents for objects in the customize.py file.
-EventStudio uses this information to generate a high level sequence diagram (component-level-sequence-diagram.pdf).</p>
+<p>The second issue highlighted above may be addressed by grouping objects. You can optionally specify the parents for objects in the customize.py file.
+EventStudio can use this information to generate a high level sequence diagram (Component Level Interaction Diagram).</p>
 
-<p>An excerpt from customize.py illustrates this:</p>
+<p>An example of object grouping is shown in an excerpt from a sample customize.py :</p>
 
 <pre><code>    # EventStudio can generate a high level sequence diagram that can abstract
     # out a set of classes as a high level entity. This abstraction is useful in 
@@ -225,17 +232,12 @@ EventStudio uses this information to generate a high level sequence diagram (com
     ])
 </code></pre>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Trace Log to Sequence Diagram Generation maintained by <a href="https://github.com/eventhelix">eventhelix</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/eventhelix">eventhelix</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
+    <script src="javascripts/scale.fix.js"></script>
     
-
   </body>
 </html>
