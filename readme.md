@@ -133,8 +133,8 @@ of the sequence diagram. So add your important messages into the bookmark list. 
 		})
 
 ###Specify Object Groupings
-The second issue highlighted above may be addressed by grouping objects. You specify the parents for objects in the customize.py file.
-EventStudio uses this information to generate a high level sequence diagram (component-level-sequence-diagram.pdf).
+The second issue highlighted above may be addressed by grouping objects. You can optionally specify the parents for objects in the customize.py file.
+EventStudio can use this information to generate a high level sequence diagram (Component Level Interaction Diagram).
 
 An excerpt from customize.py illustrates this:
 
