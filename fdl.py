@@ -7,9 +7,11 @@
 """
 
 import re
+from collections import OrderedDict
+
 import config
 import customize
-from collections import OrderedDict
+
 
 def trimSplit(s, sep):
     """
@@ -627,4 +629,3 @@ traceHandlerMapper = {
    'FreedResource'      :   FreedResource,
    'Action'             :   Action
 }
-

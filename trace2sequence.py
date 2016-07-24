@@ -15,13 +15,15 @@
 """
 
 import argparse
+import os
+import re
 import sys
 from collections import OrderedDict
-import re
+
 import config
-import fdl
-import os
 import customize
+import fdl
+
 
 # utilities
 
