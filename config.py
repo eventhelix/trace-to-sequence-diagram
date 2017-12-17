@@ -14,7 +14,7 @@ eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Desi
 eventStudioCommandLine = r'{eventStudio} TraceProject.scn /GenerateAll'
 
 # The identation to be used in generating the FDL file.
-indent = ' '*4
+indent = ' ' * 4
 
 #style template to use for generated sequence diagram. Set it to None if
 #you do not wish to use any styles
