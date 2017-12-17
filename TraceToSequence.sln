@@ -1,12 +1,14 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Trace2Sequence", "Trace2Sequence.pyproj", "{2470486A-757C-4861-B0F9-DD2F83291DD1}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9F27D0F-45F7-4D8D-81CE-B6C9FF7D0AB8}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Trace2Sequence", "Trace2Sequence.pyproj", "{2470486A-757C-4861-B0F9-DD2F83291DD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
