@@ -30,6 +30,7 @@
     <Compile Include="customize.py" />
     <Compile Include="config.py" />
     <Compile Include="fdl.py" />
+    <Compile Include="funutils.py" />
     <Compile Include="trace2sequence.py" />
   </ItemGroup>
   <ItemGroup>
