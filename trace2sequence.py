@@ -324,7 +324,7 @@ a = TypeVar('a')
 class Maybe(NamedTuple('Maybe', [('hasValue', bool) , ('value', a)]), Generic[a]):
     def __repr__(self) -> str : 
         if self.hasValue:
-            return f'just({self.value})'
+            return f'just({repr(self.value)})'
         else: 
             return 'nothing()'
     def map(self, f) :
@@ -385,5 +385,5 @@ def findEventStudioVSCodePath() -> Maybe[str]:
     #}
 
 	vsCodeExtensions = os.path.expandvars(r'%USERPROFILE%\.vscode\extensions')
-	return first(os.listdir(vscodeExtensions), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-'))
+	return first(os.listdir(vsCodeExtensions), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-'))
 	        
