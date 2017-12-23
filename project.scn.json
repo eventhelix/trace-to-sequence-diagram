@@ -1,0 +1,29 @@
+{
+	"documents" : 
+	[
+		{
+			"documentFormat" : "pdf",
+			"documentName" : "sequence-diagram",
+			"documentType" : "sequence-diagram",
+			"remarkWidth" : "small"
+		},
+		{
+			"documentFormat" : "pdf",
+			"documentName" : "context-diagram",
+			"documentType" : "context-diagram",
+			"internalMargin" : "small"
+		},
+		{
+			"documentFormat" : "xml",
+			"documentName" : "xml-export",
+			"documentType" : "export-document"
+		}
+	],
+	"scenarios" : 
+	[
+		{
+			"modelPath" : ".\\trace.FDL",
+			"scenarioName" : "Trace Output"
+		}
+	]
+}
