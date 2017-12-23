@@ -220,9 +220,9 @@ class Document:
 
         # Generate the start of a feature block
         if config.themeTemplate == None:
-            header += '\nfeature "generated flow"\n'
+            header += '\nfeature "generated flow" {\n'
         else:
-            header += '\n{MyTheme} feature "generated flow"\n'
+            header += '\n{MyTheme} feature "generated flow" {\n'
         # The following code does an anonymous object create if an object delete
         # has been encountered in the trace but the object was already created
         # when tracing started. Such cases are flagged by a 'dynamic-deleted'
@@ -268,7 +268,7 @@ class Document:
         """
         Private method. Generate the FDL footer.
         """
-        self.ofile.write('endfeature\n')
+        self.ofile.write('}\n')
 
 def parseCommandLine():
     """
