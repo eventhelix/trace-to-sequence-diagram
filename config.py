@@ -9,9 +9,13 @@
 
 import os
 
-# Path for identifying where the EventStudio execuable is installed.
+# Path for identifying where the EventStudio execuable is installed. Set to None
+# if your wish to use the Visual Studio Code extension of EventStudio.
 eventStudioPath = None
 
+# Specifies the path where Visual Studio code extensions are installed in Windows
+# (You do not need to change this unless your Visual Studio Code extensions are installed
+# at a different path.)
 vsCodeExtensions = r'%USERPROFILE%\.vscode\extensions'
 
 # The EventStudio command line to be used to generate the sequence diagrams.

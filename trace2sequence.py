@@ -9,8 +9,8 @@
                 expressions defined in customize.py. The parsed traces are stored as
                 FDL statements.
                 (3) FDL file is generated (trace.fdl).
-                (4) EventStudio is invoked on the TraceProject.scn scenario project.
-                    (TraceProject.scn references the newly generated trace.fdl).
+                (4) EventStudio is invoked on the project.scn.json scenario project.
+                    (project.scn.json references the newly generated trace.fdl).
 .. moduleauthor:: EventHelix.com Inc.
 """
 
