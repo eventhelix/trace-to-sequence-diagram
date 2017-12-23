@@ -14,6 +14,16 @@ class Maybe(NamedTuple('Maybe', [('hasValue', bool) , ('value', a)]), Generic[a]
         if self.hasValue:
             return just(f(self.value))
         else: return nothing()
+    def do(self, f):
+        if self.hasValue :
+            f(self.value)
+            return self
+        else : return self
+
+    def then(self, f) :
+        if self.hasValue :
+            return f(self.value)
+        else : nothing()
 
 def nothing() -> Maybe[a] : return Maybe(False, None)
 def just(x : a) -> Maybe[a] : return Maybe(True, x)

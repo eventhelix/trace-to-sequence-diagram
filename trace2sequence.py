@@ -24,6 +24,8 @@ import config
 import customize
 import fdl
 
+from funutils import Maybe, first
+
 
 # utilities
 
@@ -290,8 +292,16 @@ def generateOutputWithEventStudio():
     """
     Run EventStudio to automatically generate the sequence diagram.
     """
-    commandLine = str.format(config.eventStudioCommandLine, eventStudio = config.eventStudioPath)
-    os.system(commandLine)
+
+    eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(os.path.expandvars(config.vsCodeExtensions))
+    eventStudio = eventStudioDirectory.map(lambda p : os.path.join(p, 'evstudio.exe'))
+    commandLine = eventStudio.map(lambda p : str.format(config.eventStudioCommandLine, eventStudio = '"' + p + '"'))
+    if commandLine.hasValue:
+        print(commandLine.value)
+        os.system(commandLine.value)
+    else:
+        print('Could not find evenstudio')
+        exit()
 
 def main():
     """
@@ -312,34 +322,12 @@ def main():
     # Generate the sequence diagram by invoking EventStudio from command-line
     generateOutputWithEventStudio()
 
+
+
+
+
+def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
+    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
+
 if __name__ == '__main__':
     main()
-
-from funutils import Maybe
-
-
-
-def findEventStudioVSCodePath() -> Maybe[str]:
-	#var vscodeExtensionPath = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\.vscode\extensions");
-    #var finalPath = "";
-    #try
-    #{
-    #    var extensionList = Directory.GetDirectories(vscodeExtensionPath, @"EventHelix.eventstudio-*");
-    #    if (extensionList.Length > 0)
-    #    {
-    #        var expandedExtensionPath = extensionList[0];
-    #        var splitExpandedExtensionPath = expandedExtensionPath.Split(new string[] { "EventHelix.eventstudio-" }, StringSplitOptions.None);
-    #        if (splitExpandedExtensionPath.Length == 2)
-    #        {
-    #            finalPath = @"%USERPROFILE%\.vscode\extensions\EventHelix.eventstudio-" + splitExpandedExtensionPath[1] + @"\evstudio.exe";
-    #        }
-    #    }
-    #}
-    #catch (Exception)
-    #{
-               
-    #}
-
-	vsCodeExtensions = os.path.expandvars(r'%USERPROFILE%\.vscode\extensions')
-	return first(os.listdir(vsCodeExtensions), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-'))
-	        

@@ -7,8 +7,12 @@
 
 """
 
+import os
+
 # Path for identifying where the EventStudio execuable is installed.
-eventStudioPath = r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
+eventStudioPath = None
+
+vsCodeExtensions = r'%USERPROFILE%\.vscode\extensions'
 
 # The EventStudio command line to be used to generate the sequence diagrams.
 eventStudioCommandLine = r'{eventStudio} build project.scn.json'
