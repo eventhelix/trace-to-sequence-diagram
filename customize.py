@@ -142,8 +142,8 @@ paramTemplate = '"{attribute}" = "{value}"'
 
 # Specifies how the per statement remark has to be generated. By default the
 # FDL remark contains the time and the file information (refer to traceRegex
-# defined above.
-remarkTemplate = r'% {time} {file}'
+# defined above).
+remarkTemplate = r'|*{time} {file}*|'
 
 # === OPTIONAL CUSTOMIZATION ===
 
