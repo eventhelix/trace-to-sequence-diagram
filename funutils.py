@@ -4,9 +4,7 @@ from typing import TypeVar, Generic, NamedTuple, Iterable
 a = TypeVar('a')
 
 
-class Maybe(NamedTuple, Generic[a]): # ('Maybe', [('hasValue', bool) , ('value', a)])
-    hasValue : bool
-    value : a
+class Maybe(NamedTuple('Maybe', [('hasValue', bool) , ('value', a)]), Generic[a]): 
     def __repr__(self) -> str : 
         if self.hasValue:
             return f'just({repr(self.value)})'

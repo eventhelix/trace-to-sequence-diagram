@@ -315,7 +315,7 @@ def main():
 if __name__ == '__main__':
     main()
 
-import funutils
+from funutils import Maybe
 
 
 

@@ -34,6 +34,7 @@
     <Compile Include="trace2sequence.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="project.scn.json" />
     <Content Include="readme.md" />
     <Content Include="sample_trace.txt" />
   </ItemGroup>
