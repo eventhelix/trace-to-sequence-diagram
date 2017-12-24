@@ -24,10 +24,7 @@ eventStudioCommandLine = r'{eventStudio} build project.scn.json'
 # The identation to be used in generating the FDL file.
 indent = ' ' * 4
 
-#style template to use for generated sequence diagram. Set it to None if
-#you do not wish to use any styles
-styleTemplate = r'#include "style-green-khakhi-modern.fdl"'
-
-#theme template to use for generated sequence diagram. Set it to None if
-#you do not wish to use any styles
-themeTemplate = r'#include "theme-embedded.fdl"'
+#theme template to use for generated sequence diagram. Set it to None to use
+# the default theme. The available themes are:
+# aqua, business, chocolate, pastel, rainbow, sunrise
+themeTemplate = 'pastel'

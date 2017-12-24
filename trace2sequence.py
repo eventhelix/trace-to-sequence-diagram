@@ -177,11 +177,11 @@ class Document:
 
     def generateStyleAndTheme(self):
         retStr = ''
-        if config.styleTemplate != None:
-            retStr += config.styleTemplate + '\n\n'
 
         if config.themeTemplate != None:
-            retStr += config.themeTemplate + '\n\n'
+            retStr += '#include <{0}.FDL>\n'.format(config.themeTemplate)
+
+        retStr += '#include <stdinc.FDL>\n\n'
 
         return retStr
 
@@ -297,10 +297,9 @@ def generateOutputWithEventStudio():
     eventStudio = eventStudioDirectory.map(lambda p : os.path.join(p, 'evstudio.exe'))
     commandLine = eventStudio.map(lambda p : str.format(config.eventStudioCommandLine, eventStudio = '"' + p + '"'))
     if commandLine.hasValue:
-        print(commandLine.value)
         os.system(commandLine.value)
     else:
-        print('Could not find evenstudio')
+        print('Could not find EventStudio')
         exit()
 
 def main():
