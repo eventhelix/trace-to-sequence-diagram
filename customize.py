@@ -111,7 +111,7 @@ deleteTemplate = '"{deletor}" deletes "{deleted}"'
 # Any trace that does not map to a defined type is treated as an action trace.
 # FDL mapping for action traces is defined here. The trace type is also
 # included in the statement.
-actionTemplate = '"{actor}" takes action "{actionType} {action}"'
+actionTemplate = '"{actor}" action "{actionType} {action}"'
 
 # FDL mapping template for state change trace body
 stateChangeTemplate = '"{object}" state = "{state}"'
