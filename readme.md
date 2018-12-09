@@ -12,23 +12,14 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 1. Download and install the latest version of Python [Python 3.X](https://www.python.org/downloads/)
 1. Download and extract the latest release of the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram/releases)
    
-1. Before we proceed, please confirm the EventStudio path setting in the config.py file:
-	* On machines running 64 bit Windows, the eventStudioPath Python variable should be set as:
 
-		eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
-	* On 32 bits Windows platforms, eventStudioPath should be set as:
-
-		eventStudioPath=r'"C:\Program Files\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
-
-		**Note:** If you get "'C:\Program' is not recognized as an internal or external command, operable program or batch file" error, check if
-		the EventStudio path is correctly specifiedl
 		
-1. Type cmd in the Run menu to invoke the Windows command prompt.
+1. Open a command line prompt in the directory where the Python scripts were unzipped.
 1. Navigate to the directory where to the Python scripts for this project were downloaded.
 1. On the command line now type:
-
-	**trace2sequence.py -i sample_trace.txt**  
-
+	```
+	trace2sequence.py -i sample_trace.txt  
+	```
 1. Click on the following generated diagrams:
 	* **sequence-diagram.pdf** - A sequence diagram showing object level interactions
 	* **component-level-sequence-diagram.pdf** - A high level sequence diagram that shows high level interactions
