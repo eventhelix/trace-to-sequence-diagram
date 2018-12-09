@@ -10,9 +10,8 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 
 1. Download and install a free 45 day trial of [EventStudio System Designer](https://www.eventhelix.com/EventStudio/download.htm).
 1. Download and install the latest version of Python [Python 3.X](https://www.python.org/downloads/)
-1. Download and extract the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram/releases)
-   * Click the [ZIP](https://github.com/eventhelix/trace-to-sequence-diagram/zipball/master) button to download files.
-   * Alternatively click the "Clone in Windows" button. This would require downloading [GitHub for Windows](http://windows.github.com/)
+1. Download and extract the latest release of the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram/releases)
+   
 1. Before we proceed, please confirm the EventStudio path setting in the config.py file:
 	* On machines running 64 bit Windows, the eventStudioPath Python variable should be set as:
 
