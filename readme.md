@@ -129,7 +129,7 @@ bookmarks = frozenset({
 	})
 ```
 
-###Specify Object Groupings
+### Specify Object Groupings
 
 The second issue highlighted above may be addressed by grouping objects. You can optionally specify the parents for objects in the `customize.py` file.
 EventStudio can use this information to generate a high level sequence diagram (Component Level Interaction Diagram).
