@@ -4,6 +4,8 @@ Browsing through the code traces is an exercise in frustration. Applications pro
 hours to analyze. The Python scripts presented here let you visualize the traces as sequence diagrams. Interactions
 between objects are presented visually.
 
+The traces to be included in the visualization are selected by specifying the regular expressions.
+
 ## Step 1: Sample Trace to Sequence Diagram Conversion
 
 Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:
@@ -12,19 +14,18 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 1. Download and install the latest version of Python [Python 3.X](https://www.python.org/downloads/)
 1. Download and extract the latest release of the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram/releases)
    
-
 		
 1. Open a command line prompt in the directory where the Python scripts were unzipped.
 1. Navigate to the directory where to the Python scripts for this project were downloaded.
-1. On the command line now type:
+1. Convert an included sample trace file into a sequence diagram by typing the following on the command prompt:
 	```
 	trace2sequence.py -i sample_trace.txt  
 	```
 1. Click on the following generated diagrams:
-	* **sequence-diagram.pdf** - A sequence diagram showing object level interactions
-	* **component-level-sequence-diagram.pdf** - A high level sequence diagram that shows high level interactions
-	* **context-diagram.pdf** - A context diagram of the object interactions.
-	* **xml-export.xml** - XML representation of the object interactions. Use this XML output to develop your custom tools.
+	* **`sequence-diagram.pdf`** - A sequence diagram showing object level interactions
+	* **`component-level-sequence-diagram.pdf`** - A high level sequence diagram that shows high level interactions
+	* **`context-diagram.pdf`** - A context diagram of the object interactions.
+	* **`xml-export.xml`** - XML representation of the object interactions. Use this XML output to develop your custom tools.
 
 
 ## Step 2: Customize Regular Expressions to Map Traces to FDL (`customize.py`)
@@ -49,12 +50,13 @@ of regular expressions. So let's visit these topics before we go any further.
 
 ### Learning FDL - The Sequence Diagram Markup Language
 
-FDL (Feature Description Language) will be used to generate sequence diagrams. For a quick overview of FDL, refer to the
-[FDL sequence diagram tutorial](http://www.eventhelix.com/EventStudio/sequence-diagram-tutorial.pdf).
+The FDL (Feature Description Language) will be used to generate sequence diagrams. For a quick overview of FDL, refer to the
+[EventStudio User Manual](https://www.eventhelix.com/EventStudio/EventStudio_System_Designer_Manual.pdf).
 
 ### Python Regular Expressions
 
-The Python website has a good [introduction to regular expressions](http://docs.python.org/library/re.html). [PythonRegEx.com](http://www.pythonregex.com/)
+- The Python website has a good [introduction to regular expressions](https://docs.python.org/3/library/re.html). 
+- [Pythex](https://pythex.org/)
 is great for testing your regular expressions.
 
 ### Templates and Regular Expressions
