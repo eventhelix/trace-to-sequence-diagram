@@ -2,5 +2,16 @@
   "files.associations": {
     "*.scn.json": "jsonc"
   },
-  "eventstudio.pdfReaderPath": "C:\\Program Files (x86)\\SumatraPDF\\SumatraPDF.exe"
+  "eventstudio.pdfReaderPath": "C:\\Program Files (x86)\\SumatraPDF\\SumatraPDF.exe",
+  "cSpell.words": [
+    "avpair",
+    "cfunction",
+    "evstudio",
+    "funutils",
+    "ofile",
+    "r'heading",
+    "r'timeout",
+    "rtype",
+    "rvalue"
+  ]
 }

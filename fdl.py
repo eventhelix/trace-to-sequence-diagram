@@ -80,7 +80,7 @@ class Statement:
         """
         Override this method to return a string that should be compared with the
         customize.py file's bookmarks. If the string returned by this method
-        is contained in the customize.py's bookmarks, a bookmark entry will be
+        is contained in the customize.py file's bookmarks, a bookmark entry will be
         generated in the PDF sequence diagram.
         """
         return ''

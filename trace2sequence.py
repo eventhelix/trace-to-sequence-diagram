@@ -319,7 +319,7 @@ def main():
 
     # Generate the FDL file
     doc = Document(traceParser, args.output_file)
-    s = doc.generateDocument()
+    doc.generateDocument()
     args.output_file.close()
 
     # Generate the sequence diagram by invoking EventStudio from command-line
