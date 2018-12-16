@@ -72,9 +72,9 @@ regular expression that extracts trace information from sample_trace.txt is show
 #
 # time:         The trace begins with time information in square brackets
 #
-# generator:    Entity generating the trace message. This may be a generic entity name.
-#               For C++ methods use the calling objects class name. For C functions
-#               the C function generating the trace would be mentioned here.
+# generator:    Entity generating the trace message. This may be a generic entity
+#               name. For C++ methods use the calling objects class name. 
+#               For a C function use the function name.
 #
 # file:         The next square bracket contains filename, line number information.
 #
@@ -131,7 +131,7 @@ bookmarks = frozenset({
 	})
 ```
 
-###Specify Object Groupings
+### Specify Object Groupings
 
 The second issue highlighted above may be addressed by grouping objects. You can optionally specify the parents for objects in the `customize.py` file.
 EventStudio can use this information to generate a high level sequence diagram (Component Level Interaction Diagram).
@@ -144,13 +144,13 @@ An example of object grouping is shown in an excerpt from a sample `customize.py
 # understanding the trace output at a higher level of abstraction.
 #
 # List the interacting entities along with their parent. For example, the 
-# tuples below indicate that DSP_01 and DSP_23 belong to the same high level PHY entity.
-# This means EventStudio will generate trace output at two levels:
+# tuples below indicate that DSP_01 and DSP_23 belong to the same high level
+#  PHY entity. This means EventStudio will generate trace output at two levels:
 # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
 # - A high level sequence diagram where PHY axis abstracts out the interactions
 #   involving DSP_01 and DSP_23
-# Just include the parent information for external actors in the system. Object parents
-# for internal actors are extracted from the trace contents.
+# Just include the parent information for external actors in the system. Object 
+# parents for internal actors are extracted from the trace contents.
 objectParents = OrderedDict([
 	# Tuples of object and its parent
 	# (entity, parent)
