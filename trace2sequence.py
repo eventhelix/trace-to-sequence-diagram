@@ -330,7 +330,7 @@ def main():
 
 
 def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
-    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
+    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
 
 if __name__ == '__main__':
     main()
