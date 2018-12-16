@@ -70,20 +70,20 @@ regular expression that extracts trace information from sample_trace.txt is show
 #
 # [time][generator][file]type body
 #
-# time:         The trace begins with time information in square brackets
+# time          The trace begins with time information in square brackets
 #
-# generator:    Entity generating the trace message. This may be a generic entity
+# generator     Entity generating the trace message. This may be a generic entity
 #               name. For C++ methods use the calling objects class name. 
 #               For a C function use the function name.
 #
-# file:         The next square bracket contains filename, line number information.
+# file          The next square bracket contains filename, line number information.
 #
-# type:         Defines the type of a trace. The type here is used to determine the
+# type          Defines the type of a trace. The type here is used to determine the
 #               mapping to an FDL statement. Refer to the traceMapper dictionary.
 #               traceMapper maps the type to the trace handler that will parse the
 #               trace body and extract information for generating an FDL statement.
 #
-# body:         This is the text following the type statement. Parsing of this text
+# body          This is the text following the type statement. Parsing of this text
 #               depends upon the type of the trace. This file contains the regular
 #               expression definitions for parsing of the body for different
 #               trace types.

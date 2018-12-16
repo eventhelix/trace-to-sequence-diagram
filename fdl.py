@@ -34,7 +34,7 @@ def trimSplit(s, sep):
 def formatParams(paramString):
     """
     Parse the format string, reformat it and store it as a valid parameter string
-    for FDL. The parameters are enclosed in paranthesis. An empty string is
+    for FDL. The parameters are enclosed in parenthesis. An empty string is
     returned if no valid parameters are found.
 
     :param paramString: Raw parameter string extracted from the traces.
@@ -63,7 +63,7 @@ class Statement:
 
     def convertToFDL(self):
         """
-        This method should be overriden to return a FDL statement that is derived
+        This method should be overridden to return a FDL statement that is derived
         from the trace body.
         """
         return ''
