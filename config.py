@@ -7,19 +7,24 @@
 
 """
 
-# Path for identifying where the EventStudio execuable is installed.
-eventStudioPath=r'"C:\Program Files (x86)\EventHelix.com\EventStudio System Designer 6\evstudio.exe"'
+import os
+
+# Path for identifying where the EventStudio executable is installed. Set to None
+# for the script to find the EventStudio path from the installed vscode extension.
+eventStudioPath = None
+
+# Specifies the path where Visual Studio code extensions are installed in Windows
+# (You do not need to change this unless your Visual Studio Code extensions are installed
+# at a different path.)
+vsCodeExtensions = r'%USERPROFILE%\.vscode\extensions'
 
 # The EventStudio command line to be used to generate the sequence diagrams.
-eventStudioCommandLine = r'{eventStudio} TraceProject.scn /GenerateAll'
+eventStudioCommandLine = r'{eventStudio} build project.scn.json'
 
-# The identation to be used in generating the FDL file.
-indent = ' '*4
+# The indentation to be used in generating the FDL file.
+indent = ' ' * 4
 
-#style template to use for generated sequence diagram. Set it to None if
-#you do not wish to use any styles
-styleTemplate = r'#include "style-green-khakhi-modern.fdl"'
-
-#theme template to use for generated sequence diagram. Set it to None if
-#you do not wish to use any styles
-themeTemplate = r'#include "theme-embedded.fdl"'
+#theme template to use for generated sequence diagram. Set it to None to use
+# the default theme. The available themes are:
+# aqua, business, chocolate, pastel, rainbow, sunrise
+themeTemplate = 'pastel'

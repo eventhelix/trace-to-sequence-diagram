@@ -1,3 +1,7 @@
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 .. automodule:: fdl
    :members:
@@ -30,7 +34,7 @@ def trimSplit(s, sep):
 def formatParams(paramString):
     """
     Parse the format string, reformat it and store it as a valid parameter string
-    for FDL. The parameters are enclosed in paranthesis. An empty string is
+    for FDL. The parameters are enclosed in parenthesis. An empty string is
     returned if no valid parameters are found.
 
     :param paramString: Raw parameter string extracted from the traces.
@@ -59,7 +63,7 @@ class Statement:
 
     def convertToFDL(self):
         """
-        This method should be overriden to return a FDL statement that is derived
+        This method should be overridden to return a FDL statement that is derived
         from the trace body.
         """
         return ''
@@ -76,7 +80,7 @@ class Statement:
         """
         Override this method to return a string that should be compared with the
         customize.py file's bookmarks. If the string returned by this method
-        is contained in the customize.py's bookmarks, a bookmark entry will be
+        is contained in the customize.py file's bookmarks, a bookmark entry will be
         generated in the PDF sequence diagram.
         """
         return ''

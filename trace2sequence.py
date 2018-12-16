@@ -1,3 +1,7 @@
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 .. automodule:: trace2sequence
    :members:
@@ -9,8 +13,8 @@
                 expressions defined in customize.py. The parsed traces are stored as
                 FDL statements.
                 (3) FDL file is generated (trace.fdl).
-                (4) EventStudio is invoked on the TraceProject.scn scenario project.
-                    (TraceProject.scn references the newly generated trace.fdl).
+                (4) EventStudio is invoked on the project.scn.json scenario project.
+                    (project.scn.json references the newly generated trace.fdl).
 .. moduleauthor:: EventHelix.com Inc.
 """
 
@@ -23,6 +27,8 @@ from collections import OrderedDict
 import config
 import customize
 import fdl
+
+from funutils import Maybe, first, just
 
 
 # utilities
@@ -175,11 +181,11 @@ class Document:
 
     def generateStyleAndTheme(self):
         retStr = ''
-        if config.styleTemplate != None:
-            retStr += config.styleTemplate + '\n\n'
 
         if config.themeTemplate != None:
-            retStr += config.themeTemplate + '\n\n'
+            retStr += '#include <{0}.FDL>\n'.format(config.themeTemplate)
+
+        retStr += '#include <stdinc.FDL>\n\n'
 
         return retStr
 
@@ -218,9 +224,9 @@ class Document:
 
         # Generate the start of a feature block
         if config.themeTemplate == None:
-            header += '\nfeature "generated flow"\n'
+            header += '\nfeature "generated flow" {\n'
         else:
-            header += '\n{MyTheme} feature "generated flow"\n'
+            header += '\n{MyTheme} feature "generated flow" {\n'
         # The following code does an anonymous object create if an object delete
         # has been encountered in the trace but the object was already created
         # when tracing started. Such cases are flagged by a 'dynamic-deleted'
@@ -266,7 +272,7 @@ class Document:
         """
         Private method. Generate the FDL footer.
         """
-        self.ofile.write('endfeature\n')
+        self.ofile.write('}\n')
 
 def parseCommandLine():
     """
@@ -290,8 +296,15 @@ def generateOutputWithEventStudio():
     """
     Run EventStudio to automatically generate the sequence diagram.
     """
-    commandLine = str.format(config.eventStudioCommandLine, eventStudio = config.eventStudioPath)
-    os.system(commandLine)
+
+    eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(os.path.expandvars(config.vsCodeExtensions))
+    eventStudio = eventStudioDirectory.map(lambda p : os.path.join(p, 'evstudio.exe'))
+    commandLine = eventStudio.map(lambda p : str.format(config.eventStudioCommandLine, eventStudio = '"' + p + '"'))
+    if commandLine.hasValue:
+        os.system(commandLine.value)
+    else:
+        print('Could not find EventStudio')
+        exit()
 
 def main():
     """
@@ -306,11 +319,18 @@ def main():
 
     # Generate the FDL file
     doc = Document(traceParser, args.output_file)
-    s = doc.generateDocument()
+    doc.generateDocument()
     args.output_file.close()
 
     # Generate the sequence diagram by invoking EventStudio from command-line
     generateOutputWithEventStudio()
+
+
+
+
+
+def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
+    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
 
 if __name__ == '__main__':
     main()
