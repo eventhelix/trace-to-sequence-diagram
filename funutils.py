@@ -80,7 +80,7 @@ def first(xs : Iterable[a], condition = lambda x: True) -> Maybe[a]:
     If the condition is not given, returns the first item of
     the iterable.
 
-    Raises `StopIteration` if no item satysfing the condition is found.
+    Raises `StopIteration` if no item satisfying the condition is found.
 
     >>> first( (1,2,3), condition=lambda x: x % 2 == 0)
     2
