@@ -28,7 +28,7 @@ import config
 import customize
 import fdl
 
-from funutils import Maybe, first
+from funutils import Maybe, first, just
 
 
 # utilities
