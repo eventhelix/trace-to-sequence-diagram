@@ -46,7 +46,7 @@ The `config.py` file lets you configure the trace to sequence diagram (FDL) mapp
 * Resource allocation and freeing
 
 We will be mapping traces to FDL statements to generate the sequence diagrams. The mapping will also require a basic understanding
-of regular expressions. So let's visit these topics before we go any further.
+of regular expressions. Let's visit these topics before we go any further.
 
 ### Learning FDL - The Sequence Diagram Markup Language
 
@@ -88,20 +88,19 @@ regular expression that extracts trace information from sample_trace.txt is show
 #               expression definitions for parsing of the body for different
 #               trace types.
 
-traceRegex = '\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+traceRegex = r'\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 ```
 
 #### Statement Templates
 If you browse `customize.py`, you will see that the trace extraction regular expressions and the FDL statement generation templates
-are defined to next to each other. You would rarely need to change the FDL generation templates but they give you a context for
-defining the regular expressions.
+are defined to next to each other. You would rarely need to change the FDL generation templates. 
 
 Refer to the example below. invokeRegex regular expression extracts named fields, called, method and params. These fields along
 with the caller are used in the FDL template.
 
 ```python
 # Regular expression for parsing the function/method entry trace body
-invokeMethodRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+invokeMethodRegex = r'(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry
 invokeTemplate = '{caller} invokes {called}.{method}{params}'
@@ -116,7 +115,7 @@ Generated sequence diagrams can get complex in two ways:
 ### Bookmarks
 
 The first problem can be addressed by using bookmarks. Once you define bookmarks you will be able to navigate quickly to different parts 
-of the sequence diagram. So add your important messages into the bookmark list. An example is shown below:
+of the sequence diagram. We recommend adding your important messages into the bookmark list. An example is shown below:
 
 ```python
 # Add messages that need to be bookmarked in the PDF file. This is useful
