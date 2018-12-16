@@ -2,5 +2,6 @@
     "files.associations": {
         "*.scn.json": "jsonc"
     },
-    "eventstudio.pdfReaderPath": "C:\\Program Files (x86)\\SumatraPDF\\SumatraPDF.exe"
+    "eventstudio.pdfReaderPath": "C:\\Program Files (x86)\\SumatraPDF\\SumatraPDF.exe",
+    "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python36_64\\python.exe"
 }
