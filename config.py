@@ -10,13 +10,13 @@
 import os
 
 # Path for identifying where the EventStudio executable is installed. Set to None
-# if your wish to use the Visual Studio Code extension of EventStudio.
+# for the script to find the EventStudio path from the installed vscode extension.
 eventStudioPath = None
 
 # Specifies the path where Visual Studio code extensions are installed in Windows
 # (You do not need to change this unless your Visual Studio Code extensions are installed
 # at a different path.)
-vsCodeExtensions = '%USERPROFILE%/.vscode/extensions'
+vsCodeExtensions = r'%USERPROFILE%\.vscode\extensions'
 
 # The EventStudio command line to be used to generate the sequence diagrams.
 eventStudioCommandLine = r'{eventStudio} build project.scn.json'
