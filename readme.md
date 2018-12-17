@@ -105,7 +105,7 @@ invokeMethodRegex = r'(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)
 invokeTemplate = '{caller} invokes {called}.{method}{params}'
 ```
 
-## Optional Step 3: High Level Object Grouping and Bookmarks (`customize.py`)
+## Optional Step 3: High Level Object Grouping and Bookmarks
 
 Generated sequence diagrams can get complex in two ways:
 1. Diagrams are long and extend into several pages
@@ -144,9 +144,11 @@ An example of object grouping is shown in an excerpt from a sample `customize.py
 # List the interacting entities along with their parent. For example, the 
 # tuples below indicate that DSP_01 and DSP_23 belong to the same high level
 #  PHY entity. This means EventStudio will generate trace output at two levels:
+#
 # - A sequence diagram where DSP_01 and DSP_23 show up as separate axis.
 # - A high level sequence diagram where PHY axis abstracts out the interactions
 #   involving DSP_01 and DSP_23
+#
 # Just include the parent information for external actors in the system. Object 
 # parents for internal actors are extracted from the trace contents.
 objectParents = OrderedDict([
