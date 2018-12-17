@@ -23,12 +23,11 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 	```
 1. Click on the following generated diagrams:
 	* **`sequence-diagram.pdf`** - A sequence diagram showing object level interactions
-	* **`component-level-sequence-diagram.pdf`** - A high level sequence diagram that shows high level interactions
 	* **`context-diagram.pdf`** - A context diagram of the object interactions.
 	* **`xml-export.xml`** - XML representation of the object interactions. Use this XML output to develop your custom tools.
 
 
-## Step 2: Customize Regular Expressions to Map Traces to FDL (`customize.py`)
+## Step 2: Customize Regular Expressions to Map Traces to FDL
 
 By now you would have seen a sequence diagram generated from the sample trace output. If you can modify your traces to 
 match the trace output in sample_trace.txt you can skip this step.
@@ -157,3 +156,4 @@ objectParents = OrderedDict([
 	('DSP_23','PHY'),
 	('CoreNetwork', 'EPC'),
 ])
+```
