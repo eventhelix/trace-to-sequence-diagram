@@ -16,23 +16,23 @@ from collections import OrderedDict
 #
 # time:         The trace begins with time information in square brackets
 #
-# generator:    Entity generating the trace message. This may be a generic entity name.
+# generator     Entity generating the trace message. This may be a generic entity name.
 #               For C++ methods use the calling objects class name. For C functions
 #               the C function generating the trace would be mentioned here.
 #
-# file:         The next square bracket contains filename, line number information.
+# file          The next square bracket contains filename, line number information.
 #
-# type:         Defines the type of a trace. The type here is used to determine the
+# type          Defines the type of a trace. The type here is used to determine the
 #               mapping to an FDL statement. Refer to the traceMapper dictionary.
 #               traceMapper maps the type to the trace handler that will parse the
 #               trace body and extract information for generating an FDL statement.
 #
-# body:         This is the text following the type statement. Parsing of this text
+# body          This is the text following the type statement. Parsing of this text
 #               depends upon the type of the trace. This file contains the regular
 #               expression definitions for parsing of the body for different
 #               trace types.
 
-traceRegex = '\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
+traceRegex = r'\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<type>\S+)\s+(?P<body>.*)'
 
 # Map the type of the trace to the trace handler that will parse the trace body and
 # extract the information needed for generating an FDL statement.
@@ -66,79 +66,79 @@ defaultMapping = 'Action'
 # regular expressions.
 
 # Regular expression for parsing the trace body when a message is being received
-messageRxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*from\s*(?P<source>\w+)'
+messageRxRegex = r'(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*from\s*(?P<source>\w+)'
 
 # Regular expression for parsing the trace body when a message is being sent
-messageTxRegex = '(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*to\s*(?P<destination>\w+)'
+messageTxRegex = r'(?P<message>\w+)\s*(\((?P<params>.*)\))?\s*to\s*(?P<destination>\w+)'
 
 # FDL mapping template for messages (received and sent messages)
-messageTemplate = '"{message}" {params} :"{source}" -> "{destination}"'
+messageTemplate = r'"{message}" {params} :"{source}" -> "{destination}"'
 
 # Regular expression for parsing C++ method trace body. Trace body with :: is assumed
 # to be a C++ method.
-invokeMethodRegex = '(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+invokeMethodRegex = r'(?P<called>\w+)(\.|::)(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # Regular expression for parsing C function trace body. Trace body without :: is assumed
 # to be a C function
-invokeFunctionRegex = '(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
+invokeFunctionRegex = r'(?P<method>\w+)\s*(\((?P<params>\w+)\))?'
 
 # FDL mapping template for function/method entry. 
-invokeTemplate = '"{caller}" invokes "{called}".{method}{params}'
+invokeTemplate = r'"{caller}" invokes "{called}".{method}{params}'
 
 # Regular expression for parsing the C++ method exit trace body.Trace body with :: is assumed
 # to be a C++ method return
-methodReturnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
+methodReturnRegex = r'(\((?P<params>.*)\))?\s*from\s*(?P<called>\w+)(\.|::)(?P<method>\w+)'
 
 # Regular expression for parsing the C function exit trace body.Trace body without :: is assumed
 # to be a C method return
-functionReturnRegex = '(\((?P<params>.*)\))?\s*from\s*(?P<method>\w+)'
+functionReturnRegex = r'(\((?P<params>.*)\))?\s*from\s*(?P<method>\w+)'
 
 # FDL mapping template for function/method exit
-returnTemplate = '"{called}".{method} returns {params}'
+returnTemplate = r'"{called}".{method} returns {params}'
 
 # Regular expression for parsing the object creation trace body
-createRegex = '(?P<created>\w+)\s*(\((?P<params>.*)\))?'
+createRegex = r'(?P<created>\w+)\s*(\((?P<params>.*)\))?'
 
 # FDL mapping template for object creation
-createTemplate = '"{creator}" creates "{created}"{params}'
+createTemplate = r'"{creator}" creates "{created}"{params}'
 
 # Regular expression for object deletion
-deleteRegex = '(?P<deleted>\w+)'
+deleteRegex = r'(?P<deleted>\w+)'
 
 # FDL mapping template for object deletion
-deleteTemplate = '"{deletor}" deletes "{deleted}"'
+deleteTemplate = r'"{deletor}" deletes "{deleted}"'
 
 # Any trace that does not map to a defined type is treated as an action trace.
 # FDL mapping for action traces is defined here. The trace type is also
 # included in the statement.
-actionTemplate = '"{actor}" action "{actionType} {action}"'
+actionTemplate = r'"{actor}" action "{actionType} {action}"'
 
 # FDL mapping template for state change trace body
-stateChangeTemplate = '"{object}" state = "{state}"'
+stateChangeTemplate = r'"{object}" state = "{state}"'
 
-# Regular expression for parsing the timer start, stop anmd expiry trace body.
-timerRegex = '(?P<timer>\w+)'
+# Regular expression for parsing the timer start, stop and expiry trace body.
+timerRegex = r'(?P<timer>\w+)'
 
 # FDL mapping templates for time start, stop and expiry traces.
-startTimerTemplate = '"{object}" starts {timer}'
-stopTimerTemplate = '"{object}" stops {timer}'
-expiredTimerTemplate = 'timeout {timer}'
+startTimerTemplate = r'"{object}" starts {timer}'
+stopTimerTemplate = r'"{object}" stops {timer}'
+expiredTimerTemplate = r'timeout {timer}'
 
 # FDL mapping for resource allocation and freeing traces.
-allocateTemplate = '"{object}" allocates "{resource}"'
-freeTemplate = '"{object}" frees "{resource}"'
+allocateTemplate = r'"{object}" allocates "{resource}"'
+freeTemplate = r'"{object}" frees "{resource}"'
 
 # FDL mapping for action start and end traces.
-beginActionTemplate = '"{object}" begins action "{action}"'
-endActionTemplate = '"{object}" ends action "{action}"'
+beginActionTemplate = r'"{object}" begins action "{action}"'
+endActionTemplate = r'"{object}" ends action "{action}"'
 
 # Many statements contain parameters, They are parsed as attribute-value pairs.
-# The attribute value pair separator and the attribute and value pair sepeator
-# can be specifield here. The default settings work for parameters of the form:
+# The attribute value pair separator and the attribute and value pair separator
+# can be specified here. The default settings work for parameters of the form:
 # attribute1 = value1, attribute2 = value2 etc.
 attributeValueSeparator = '='
 avpairSeparator = ','
-paramTemplate = '"{attribute}" = "{value}"'
+paramTemplate = r'"{attribute}" = "{value}"'
 
 # Specifies how the per statement remark has to be generated. By default the
 # FDL remark contains the time and the file information (refer to traceRegex
@@ -161,7 +161,7 @@ bookmarks = frozenset({
 
 
 # FDL mapping template for the bookmarks
-bookmarkTemplate = 'heading "{bookmark}"'
+bookmarkTemplate = r'heading "{bookmark}"'
 
 # === External entity definition ===
 # EventStudio can generate a high level sequence diagram that can abstract

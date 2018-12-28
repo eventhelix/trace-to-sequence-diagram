@@ -9,8 +9,8 @@
 
 import os
 
-# Path for identifying where the EventStudio execuable is installed. Set to None
-# if your wish to use the Visual Studio Code extension of EventStudio.
+# Path for identifying where the EventStudio executable is installed. Set to None
+# for the script to find the EventStudio path from the installed vscode extension.
 eventStudioPath = None
 
 # Specifies the path where Visual Studio code extensions are installed in Windows
@@ -21,7 +21,7 @@ vsCodeExtensions = r'%USERPROFILE%\.vscode\extensions'
 # The EventStudio command line to be used to generate the sequence diagrams.
 eventStudioCommandLine = r'{eventStudio} build project.scn.json'
 
-# The identation to be used in generating the FDL file.
+# The indentation to be used in generating the FDL file.
 indent = ' ' * 4
 
 #theme template to use for generated sequence diagram. Set it to None to use

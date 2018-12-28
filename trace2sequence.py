@@ -1,3 +1,7 @@
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 """
 .. automodule:: trace2sequence
    :members:
@@ -24,7 +28,7 @@ import config
 import customize
 import fdl
 
-from funutils import Maybe, first
+from funutils import Maybe, first, just
 
 
 # utilities
@@ -315,7 +319,7 @@ def main():
 
     # Generate the FDL file
     doc = Document(traceParser, args.output_file)
-    s = doc.generateDocument()
+    doc.generateDocument()
     args.output_file.close()
 
     # Generate the sequence diagram by invoking EventStudio from command-line
@@ -326,7 +330,7 @@ def main():
 
 
 def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
-    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).startswith('EventHelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
+    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
 
 if __name__ == '__main__':
     main()
