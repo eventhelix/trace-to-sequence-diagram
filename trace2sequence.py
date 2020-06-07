@@ -65,7 +65,7 @@ class TraceParser:
         """
         # Parse the line using the precompiled regular expression
         messageGroup = self.regex.search(line)
-        if messageGroup != None:
+        if messageGroup is not None:
             self.attributes = messageGroup.groupdict()
 
             # The type named group parsed from the regular expression is used
@@ -83,7 +83,7 @@ class TraceParser:
 
             # If trace parsing was successful, add a remark to the trace and then
             # save the parsed statement.
-            if statement != None:
+            if statement is not None:
                 statement.attributeUpdate(self.attributes)
                 self.saveStatement(statement)
 
@@ -104,7 +104,7 @@ class TraceParser:
         # The entityList override of the statement is used to obtain this information
         for entity, entityType in statement.entityList():
             obj = statement.attributes[entity]
-            if firstObj == None:
+            if firstObj is None:
                 firstObj = obj
             if obj in self.objectDict:
                 if self.objectDict[obj] == 'any':
@@ -228,7 +228,7 @@ class Document:
             header += self.generateDeclaration(previousType, entityList)
 
         # Generate the start of a feature block
-        if config.themeTemplate == None:
+        if config.themeTemplate is None:
             header += '\nfeature "generated flow" {\n'
         else:
             header += '\n{MyTheme} feature "generated flow" {\n'

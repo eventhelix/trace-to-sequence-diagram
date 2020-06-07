@@ -42,7 +42,7 @@ def formatParams(paramString):
     :rtype: string that is suitable for FDL statements.
     """
     avPairStr = ''
-    if paramString != None and len(paramString) != 0 and customize.attributeValueSeparator in paramString:
+    if paramString is not None and len(paramString) != 0 and customize.attributeValueSeparator in paramString:
         avPairStr = '('
         avpairList = [trimSplit(item, customize.attributeValueSeparator) for item in
                       paramString.split(customize.avpairSeparator)]
@@ -144,7 +144,7 @@ def MessageReceive(traceType, traceGenerator, traceText):
     """
     statement = None
     messageGroup = messageReceiveRegex.search(traceText)
-    if messageGroup != None:
+    if messageGroup is not None:
         statement = MessageReceiveStatement()
         statement.attributes = messageGroup.groupdict()
         statement.attributes['destination'] = traceGenerator
@@ -175,7 +175,7 @@ def MessageSent(traceType, traceGenerator, traceText):
     """
     statement = None
     messageGroup = messageSentRegex.search(traceText)
-    if messageGroup != None:
+    if messageGroup is not None:
         statement = MessageSendStatement()
         statement.attributes = messageGroup.groupdict()
         statement.attributes['source'] = traceGenerator
@@ -224,7 +224,7 @@ def MethodInvoke(traceType, traceGenerator, traceText):
         invokeGroup = invokeFunctionRegex.search(traceText)
         cfunction = True
 
-    if invokeGroup != None:
+    if invokeGroup is not None:
         statement = InvokeStatement()
         statement.attributes = invokeGroup.groupdict()
         statement.attributes['caller'] = traceGenerator
@@ -277,7 +277,7 @@ def MethodReturn(traceType, traceGenerator, traceText):
         returnGroup = functionReturnRegex.search(traceText)
         cfunction = True
 
-    if returnGroup != None:
+    if returnGroup is not None:
         statement = ReturnStatement()
         statement.attributes = returnGroup.groupdict()
         if cfunction:
@@ -319,7 +319,7 @@ def CreateObject(traceType, traceGenerator, traceText):
     """
     statement = None
     createGroup = createRegex.search(traceText)
-    if createGroup != None:
+    if createGroup is not None:
         statement = CreateStatement()
         statement.attributes = createGroup.groupdict()
         statement.attributes['creator'] = traceGenerator
@@ -356,7 +356,7 @@ def DeleteObject(traceType, traceGenerator, traceText):
     """
     statement = None
     deleteGroup = deleteRegex.search(traceText)
-    if deleteGroup != None:
+    if deleteGroup is not None:
         statement = DeleteStatement()
         statement.attributes = deleteGroup.groupdict()
         statement.attributes['deletor'] = traceGenerator
@@ -401,7 +401,7 @@ def StartTimer(traceType, traceGenerator, traceText):
     """
     statement = None
     timerGroup = timerRegex.search(traceText)
-    if timerGroup != None:
+    if timerGroup is not None:
         statement = StartTimerStatement()
         statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
@@ -433,7 +433,7 @@ def StopTimer(traceType, traceGenerator, traceText):
     """
     statement = None
     timerGroup = timerRegex.search(traceText)
-    if timerGroup != None:
+    if timerGroup is not None:
         statement = StopTimerStatement()
         statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
@@ -465,7 +465,7 @@ def ExpiredTimer(traceType, traceGenerator, traceText):
     """
     statement = None
     timerGroup = timerRegex.search(traceText)
-    if timerGroup != None:
+    if timerGroup is not None:
         statement = ExpiredTimerStatement()
         statement.attributes['object'] = traceGenerator
         statement.attributes['timer'] = traceText.strip()
