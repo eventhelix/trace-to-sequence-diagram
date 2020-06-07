@@ -187,7 +187,7 @@ class Document:
     def generateStyleAndTheme():
         retStr = ''
 
-        if config.themeTemplate != None:
+        if config.themeTemplate is not None:
             retStr += '#include <{0}.FDL>\n'.format(config.themeTemplate)
 
         retStr += '#include <stdinc.FDL>\n\n'
