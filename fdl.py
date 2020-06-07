@@ -26,10 +26,11 @@ def trimSplit(s, sep):
     :rtype: tuple of strings (extra blank spaces are removed)
     """
     if sep in s:
-        s1,s2 = s.split(sep)
+        s1, s2 = s.split(sep)
         return s1.strip(), s2.strip()
     else:
-        return '',''
+        return '', ''
+
 
 def formatParams(paramString):
     """
@@ -43,8 +44,9 @@ def formatParams(paramString):
     avPairStr = ''
     if paramString != None and len(paramString) != 0 and customize.attributeValueSeparator in paramString:
         avPairStr = '('
-        avpairList = [trimSplit(item, customize.attributeValueSeparator) for item in paramString.split(customize.avpairSeparator)]
-        for att,val in avpairList:
+        avpairList = [trimSplit(item, customize.attributeValueSeparator) for item in
+                      paramString.split(customize.avpairSeparator)]
+        for att, val in avpairList:
             avPairStr += str.format(customize.paramTemplate, attribute=att, value=val)
             avPairStr += ','
         avPairStr = avPairStr[:-1]
@@ -56,10 +58,10 @@ class Statement:
     """
     Base class for representing FDL statements.
     """
+
     def __init__(self):
         self.attributes = {}
         self.remarks = ''
-
 
     def convertToFDL(self):
         """
@@ -93,7 +95,7 @@ class Statement:
         :rvalue: string containing the complete FDL statement (including the
                  correct indentation and the remark.
         """
-        fdlText = config.indent + self.convertToFDL() + '\n'+ config.indent
+        fdlText = config.indent + self.convertToFDL() + '\n' + config.indent
         fdlText += self.remarks + '\n\n'
         return fdlText
 
@@ -106,26 +108,28 @@ class Statement:
         self.remarks = str.format(customize.remarkTemplate, **traceAttributes)
 
 
-
-
 class MessageStatement(Statement):
     """
     Represents the FDL message statement. This class is used in message sent and
     receive processing.
     """
+
     def convertToFDL(self):
         return str.format(customize.messageTemplate, **self.attributes)
 
     def bookmarkAttribute(self):
         return 'message'
 
+
 class MessageReceiveStatement(MessageStatement):
 
     def entityList(self):
-        return [('destination','any'),('source','any')]
+        return [('destination', 'any'), ('source', 'any')]
+
 
 # Compile the regular expression for received message extraction from the trace body.
 messageReceiveRegex = re.compile(customize.messageRxRegex)
+
 
 def MessageReceive(traceType, traceGenerator, traceText):
     """
@@ -141,19 +145,23 @@ def MessageReceive(traceType, traceGenerator, traceText):
     statement = None
     messageGroup = messageReceiveRegex.search(traceText)
     if messageGroup != None:
-         statement = MessageReceiveStatement()
-         statement.attributes = messageGroup.groupdict()
-         statement.attributes['destination'] = traceGenerator
-         if 'params' in statement.attributes:
+        statement = MessageReceiveStatement()
+        statement.attributes = messageGroup.groupdict()
+        statement.attributes['destination'] = traceGenerator
+        if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
+
 
 class MessageSendStatement(MessageStatement):
 
     def entityList(self):
-        return [('source','any'),('destination','any')]
+        return [('source', 'any'), ('destination', 'any')]
+
 
 messageSentRegex = re.compile(customize.messageTxRegex)
+
+
 def MessageSent(traceType, traceGenerator, traceText):
     """
     Parse the traceText from a message sent trace and return a statement object.
@@ -168,28 +176,32 @@ def MessageSent(traceType, traceGenerator, traceText):
     statement = None
     messageGroup = messageSentRegex.search(traceText)
     if messageGroup != None:
-         statement = MessageSendStatement()
-         statement.attributes = messageGroup.groupdict()
-         statement.attributes['source'] = traceGenerator
-         if 'params' in statement.attributes:
+        statement = MessageSendStatement()
+        statement.attributes = messageGroup.groupdict()
+        statement.attributes['source'] = traceGenerator
+        if 'params' in statement.attributes:
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
+
 
 class InvokeStatement(Statement):
     """
     Represents the FDL method invoke statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.invokeTemplate, **self.attributes)
 
     def entityList(self):
-        return [('called','any'),('caller', 'any')]
+        return [('called', 'any'), ('caller', 'any')]
 
     def bookmarkAttribute(self):
         return 'method'
 
+
 invokeMethodRegex = re.compile(customize.invokeMethodRegex)
 invokeFunctionRegex = re.compile(customize.invokeFunctionRegex)
+
 
 def MethodInvoke(traceType, traceGenerator, traceText):
     """
@@ -203,7 +215,7 @@ def MethodInvoke(traceType, traceGenerator, traceText):
     :rtype: statement object containing information about the trace.
     """
     statement = None
-    if '::'  in traceText:
+    if '::' in traceText:
         # C++ method trace
         invokeGroup = invokeMethodRegex.search(traceText)
         cfunction = False
@@ -227,18 +239,22 @@ def MethodInvoke(traceType, traceGenerator, traceText):
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
 
+
 class ReturnStatement(Statement):
     """
     Represents the FDL method return statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.returnTemplate, **self.attributes)
 
     def entityList(self):
-        return [('called','any')]
+        return [('called', 'any')]
+
 
 methodReturnRegex = re.compile(customize.methodReturnRegex)
 functionReturnRegex = re.compile(customize.functionReturnRegex)
+
 
 def MethodReturn(traceType, traceGenerator, traceText):
     """
@@ -252,7 +268,7 @@ def MethodReturn(traceType, traceGenerator, traceText):
     :rtype: statement object containing information about the trace.
     """
     statement = None
-    if '::'  in traceText:
+    if '::' in traceText:
         # C++ method trace
         returnGroup = methodReturnRegex.search(traceText)
         cfunction = False
@@ -279,13 +295,17 @@ class CreateStatement(Statement):
     """
     Represents the FDL object create statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.createTemplate, **self.attributes)
 
     def entityList(self):
-        return [('creator','any'), ('created', 'dynamic-created')]
+        return [('creator', 'any'), ('created', 'dynamic-created')]
+
 
 createRegex = re.compile(customize.createRegex)
+
+
 def CreateObject(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an object create and return a statement object.
@@ -307,17 +327,22 @@ def CreateObject(traceType, traceGenerator, traceText):
             statement.attributes['params'] = formatParams(statement.attributes['params'])
     return statement
 
+
 class DeleteStatement(Statement):
     """
     Represents the FDL object delete statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.deleteTemplate, **self.attributes)
 
     def entityList(self):
-        return [('deletor','any'), ('deleted', 'dynamic-deleted')]
+        return [('deletor', 'any'), ('deleted', 'dynamic-deleted')]
+
 
 deleteRegex = re.compile(customize.deleteRegex)
+
+
 def DeleteObject(traceType, traceGenerator, traceText):
     """
     Parse the traceText of an object delete and return a statement object.
@@ -337,25 +362,31 @@ def DeleteObject(traceType, traceGenerator, traceText):
         statement.attributes['deletor'] = traceGenerator
     return statement
 
+
 timerRegex = re.compile(customize.timerRegex)
+
 
 class TimerStatement(Statement):
     """
     Represents the FDL timer statements. This class acts as the base class for
     all the timer management statements.
     """
+
     def bookmarkAttribute(self):
         return 'timer'
+
 
 class StartTimerStatement(TimerStatement):
     """
     Represents FDL timer start.
     """
+
     def convertToFDL(self):
         return str.format(customize.startTimerTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
+
 
 def StartTimer(traceType, traceGenerator, traceText):
     """
@@ -376,15 +407,18 @@ def StartTimer(traceType, traceGenerator, traceText):
         statement.attributes['timer'] = traceText.strip()
     return statement
 
+
 class StopTimerStatement(TimerStatement):
     """
     Represents FDL stop statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.stopTimerTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
+
 
 def StopTimer(traceType, traceGenerator, traceText):
     """
@@ -405,15 +439,18 @@ def StopTimer(traceType, traceGenerator, traceText):
         statement.attributes['timer'] = traceText.strip()
     return statement
 
+
 class ExpiredTimerStatement(TimerStatement):
     """
     Represents FDL timeout statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.expiredTimerTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
+
 
 def ExpiredTimer(traceType, traceGenerator, traceText):
     """
@@ -434,15 +471,17 @@ def ExpiredTimer(traceType, traceGenerator, traceText):
         statement.attributes['timer'] = traceText.strip()
     return statement
 
+
 class ActionStatement(Statement):
     """
     Represents the FDL action statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.actionTemplate, **self.attributes)
 
     def entityList(self):
-        return [('actor','any')]
+        return [('actor', 'any')]
 
     def bookmarkAttribute(self):
         return 'action'
@@ -465,18 +504,21 @@ def Action(traceType, traceGenerator, traceText):
     statement.attributes['action'] = traceText.strip()
     return statement
 
+
 class StateChangeStatement(Statement):
     """
     Represents the FDL state change statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.stateChangeTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
 
     def bookmarkAttribute(self):
         return 'state'
+
 
 def StateChange(traceType, traceGenerator, traceText):
     """
@@ -499,14 +541,16 @@ class AllocateStatement(Statement):
     """
     Represents the resource allocation FDL statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.allocateTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
 
     def bookmarkAttribute(self):
         return 'resource'
+
 
 def AllocatedResource(traceType, traceGenerator, traceText):
     """
@@ -524,18 +568,21 @@ def AllocatedResource(traceType, traceGenerator, traceText):
     statement.attributes['resource'] = traceText.strip()
     return statement
 
+
 class FreeStatement(Statement):
     """
     Represents the resource free FDL statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.freeTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
 
     def bookmarkAttribute(self):
         return 'resource'
+
 
 def FreedResource(traceType, traceGenerator, traceText):
     """
@@ -553,18 +600,21 @@ def FreedResource(traceType, traceGenerator, traceText):
     statement.attributes['resource'] = traceText.strip()
     return statement
 
+
 class BeginActionStatement(Statement):
     """
     Represent an action start FDL statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.beginActionTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
 
     def bookmarkAttribute(self):
         return 'action'
+
 
 def BeginAction(traceType, traceGenerator, traceText):
     """
@@ -582,18 +632,21 @@ def BeginAction(traceType, traceGenerator, traceText):
     statement.attributes['action'] = traceText.strip()
     return statement
 
+
 class EndActionStatement(Statement):
     """
     Represents the action end FDL statement.
     """
+
     def convertToFDL(self):
         return str.format(customize.endActionTemplate, **self.attributes)
 
     def entityList(self):
-        return [('object','any')]
+        return [('object', 'any')]
 
     def bookmarkAttribute(self):
         return 'action'
+
 
 def EndAction(traceType, traceGenerator, traceText):
     """
@@ -617,19 +670,19 @@ def EndAction(traceType, traceGenerator, traceText):
 # to trace handler function.
 
 traceHandlerMapper = {
-   'MessageReceive'     :   MessageReceive,
-   'MessageSent'        :   MessageSent,
-   'MethodInvoke'       :   MethodInvoke,
-   'MethodReturn'       :   MethodReturn,
-   'StateChange'        :   StateChange,
-   'CreateObject'       :   CreateObject,
-   'DeleteObject'       :   DeleteObject,
-   'BeginAction'        :   BeginAction,
-   'EndAction'          :   EndAction,
-   'StartTimer'         :   StartTimer,
-   'StopTimer'          :   StopTimer,
-   'ExpiredTimer'       :   ExpiredTimer,
-   'AllocatedResource'  :   AllocatedResource,
-   'FreedResource'      :   FreedResource,
-   'Action'             :   Action
+    'MessageReceive': MessageReceive,
+    'MessageSent': MessageSent,
+    'MethodInvoke': MethodInvoke,
+    'MethodReturn': MethodReturn,
+    'StateChange': StateChange,
+    'CreateObject': CreateObject,
+    'DeleteObject': DeleteObject,
+    'BeginAction': BeginAction,
+    'EndAction': EndAction,
+    'StartTimer': StartTimer,
+    'StopTimer': StopTimer,
+    'ExpiredTimer': ExpiredTimer,
+    'AllocatedResource': AllocatedResource,
+    'FreedResource': FreedResource,
+    'Action': Action
 }

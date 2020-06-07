@@ -24,7 +24,7 @@ eventStudioCommandLine = r'{eventStudio} build project.scn.json'
 # The indentation to be used in generating the FDL file.
 indent = ' ' * 4
 
-#theme template to use for generated sequence diagram. Set it to None to use
+# Theme template to use for generated sequence diagram. Set it to None to use
 # the default theme. The available themes are:
 # aqua, business, chocolate, pastel, rainbow, sunrise
 themeTemplate = 'pastel'

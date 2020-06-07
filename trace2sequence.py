@@ -36,7 +36,7 @@ from funutils import Maybe, first, just
 def distinct(seq):
     seen = set()
     seen_add = seen.add
-    return [ x for x in seq if x not in seen and not seen_add(x)]
+    return [x for x in seq if x not in seen and not seen_add(x)]
 
 
 # trace parser
@@ -45,6 +45,7 @@ class TraceParser:
     """
     Parse trace lines and store parsed trace output.
     """
+
     def __init__(self):
         """
         Initialize the TraceParser object. The regular expression for tracing
@@ -76,9 +77,9 @@ class TraceParser:
                 traceBodyHandler = customize.defaultMapping
 
             traceBodyParser = fdl.traceHandlerMapper[traceBodyHandler]
-            
+
             # Invoke the function to parse the body of the trace.
-            statement = traceBodyParser(traceType, self.attributes['generator'],self.attributes['body'])
+            statement = traceBodyParser(traceType, self.attributes['generator'], self.attributes['body'])
 
             # If trace parsing was successful, add a remark to the trace and then
             # save the parsed statement.
@@ -120,6 +121,7 @@ class Document:
     """
     The Document class generates the FDL file from the parsed statement information.
     """
+
     def __init__(self, traceParser, ofile):
         """
         Initialize the document dependencies.
@@ -149,9 +151,11 @@ class Document:
         :param nextType: The next object type
         :rvalue: True if a change is detected.
         """
-        return previousType != '' and ((previousType == 'any' and 'dynamic' in nextType) or ('dynamic' in previousType and nextType == 'any'))
+        return previousType != '' and ((previousType == 'any' and 'dynamic' in nextType) or (
+                'dynamic' in previousType and nextType == 'any'))
 
-    def generateDeclaration(self, objType, entities):
+    @staticmethod
+    def generateDeclaration(objType, entities):
         """
         Private method: Generate a declaration of by iterating over the objType.
         :param objType: String object type ('any' or 'dynamic'). 'any' will default
@@ -179,7 +183,8 @@ class Document:
         entitiesWithParent = map(createEntityWithParent, entities)
         return declType + ': ' + ', '.join(entitiesWithParent) + '\n'
 
-    def generateStyleAndTheme(self):
+    @staticmethod
+    def generateStyleAndTheme():
         retStr = ''
 
         if config.themeTemplate != None:
@@ -253,8 +258,8 @@ class Document:
         bookmarkText = statement.attributes[bookmarkAttribute]
 
         # If the bookmarking text is found, prefix the bookmark as heading statement
-        if  bookmarkText in customize.bookmarks:
-            bookmarkStr = config.indent+ str.format(customize.bookmarkTemplate, bookmark = bookmarkText)+'\n'
+        if bookmarkText in customize.bookmarks:
+            bookmarkStr = config.indent + str.format(customize.bookmarkTemplate, bookmark=bookmarkText) + '\n'
             self.ofile.write(bookmarkStr)
 
     def generateBody(self):
@@ -274,14 +279,15 @@ class Document:
         """
         self.ofile.write('}\n')
 
+
 def parseCommandLine():
     """
     Parse the command line. Input and output file specification from the user are parsed.
     Help for the command-line is also supported.
     """
     parser = argparse.ArgumentParser(
-            description='Convert traces to sequence diagrams via EventStudio',
-            epilog='(c) EventHelix.com Inc. EventStudio customers are licensed to modify and use the script.')
+        description='Convert traces to sequence diagrams via EventStudio',
+        epilog='(c) EventHelix.com Inc. EventStudio customers are licensed to modify and use the script.')
     parser.add_argument('-i', '--input-file',
                         type=argparse.FileType('r'),
                         required=True,
@@ -289,22 +295,25 @@ def parseCommandLine():
     parser.add_argument('-o', '--output-file',
                         type=argparse.FileType('w'),
                         default='trace.fdl',
-                        help='Output file (defaults to trace.fdl - recommended)' )
+                        help='Output file (defaults to trace.fdl - recommended)')
     return parser.parse_args()
+
 
 def generateOutputWithEventStudio():
     """
     Run EventStudio to automatically generate the sequence diagram.
     """
 
-    eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(os.path.expandvars(config.vsCodeExtensions))
-    eventStudio = eventStudioDirectory.map(lambda p : os.path.join(p, 'evstudio.exe'))
-    commandLine = eventStudio.map(lambda p : str.format(config.eventStudioCommandLine, eventStudio = '"' + p + '"'))
+    eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
+        os.path.expandvars(config.vsCodeExtensions))
+    eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio.exe'))
+    commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio='"' + p + '"'))
     if commandLine.hasValue:
         os.system(commandLine.value)
     else:
         print('Could not find EventStudio')
         exit()
+
 
 def main():
     """
@@ -316,7 +325,6 @@ def main():
     for line in args.input_file:
         traceParser.parseTraceLine(line)
 
-
     # Generate the FDL file
     doc = Document(traceParser, args.output_file)
     doc.generateDocument()
@@ -326,11 +334,12 @@ def main():
     generateOutputWithEventStudio()
 
 
-
-
-
+# TODO: Add support for macOS
 def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
-    return first(os.listdir(extensionsPath), lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(lambda p : os.path.join(extensionsPath, p))
+    return first(os.listdir(extensionsPath),
+                 lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(
+        lambda p: os.path.join(extensionsPath, p))
+
 
 if __name__ == '__main__':
     main()

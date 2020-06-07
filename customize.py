@@ -37,20 +37,20 @@ traceRegex = r'\[(?P<time>.*)\]\s*\[(?P<generator>.*)\]\[(?P<file>.*)\]\s*(?P<ty
 # Map the type of the trace to the trace handler that will parse the trace body and
 # extract the information needed for generating an FDL statement.
 traceMapper = {
-   'received'   :   'MessageReceive',
-   'sent'       :   'MessageSent',
-   'called'     :   'MethodInvoke',
-   'returned'   :   'MethodReturn',
-   'state'   :      'StateChange',
-   'created'    :   'CreateObject',
-   'deleted'    :   'DeleteObject',
-   'begun'      :   'BeginAction',
-   'ended'      :   'EndAction',
-   'started'    :   'StartTimer',
-   'stopped'    :   'StopTimer',
-   'expired'    :   'ExpiredTimer',
-   'allocated'  :   'AllocatedResource',
-   'freed'      :   'FreedResource'
+    'received': 'MessageReceive',
+    'sent': 'MessageSent',
+    'called': 'MethodInvoke',
+    'returned': 'MethodReturn',
+    'state': 'StateChange',
+    'created': 'CreateObject',
+    'deleted': 'DeleteObject',
+    'begun': 'BeginAction',
+    'ended': 'EndAction',
+    'started': 'StartTimer',
+    'stopped': 'StopTimer',
+    'expired': 'ExpiredTimer',
+    'allocated': 'AllocatedResource',
+    'freed': 'FreedResource'
 }
 
 # The the trace type defaults to action if it is not found in the traceMapper
@@ -157,8 +157,6 @@ bookmarks = frozenset({
     'InitialUEMessage',
     'ReleaseConnection'
 })
-
-
 
 # FDL mapping template for the bookmarks
 bookmarkTemplate = r'heading "{bookmark}"'
