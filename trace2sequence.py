@@ -303,10 +303,15 @@ def generateOutputWithEventStudio():
     """
     Run EventStudio to automatically generate the sequence diagram.
     """
+    if sys.platform == 'win32':
+        eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
+            os.path.expandvars(config.vsCodeExtensions))
+        eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio.exe'))
+    elif sys.platform == 'darwin':
+        eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
+            os.path.expanduser(config.vsCodeExtensions))
+        eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio'))
 
-    eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
-        os.path.expandvars(config.vsCodeExtensions))
-    eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio.exe'))
     commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio='"' + p + '"'))
     if commandLine.hasValue:
         os.system(commandLine.value)

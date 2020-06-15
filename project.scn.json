@@ -22,7 +22,7 @@
 	"scenarios" : 
 	[
 		{
-			"modelPath" : ".\\trace.FDL",
+			"modelPath" : "./trace.FDL",
 			"scenarioName" : "Trace Output"
 		}
 	]
