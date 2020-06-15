@@ -311,6 +311,9 @@ def generateOutputWithEventStudio():
         eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
             os.path.expanduser(config.vsCodeExtensions))
         eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio'))
+    else:
+        print('Unsupported platform')
+        exit()
 
     commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio='"' + p + '"'))
     if commandLine.hasValue:
