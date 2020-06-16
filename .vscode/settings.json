@@ -13,5 +13,6 @@
     "r'timeout",
     "rtype",
     "rvalue"
-  ]
+  ],
+  "python.pythonPath": "/usr/bin/python3"
 }
