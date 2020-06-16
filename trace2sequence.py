@@ -315,7 +315,7 @@ def generateOutputWithEventStudio():
         print('Unsupported platform')
         exit()
 
-    commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio='"' + p + '"'))
+    commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio=f'"{p}"'))
     if commandLine.hasValue:
         os.system(commandLine.value)
     else:
