@@ -84,7 +84,7 @@ def generate_sequence_diagram(scenario_df: pd.DataFrame, scenario_name: str, arg
         fdl.write(f'feature "{scenario_name}" {{\n')
 
         for statement in scenario_df.itertuples():
-            indentation = '    '
+            indentation = config.indent
             if hasattr(statement, 'Bookmark') and statement.Bookmark:
                 fdl.write(f'{indentation}heading "{statement.Message}"\n')
 
@@ -120,7 +120,7 @@ def generate_sequence_diagram(scenario_df: pd.DataFrame, scenario_name: str, arg
 
 
 def format_parameters(parameters: list) -> str:
-    indentation = '        '
+    indentation = config.indent*2
     formatted_params = ''
     separator = ''
 
@@ -160,9 +160,6 @@ def update_data_frame_types(df) -> pd.DataFrame:
     df['Timestamp'] = pd.to_datetime(df['Timestamp'], unit='s')
     df['Parameters'] = df['Parameters'].apply(try_literal_eval)
     return df
-
-
-
 
 
 def generate_project(fdl_files: List[str], args):

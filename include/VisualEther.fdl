@@ -1,0 +1,265 @@
+/* 
+   == STYLES AND THEMES HEADER FILE == 
+   VisualEther generates this file with your EventStudio project.
+   You may edit this file. VisualEther will preserve your edits
+   and will not overwrite the file.
+*/
+
+/* 
+   == COLOR SPECIFICATION ==
+   File specifying the color definitions. The colors defined
+   here are shown in the last appendix of the EventStudio user's manual.
+   The user manual is installed with EventStudio. It is also available
+   online at:
+   http://www.eventhelix.com/eventstudio/EventStudio_System_Designer_Manual.pdf
+*/
+
+#include "colors.FDL"
+
+/* 
+   == STYLES ==
+   Styles specified may be used in FXT files to flag interactions. The style
+   attribute specified in the FXT file should match the style specification here.
+   You may add more styles or modify the settings for the existing styles.
+*/ 
+
+/*background style: Use this style when message interactions are being included
+                    just to complete the flow, e.g. TCP handshake and acks when
+                    describing a protocol carried over TCP. */
+style background: color = GRAY, font = "Arial Narrow", fontsize="9"
+
+/* important style: Use this style for important messages in the flow. */
+style important: color = STEELBLUE
+
+/* warning style:   Apply this style to flag interactions that are less than perfect. */
+style warning: color = DARKGOLDENROD
+
+/* error style: Apply this style to messages that signal an error condition */
+style error: color = RED
+
+/* == Predefined Styles == 
+   Use the following predefined styles to control the color of the displayed
+   messages.
+*/
+style grey: textcolor=BLACK, color=DIMGREY, paramcolor=GREY
+
+style redblue: textcolor=FIREBRICK, color=ROYALBLUE, paramcolor=SLATEBLUE
+
+style bluegreen: textcolor=DODGERBLUE, color=LIMEGREEN, paramcolor=FORESTGREEN
+
+style bluegrey: textcolor=MEDIUMBLUE, color=GREY, paramcolor=DIMGREY
+
+style greenkhaki: textcolor=OLIVEDRAB, color=DARKKHAKI, paramcolor=OLIVE
+
+style purpleblue: textcolor=PURPLE, color=DARKBLUE, paramcolor=DODGERBLUE
+
+/*
+  == AUTO STYLES ==
+  Define styles that will be automatically applied if the message name matches the 
+  regular expression specified in the style specifications. A few examples are 
+  presented here. For details, refer to the "Regular Expression" appendix of the
+  EventStudio user's manual.
+*/
+
+/* == DEFAULT STYLES == 
+   These styles are FDL statement specific. These styles apply 
+   when the FXT file does not call out a style.
+*/
+style default_invokes_style: color = STEELBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY 
+style default_returns_style: color = STEELBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY, linepattern="- -" 
+style default_message_style: color = DODGERBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY 
+style default_cascaded_message_style: color = STEELBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY 
+style default_multicast_style: color = DODGERBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY 
+style default_create_style: color = DODGERBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY, linepattern="- -"   
+style default_delete_style: color = DODGERBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY,  linepattern="- -"   
+style default_remark_style: color = STEELBLUE
+style default_timer_style: color = DODGERBLUE, bgcolor=GAINSBORO, textcolor=NAVY, paramcolor=GRAY
+
+style default_block_remark_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_state_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_action_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_continuous_action_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE, fontsize="5"
+style default_allocate_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_free_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_heading_style: color = NAVY, bgcolor=WHITESMOKE, textcolor=DODGERBLUE, font="Arial-Bold", fontsize="14"
+
+style default_sequence_style: color = STEELBLUE, bgcolor=STEELBLUE, textcolor=DODGERBLUE
+
+style default_system_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_subsystem_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_module_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_processor_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE
+style default_eternal_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE, linewidth="0.75"
+style default_dynamic_style: color = NAVY, bgcolor=DODGERBLUE, textcolor=WHITE, linewidth="0.75"
+style default_tag_style: color=CORNFLOWERBLUE, bgcolor=CORNFLOWERBLUE, textcolor=WHITE
+
+/* 
+   == THEME DECLARATION ==
+   Themes define the general look and feel of the generated diagrams. You can
+   change the theme options as specified in the comment below the theme declaration. */
+
+theme VisualEther: messageParameterFormatting = "single-parameter-per-line-left-align",
+                    sequenceDiagramHeader = "multi-tier-header",
+                    displayParentInLightWeightHeader = "true",
+                    blockRemarkFormatting = "left-align",
+                    assignSequenceNumbersInSequenceDiagrams = "true",
+                    includeRemarkColumnInSequenceDiagrams = "true",
+                    paperSize = "B",
+                    minimizeEMFImageWidth = "false",
+                    minimizeEMFImageLength = "false",
+                    sequenceDiagramLayout = "auto-choose-between-portrait-landscape",
+                    stateShape = "curved-rectangle",
+                    pageMarginPDF = "small",
+                    pageMarginEMF = "small",
+                    headingAndTitleFont = "Arial Narrow",
+                    headingAndTitleFontSize = "8",
+                    sequenceDiagramMessageNameFont = "Arial Narrow",
+                    sequenceDiagramMessageNameFontSize = "10",
+                    collaborationDiagramMessageNameFont = "Arial Narrow",
+                    collaborationDiagramMessageNameFontSize = "8",
+                    messageParameterFont = "Arial Narrow",
+                    messageParameterFontSize = "8",
+                    actionBoxFont = "Arial Narrow",
+                    actionBoxFontSize = "8",
+                    remarkFont = "Arial Narrow",
+                    remarkFontSize = "10",
+                    blockRemarkFont = "Arial Narrow",
+                    blockRemarkFontSize = "10"
+                    
+/*
+  == THEME OPTIONS ==
+  
+    messageParameterFormatting :: multiple-parameters-per-line-center-align/single-parameter-per-line-center-align/single-parameter-per-line-left-align
+    sequenceDiagramHeader :: multi-tier-header/single-tier-light-weight/single-tier-light-weight-with-images
+    displayParentInLightWeightHeader :: true/false
+    blockRemarkFormatting :: left-align/center-align/right-align/justify/verbatim
+    assignSequenceNumbersInSequenceDiagrams :: true/false
+    includeRemarkColumnInSequenceDiagrams :: true/false
+    paperSize :: letter/legal/B/C/A4/A3
+    minimizeEMFImageWidth :: true/false
+    minimizeEMFImageLength :: true/false
+    stateShape :: hexagon/curved-rectangle
+    sequenceDiagramLayout :: landscape-only/portrait-only/auto-choose-between-portrait-landscape
+    pageMarginPDF :: small/medium/large
+    headingAndTitleFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    headingAndTitleFontSize :: 
+    sequenceDiagramMessageNameFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    sequenceDiagramMessageNameFontSize :: 
+    collaborationDiagramMessageNameFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    collaborationDiagramMessageNameFontSize :: 1>= value <= 35
+    messageParameterFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    messageParameterFontSize :: 1>= value <= 35
+    actionBoxFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    actionBoxFontSize :: 1>= value <= 35
+    remarkFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    remarkFontSize :: 1>= value <= 35
+    blockRemarkFont :: Arial/Arial Narrow/Courier New/Times New Roman
+    blockRemarkFontSize :: 1>= value <= 35
+*/
+
+/* == TAG STYLES FOR WELL KNOWN PORT NUMBERS == */ 
+style "20_tag_style":  textcolor=WHITE, color=BROWN			, bgcolor=BROWN			/* FTP data transfer */
+style "21_tag_style":  textcolor=WHITE, color=DARKRED			, bgcolor=DARKRED			/* FTP control (command) */
+style "22_tag_style":  textcolor=WHITE, color=FORESTGREEN		, bgcolor=FORESTGREEN		/* Secure Shell (SSH)   used for secure logins, file transfers (scp, sftp) and port forwarding */
+style "23_tag_style":  textcolor=WHITE, color=BLUEVIOLET		, bgcolor=BLUEVIOLET		/* Telnet protocol unencrypted text communications */
+style "24_tag_style":  textcolor=WHITE, color=DARKGREEN		, bgcolor=DARKGREEN		/* Priv-mail : any private mail system. */
+style "25_tag_style":  textcolor=WHITE, color=MAROON			, bgcolor=MAROON			/* Simple Mail Transfer Protocol (SMTP) used for e-mail routing between mail servers */
+style "37_tag_style":  textcolor=WHITE, color=MIDNIGHTBLUE	, bgcolor=MIDNIGHTBLUE	/* TIME protocol */
+style "39_tag_style":  textcolor=WHITE, color=ROYALBLUE		, bgcolor=ROYALBLUE		/* Resource Location Protocol[7] (RLP) used for determining the location of higher level services from hosts on a network */
+style "42_tag_style":  textcolor=WHITE, color=SLATEBLUE		, bgcolor=SLATEBLUE		/* ARPA Host Name Server Protocol */
+style "43_tag_style":  textcolor=WHITE, color=MEDIUMORCHID	, bgcolor=MEDIUMORCHID	/* WHOIS protocol */
+style "47_tag_style":  textcolor=WHITE, color=SLATEBLUE		, bgcolor=SLATEBLUE		/* NI FTP[7] */
+style "53_tag_style":  textcolor=WHITE, color=MEDIUMPURPLE	, bgcolor=MEDIUMPURPLE	/* Domain Name System (DNS) */
+style "57_tag_style":  textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* Mail Transfer Protocol (RFC 780) */
+style "67_tag_style":  textcolor=WHITE, color=STEELBLUE		, bgcolor=STEELBLUE		/* Bootstrap Protocol (BOOTP) Server; also used by Dynamic Host Configuration Protocol (DHCP) */
+style "68_tag_style":  textcolor=WHITE, color=STEELBLUE		, bgcolor=STEELBLUE		/* Bootstrap Protocol (BOOTP) Client; also used by Dynamic Host Configuration Protocol (DHCP) */
+style "69_tag_style":  textcolor=WHITE, color=LIGHTSLATEGREY	, bgcolor=LIGHTSLATEGREY	/* Trivial File Transfer Protocol (TFTP) */
+style "70_tag_style":  textcolor=WHITE, color=NAVY			, bgcolor=NAVY			/* Gopher protocol */
+style "79_tag_style":  textcolor=WHITE, color=PURPLE			, bgcolor=PURPLE			/* Finger protocol */
+style "80_tag_style":  textcolor=WHITE, color=RED				, bgcolor=RED				/* Hypertext Transfer Protocol (HTTP) */
+style "88_tag_style":  textcolor=WHITE, color=DARKGREEN		, bgcolor=DARKGREEN		/* Kerberos authentication system */
+style "90_tag_style":  textcolor=WHITE, color=DARKGREEN		, bgcolor=DARKGREEN		/* dnsix (DoD Network Security for Information Exchange) Securit Attribute Token Map */
+style "109_tag_style": textcolor=WHITE, color=CRIMSON			, bgcolor=CRIMSON			/* Post Office Protocol v2 (POP2) */
+style "110_tag_style": textcolor=WHITE, color=CRIMSON			, bgcolor=CRIMSON			/* Post Office Protocol v3 (POP3) */
+style "113_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* Authentication Service[14] (auth) */
+style "115_tag_style": textcolor=WHITE, color=DEEPPINK		, bgcolor=DEEPPINK		/* Simple File Transfer Protocol (SFTP) */
+style "118_tag_style": textcolor=WHITE, color=DEEPPINK		, bgcolor=DEEPPINK		/* SQL (Structured Query Language) Services */
+style "119_tag_style": textcolor=WHITE, color=VIOLET			, bgcolor=VIOLET			/* Network News Transfer Protocol (NNTP) retrieval of newsgroup messages */
+style "123_tag_style": textcolor=WHITE, color=VIOLET			, bgcolor=VIOLET			/* Network Time Protocol (NTP) used for time synchronization */
+style "137_tag_style": textcolor=WHITE, color=STEELBLUE		, bgcolor=STEELBLUE		/* NetBIOS NetBIOS Name Service */
+style "138_tag_style": textcolor=WHITE, color=STEELBLUE		, bgcolor=STEELBLUE		/* NetBIOS NetBIOS Datagram Service */
+style "139_tag_style": textcolor=WHITE, color=STEELBLUE		, bgcolor=STEELBLUE		/* NetBIOS NetBIOS Session Service */
+style "143_tag_style": textcolor=WHITE, color=CRIMSON			, bgcolor=CRIMSON			/* Internet Message Access Protocol (IMAP) management of email messages */
+style "152_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* Background File Transfer Program (BFTP)*/
+style "153_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* SGMP, Simple Gateway Monitoring Protocol */
+style "156_tag_style": textcolor=WHITE, color=DEEPPINK		, bgcolor=DEEPPINK		/* SQL Service */
+style "161_tag_style": textcolor=WHITE, color=DARKSLATEGREY	, bgcolor=DARKSLATEGREY	/* Simple Network Management Protocol (SNMP) */
+style "162_tag_style": textcolor=WHITE, color=DARKSLATEGREY	, bgcolor=DARKSLATEGREY	/* Simple Network Management Protocol Trap (SNMPTRAP)*/
+style "170_tag_style": textcolor=WHITE, color=DARKSLATEGREY	, bgcolor=DARKSLATEGREY	/* Print-srv, Network PostScript */
+style "177_tag_style": textcolor=WHITE, color=SLATEGRAY		, bgcolor=SLATEGRAY		/* X Display Manager Control Protocol (XDMCP) */
+style "179_tag_style": textcolor=WHITE, color=BLUEVIOLET		, bgcolor=BLUEVIOLET		/* BGP (Border Gateway Protocol) */
+style "194_tag_style": textcolor=WHITE, color=OLIVE			, bgcolor=OLIVE			/* Internet Relay Chat (IRC) */
+style "209_tag_style": textcolor=WHITE, color=OLIVE			, bgcolor=OLIVE			/* The Quick Mail Transfer Protocol */
+style "218_tag_style": textcolor=WHITE, color=OLIVE			, bgcolor=OLIVE			/* Message posting protocol (MPP) */
+style "220_tag_style": textcolor=WHITE, color=DARKKHAKI		, bgcolor=DARKKHAKI		/* Internet Message Access Protocol (IMAP), version 3 */
+style "264_tag_style": textcolor=WHITE, color=BLUEVIOLET		, bgcolor=BLUEVIOLET		/* BGMP, Border Gateway Multicast Protocol */
+style "280_tag_style": textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* http-mgmt */
+style "427_tag_style": textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* Service Location Protocol (SLP) */
+style "443_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* Hypertext Transfer Protocol over TLS/SSL (HTTPS) */
+style "444_tag_style": textcolor=WHITE, color=DARKORANGE		, bgcolor=DARKORANGE		/* SNPP, Simple Network Paging Protocol (RFC 1568) */
+style "445_tag_style": textcolor=WHITE, color=DARKORANGE		, bgcolor=DARKORANGE		/* Microsoft-DS Active Directory, Windows shares */
+style "464_tag_style": textcolor=WHITE, color=OLIVEDRAB		, bgcolor=OLIVEDRAB		/* Kerberos Change/Set password */
+style "500_tag_style": textcolor=WHITE, color=OLIVEDRAB		, bgcolor=OLIVEDRAB		/* Internet Security Association and Key Management Protocol (ISAKMP) */
+style "513_tag_style": textcolor=WHITE, color=SADDLEBROWN		, bgcolor=SADDLEBROWN		/* rlogin */
+style "514_tag_style": textcolor=WHITE, color=SADDLEBROWN		, bgcolor=SADDLEBROWN		/* Shell used to execute non-interactive commands on a remote system (Remote Shell, rsh, remsh) */
+style "515_tag_style": textcolor=WHITE, color=TOMATO			, bgcolor=TOMATO			/* Line Printer Daemon print service */
+style "520_tag_style": textcolor=WHITE, color=INDIGO			, bgcolor=INDIGO			/* Routing Information Protocol (RIP) */
+style "525_tag_style": textcolor=WHITE, color=TOMATO			, bgcolor=TOMATO			/* Timed, Timeserver */
+style "530_tag_style": textcolor=WHITE, color=INDIGO			, bgcolor=INDIGO			/* RPC */
+style "540_tag_style": textcolor=WHITE, color=INDIGO			, bgcolor=INDIGO			/* UUCP (Unix-to-Unix Copy Protocol) */
+style "543_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* klogin, Kerberos login */
+style "544_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* kshell, Kerberos Remote shell */
+style "546_tag_style": textcolor=WHITE, color=INDIGO			, bgcolor=INDIGO			/* DHCPv6 client */
+style "547_tag_style": textcolor=WHITE, color=PURPLE			, bgcolor=PURPLE			/* DHCPv6 server */
+style "548_tag_style": textcolor=WHITE, color=CADETBLUE		, bgcolor=CADETBLUE		/* Apple Filing Protocol (AFP) over TCP */
+style "550_tag_style": textcolor=WHITE, color=CADETBLUE		, bgcolor=CADETBLUE		/* new-rwho, new-who[21] */
+style "554_tag_style": textcolor=WHITE, color=CADETBLUE		, bgcolor=CADETBLUE		/* Real Time Streaming Protocol (RTSP) */
+style "556_tag_style": textcolor=WHITE, color=DARKRED			, bgcolor=DARKRED			/* Remotefs, RFS, rfs_server */
+style "560_tag_style": textcolor=WHITE, color=DARKRED			, bgcolor=DARKRED			/* rmonitor, Remote Monitor */
+style "561_tag_style": textcolor=WHITE, color=DARKRED			, bgcolor=DARKRED			/* monitor */
+style "563_tag_style": textcolor=WHITE, color=DIMGREY			, bgcolor=DIMGREY			/* NNTP protocol over TLS/SSL (NNTPS) */
+style "587_tag_style": textcolor=WHITE, color=DIMGREY			, bgcolor=DIMGREY			/* e-mail message submission[22] (SMTP) */
+style "591_tag_style": textcolor=WHITE, color=DIMGREY			, bgcolor=DIMGREY			/* FileMaker 6.0 (and later) Web Sharing (HTTP Alternate, also see port 80) */
+style "593_tag_style": textcolor=WHITE, color=BROWN			, bgcolor=BROWN			/* HTTP RPC Ep Map, Remote procedure call over Hypertext Transfer Protocol, often used by Distributed Component Object Model services and Microsoft Exchange Server */
+style "623_tag_style": textcolor=WHITE, color=BROWN			, bgcolor=BROWN			/* ASF Remote Management and Control Protocol (ASF-RMCP) */
+style "631_tag_style": textcolor=WHITE, color=BROWN			, bgcolor=BROWN			/* Internet Printing Protocol (IPP) */
+style "636_tag_style": textcolor=WHITE, color=DARKOLIVEGREEN  , bgcolor=DARKOLIVEGREEN  /* Lightweight Directory Access Protocol over TLS/SSL (LDAPS) */
+style "639_tag_style": textcolor=WHITE, color=ROSYBROWN		, bgcolor=ROSYBROWN		/* MSDP, Multicast Source Discovery Protocol */
+style "646_tag_style": textcolor=WHITE, color=ROSYBROWN		, bgcolor=ROSYBROWN		/* LDP, Label Distribution Protocol, a routing protocol used in MPLS networks */
+style "647_tag_style": textcolor=WHITE, color=ROSYBROWN		, bgcolor=ROSYBROWN		/* DHCP Failover protocol[24] */
+style "648_tag_style": textcolor=WHITE, color=CORAL			, bgcolor=CORAL			/* RRP (Registry Registrar Protocol)[25] */
+style "651_tag_style": textcolor=WHITE, color=CORAL			, bgcolor=CORAL			/* IEEE-MMS */
+style "666_tag_style": textcolor=WHITE, color=CORAL			, bgcolor=CORAL			/* Doom, first online first-person shooter */
+style "691_tag_style": textcolor=WHITE, color=TEAL			, bgcolor=TEAL			/* MS Exchange Routing */
+style "694_tag_style": textcolor=WHITE, color=TEAL			, bgcolor=TEAL			/* Linux-HA High availability Heartbeat */
+style "695_tag_style": textcolor=WHITE, color=DARKOLIVEGREEN	, bgcolor=DARKOLIVEGREEN	/* IEEE-MMS-SSL (IEEE Media Management System over SSL)[28] */
+style "698_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* OLSR (Optimized Link State Routing) */
+style "700_tag_style": textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* EPP (Extensible Provisioning Protocol), a protocol for communication between domain name registries and registrars (RFC 5734) */
+style "701_tag_style": textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* LMP (Link Management Protocol (Internet)),[29] a protocol that runs between a pair of nodes and is used to manage traffic engineering (TE)links */
+style "702_tag_style": textcolor=WHITE, color=DARKGOLDENROD	, bgcolor=DARKGOLDENROD	/* IRIS[30][31] (Internet Registry Information Service) over BEEP (Blocks Extensible Exchange Protocol)[32] (RFC 3983) */
+style "706_tag_style": textcolor=WHITE, color=GREEN			, bgcolor=GREEN			/* Secure Internet Live Conferencing (SILC) */
+style "711_tag_style": textcolor=WHITE, color=GREY			, bgcolor=GREY			/* Cisco Tag Distribution Protocol[33][34][35] being replaced by the MPLS Label Distribution Protocol[36] */
+style "712_tag_style": textcolor=WHITE, color=GREY			, bgcolor=GREY			/* Topology Broadcast based on Reverse-Path Forwarding routing protocol (TBRPF) (RFC 3684) */
+style "749_tag_style": textcolor=WHITE, color=DARKOLIVEGREEN	, bgcolor=DARKOLIVEGREEN	/* Kerberos (protocol) administration */
+style "750_tag_style": textcolor=WHITE, color=DARKOLIVEGREEN	, bgcolor=DARKOLIVEGREEN	/* kerberos-iv, Kerberos version IV */
+style "753_tag_style": textcolor=WHITE, color=ORANGERED		, bgcolor=ORANGERED		/* Reverse Routing Header (rrh)[37] */
+style "847_tag_style": textcolor=WHITE, color=ORANGERED		, bgcolor=ORANGERED		/* DHCP Failover protocol */
+style "860_tag_style": textcolor=WHITE, color=DIMGRAY			, bgcolor=DIMGRAY			/* iSCSI (RFC 3720) */
+style "873_tag_style": textcolor=WHITE, color=DIMGRAY			, bgcolor=DIMGRAY			/* rsync file synchronization protocol */
+style "989_tag_style": textcolor=WHITE, color=MEDIUMSEAGREEN	, bgcolor=MEDIUMSEAGREEN	/* FTPS Protocol (data): FTP over TLS/SSL */
+style "990_tag_style": textcolor=WHITE, color=MEDIUMSEAGREEN	, bgcolor=MEDIUMSEAGREEN	/* FTPS Protocol (control): FTP over TLS/SSL */
+style "991_tag_style": textcolor=WHITE, color=DIMGRAY			, bgcolor=DIMGRAY			/* NAS (Netnews Administration System)[41] */
+style "992_tag_style": textcolor=WHITE, color=MEDIUMSEAGREEN	, bgcolor=MEDIUMSEAGREEN	/* TELNET protocol over TLS/SSL */
+style "993_tag_style": textcolor=WHITE, color=FORESTGREEN		, bgcolor=FORESTGREEN		/* Internet Message Access Protocol over TLS/SSL (IMAPS) */
+style "995_tag_style": textcolor=WHITE, color=FORESTGREEN		, bgcolor=FORESTGREEN		/* Post Office Protocol 3 over TLS/SSL (POP3S) */
+style "2049_tag_style":textcolor=WHITE, color=SIENNA			, bgcolor=SIENNA			/* Network File System */

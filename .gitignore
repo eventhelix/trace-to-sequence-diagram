@@ -181,3 +181,4 @@ pip-log.txt
 !.vscode/extensions.json
 .vs/*
 samples/
+.eventstudio/navigation-meta-data.csv
