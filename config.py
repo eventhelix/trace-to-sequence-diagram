@@ -17,14 +17,11 @@ eventstudio_path = None
 # (You do not need to change this unless your Visual Studio Code extensions are installed
 # at a different path.)
 
-if sys.platform == 'win32':
+if sys.platform == 'win32':  # Windows
     vscode_extensions = r'%USERPROFILE%\.vscode\extensions'
-elif sys.platform == 'darwin':
+elif sys.platform == 'darwin':  # macOS
     vscode_extensions = r'~/.vscode/extensions'
 
-
-# The EventStudio command line to be used to generate the sequence diagrams.
-eventstudio_command_line = r'{eventStudio} build project.scn.json'
 
 # The indentation to be used in generating the FDL file.
 indent = ' ' * 4
