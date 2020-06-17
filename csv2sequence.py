@@ -217,6 +217,7 @@ def copy_include_file(args):
     shutil.copy(include_file, args.output)
 
 
+# TODO: Bookmarks not generated in sequence diagram
 def generate_diagrams(args):
     eventhelix.generate_output_with_eventstudio(args.output)
 
