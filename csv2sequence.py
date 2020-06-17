@@ -5,20 +5,22 @@ import os
 import sys
 import config
 from typing import List
-from funutils import Maybe, first, just
-
 import pandas as pd
+import shutil
+import eventhelix
 
 
 # TODO: Document all functions
+
+
 
 def main():
     args = parse_command_line()
     setup()
     files = generate_fdl_files(args)
+    copy_include_file(args)
     generate_project(files, args)
-
-    # TODO: Add support for document generation
+    generate_diagrams(args)
 
 
 def parse_command_line():
@@ -31,7 +33,7 @@ def parse_command_line():
                         help='sort the headers in the generated sequence diagram')
     parser.add_argument('-o', '--output',
                         help='specify the output directory for the sequence diagram project')
-    # TODO: Add an argument for controlling the output
+   
     args = parser.parse_args()
     if not args.output:
         args.output = os.path.dirname(args.csv_file[0])
@@ -56,27 +58,32 @@ def generate_fdl_files(args) -> List[str]:
         combined_frame = pd.concat(frames).drop_duplicates().reset_index(drop=True)
         combined_frame = update_data_frame_types(combined_frame)
         combined_frame.sort_values(['Timestamp'], inplace=True)
-        generate_sequence_diagram(combined_frame, merged_file_path, args)
+        generate_fdl(combined_frame, merged_file_path, args)
         files = ['merged']
     else:
         for file in args.csv_file:
-            file_title = os.path.basename[0]  # Remove file extension
+            file_name = os.path.basename(file)
+            out_file_name = os.path.join(args.output, file_name)
+            file_title = os.path.splitext(out_file_name)[0]  # Remove file extension
+            print(f'file_title={file_title}')
             df = read_data_frame(file)
             df = update_data_frame_types(df)
-            generate_sequence_diagram(df, file_title, args)
+            generate_fdl(df, file_title, args)
             files.append(file)
     return files
+# TODO: Test the non merge case
 
 
-def generate_sequence_diagram(scenario_df: pd.DataFrame, scenario_name: str, args):
+def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
     column_values = scenario_df[['Source', 'Destination']].values.ravel()
     entities = pd.unique(column_values)
+    print(scenario_name)
     os.makedirs(os.path.dirname(scenario_name), exist_ok=True)
     with open(scenario_name + '.FDL', 'w') as fdl:
         if config.theme_template is not None:
             fdl.write(f'#include <{config.theme_template}.FDL>\n')
         fdl.write('#include <stdinc.FDL>\n\n')
-        fdl.write('#include "VisualEtherStyles.FDL"\n')
+        fdl.write('#include "VisualEtherStyles.FDL"\n')   # TODO: Enable poster mode
 
         if args.sort:
             entities.sort()
@@ -186,7 +193,8 @@ def generate_project(fdl_files: List[str], args):
     }
 
     for fdl in fdl_files:
-        file_title = os.path.splitext(fdl)[0]
+        file_name = os.path.basename(fdl)
+        file_title = os.path.splitext(file_name)[0]
         scenario_project["scenarios"].append({
             "modelPath": file_title + '.FDL',
             "scenarioName": file_title
@@ -200,6 +208,17 @@ def generate_project(fdl_files: List[str], args):
     os.makedirs(args.output, exist_ok=True)
     with open(project_file_path, "w") as project_file:
         project_file.write(json_object)
+
+
+def copy_include_file(args):
+    script_path = os.path.realpath(__file__)
+    script_dir = os.path.dirname(script_path)
+    include_file = os.path.join(script_dir, 'include', 'VisualEtherStyles.FDL')
+    shutil.copy(include_file, args.output)
+
+
+def generate_diagrams(args):
+    eventhelix.generate_output_with_eventstudio(args.output)
 
 
 if __name__ == '__main__':
