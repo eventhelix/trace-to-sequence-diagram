@@ -73,7 +73,10 @@ def generate_sequence_diagram(scenario_df: pd.DataFrame, scenario_name: str, arg
     entities = pd.unique(column_values)
     os.makedirs(os.path.dirname(scenario_name), exist_ok=True)
     with open(scenario_name + '.FDL', 'w') as fdl:
-        fdl.write('#include "VisualEther.fdl"\n')
+        if config.themeTemplate is not None:
+            fdl.write(f'#include <{config.themeTemplate}.FDL>\n')
+        fdl.write('#include <stdinc.FDL>\n\n')
+        fdl.write('#include "VisualEtherStyles.FDL"\n')
 
         if args.sort:
             entities.sort()
