@@ -26,7 +26,7 @@ from collections import OrderedDict
 import config
 import customize
 import fdl
-from eventhelix import generateOutputWithEventStudio
+import eventhelix
 
 
 # utilities
@@ -185,8 +185,8 @@ class Document:
     def generateStyleAndTheme():
         retStr = ''
 
-        if config.themeTemplate is not None:
-            retStr += '#include <{0}.FDL>\n'.format(config.themeTemplate)
+        if config.theme_template is not None:
+            retStr += '#include <{0}.FDL>\n'.format(config.theme_template)
 
         retStr += '#include <stdinc.FDL>\n\n'
 
@@ -226,7 +226,7 @@ class Document:
             header += self.generateDeclaration(previousType, entityList)
 
         # Generate the start of a feature block
-        if config.themeTemplate is None:
+        if config.theme_template is None:
             header += '\nfeature "generated flow" {\n'
         else:
             header += '\n{MyTheme} feature "generated flow" {\n'
@@ -313,7 +313,7 @@ def main():
     args.output_file.close()
 
     # Generate the sequence diagram by invoking EventStudio from command-line
-    generateOutputWithEventStudio()
+    eventhelix.generate_output_with_eventstudio()
 
 
 if __name__ == '__main__':

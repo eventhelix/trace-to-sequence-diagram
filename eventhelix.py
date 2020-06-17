@@ -5,32 +5,31 @@ import config
 from funutils import just, Maybe, first
 
 
-def generateOutputWithEventStudio():
+def generate_output_with_eventstudio():
     """
     Run EventStudio to automatically generate the sequence diagram.
     """
     if sys.platform == 'win32':
-        eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
-            os.path.expandvars(config.vsCodeExtensions))
-        eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio.exe'))
+        eventstudio_directory = just(config.eventstudio_path) if config.eventstudio_path else find_eventstudio_vscode_path(
+            os.path.expandvars(config.vscode_extensions))
+        eventstudio = eventstudio_directory.map(lambda p: os.path.join(p, 'evstudio.exe'))
     elif sys.platform == 'darwin':
-        eventStudioDirectory = just(config.eventStudioPath) if config.eventStudioPath else findEventStudioVSCodePath(
-            os.path.expanduser(config.vsCodeExtensions))
-        eventStudio = eventStudioDirectory.map(lambda p: os.path.join(p, 'evstudio'))
+        eventstudio_directory = just(config.eventstudio_path) if config.eventstudio_path else find_eventstudio_vscode_path(
+            os.path.expanduser(config.vscode_extensions))
+        eventstudio = eventstudio_directory.map(lambda p: os.path.join(p, 'evstudio'))
     else:
         print('Unsupported platform')
         exit()
 
-    commandLine = eventStudio.map(lambda p: str.format(config.eventStudioCommandLine, eventStudio=f'"{p}"'))
-    if commandLine.hasValue:
-        os.system(commandLine.value)
+    command_line = eventstudio.map(lambda p: str.format(config.eventstudio_command_line, eventStudio=f'"{p}"'))
+    if command_line.hasValue:
+        os.system(command_line.value)
     else:
         print('Could not find EventStudio')
         exit()
 
 
-# TODO: Add support for macOS
-def findEventStudioVSCodePath(extensionsPath) -> Maybe[str]:
-    return first(os.listdir(extensionsPath),
+def find_eventstudio_vscode_path(extensions_path) -> Maybe[str]:
+    return first(os.listdir(extensions_path),
                  lambda x: os.path.basename(x).lower().startswith('eventhelix.eventstudio-')).map(
-        lambda p: os.path.join(extensionsPath, p))
+        lambda p: os.path.join(extensions_path, p))
