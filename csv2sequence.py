@@ -13,7 +13,6 @@ import eventhelix
 # TODO: Document all functions
 
 
-
 def main():
     args = parse_command_line()
     setup()
@@ -33,7 +32,7 @@ def parse_command_line():
                         help='sort the headers in the generated sequence diagram')
     parser.add_argument('-o', '--output',
                         help='specify the output directory for the sequence diagram project')
-   
+
     args = parser.parse_args()
     if not args.output:
         args.output = os.path.dirname(args.csv_file[0])
@@ -71,7 +70,6 @@ def generate_fdl_files(args) -> List[str]:
             generate_fdl(df, file_title, args)
             files.append(file)
     return files
-# TODO: Test the non merge case
 
 
 def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
@@ -83,7 +81,7 @@ def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
         if config.theme_template is not None:
             fdl.write(f'#include <{config.theme_template}.FDL>\n')
         fdl.write('#include <stdinc.FDL>\n\n')
-        fdl.write('#include "VisualEtherStyles.FDL"\n')   # TODO: Enable poster mode
+        fdl.write('#include "VisualEtherStyles.FDL"\n')  # TODO: Enable poster mode
 
         if args.sort:
             entities.sort()
@@ -130,7 +128,7 @@ def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
 
 
 def format_parameters(parameters: list) -> str:
-    indentation = config.indent*2
+    indentation = config.indent * 2
     formatted_params = ''
     separator = ''
 
@@ -177,12 +175,14 @@ def generate_project(fdl_files: List[str], args):
         "documents": [
             {
                 "columnWidth": "medium",
+                "defines": ["POSTER"],
                 "documentFormat": "pdf",
                 "documentName": "SequenceDiagram",
                 "documentType": "sequence-diagram",
                 "remarkWidth": "small"
             },
             {
+                "defines": ["POSTER"],
                 "documentFormat": "pdf",
                 "documentName": "ContextDiagram",
                 "documentType": "context-diagram",
