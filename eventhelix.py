@@ -5,7 +5,7 @@ import config
 from funutils import just, Maybe, first
 
 
-def generate_output_with_eventstudio(project_directory='.'):
+def generate_output_with_eventstudio(project_directory: str = '.'):
     """
     Run EventStudio to automatically generate the sequence diagram.
     """

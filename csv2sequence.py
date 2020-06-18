@@ -4,7 +4,7 @@ import json
 import os
 import sys
 import config
-from typing import List
+from typing import List, Dict
 import pandas as pd
 import shutil
 import eventhelix
@@ -14,7 +14,7 @@ import eventhelix
 
 
 def main():
-    args = parse_command_line()
+    args = parse_command_line_arguments()
     setup()
     files = generate_fdl_files(args)
     copy_include_file(args)
@@ -22,7 +22,10 @@ def main():
     generate_diagrams(args)
 
 
-def parse_command_line():
+def parse_command_line_arguments() -> argparse.Namespace:
+    """
+    Parse command line arguments to determine what action the user wants the tool to take.
+    """
     parser = argparse.ArgumentParser(description='Convert a CSV file into Sequence Diagram')
     parser.add_argument('csv_file', metavar='csv_file', nargs='+',
                         help='CSV file to be converted to a sequence diagram')
@@ -41,10 +44,15 @@ def parse_command_line():
 
 
 def setup():
+    """Sets up the environment for the script."""
     pd.options.mode.use_inf_as_na = True  # Treat null and inf also as missing data in a isna call
 
 
 def generate_fdl_files(args) -> List[str]:
+    """
+    If args.merge is activated, then it will generate one combined FDL file from merging the DataFrames of each CSV files.
+    Otherwise, it will generate one FDL file for each CSV file.
+    """
     files = []
     if args.merge:
         # Read all the CSV files and combine them into a single data frame
@@ -73,6 +81,9 @@ def generate_fdl_files(args) -> List[str]:
 
 
 def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
+    """
+    Generate the corresponding FDL for a pandas.DataFrame that was constructed from a CSV file.
+    """
     column_values = scenario_df[['Source', 'Destination']].values.ravel()
     entities = pd.unique(column_values)
     print(scenario_name)
@@ -128,6 +139,9 @@ def generate_fdl(scenario_df: pd.DataFrame, scenario_name: str, args):
 
 
 def format_parameters(parameters: list) -> str:
+    """
+    Format the parameters associated with an FDL statement for being put into FDL file.
+    """
     indentation = config.indent * 2
     formatted_params = ''
     separator = ''
@@ -145,6 +159,10 @@ def format_parameters(parameters: list) -> str:
 
 
 def validate_csv_file(file: str, df: pd.DataFrame):
+    """
+    Check a DataFrame that was generated from a CSV file to make sure it has all of the required fields. If it does not,
+    then exit with failure.
+    """
     mandatory_columns = {'Timestamp', 'Source', 'Destination', 'Message'}
 
     if not mandatory_columns.issubset(df.columns):
@@ -164,13 +182,20 @@ def read_data_frame(file) -> pd.DataFrame:
     return df
 
 
-def update_data_frame_types(df) -> pd.DataFrame:
+def update_data_frame_types(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Formats the timestamps in the DataFrame from Linux epoch to date time.
+    Evaluates all the parameters in the DataFrame using python literal eval.
+    """
     df['Timestamp'] = pd.to_datetime(df['Timestamp'], unit='s')
     df['Parameters'] = df['Parameters'].apply(try_literal_eval)
     return df
 
 
 def generate_project(fdl_files: List[str], args):
+    """
+    Generate a project file for the given FDL files. args.output is used to determine the path.
+    """
     scenario_project = {
         "documents": [
             {
@@ -210,7 +235,7 @@ def generate_project(fdl_files: List[str], args):
         project_file.write(json_object)
 
 
-def copy_include_file(args):
+def copy_include_file(args: argparse.Namespace):
     script_path = os.path.realpath(__file__)
     script_dir = os.path.dirname(script_path)
     include_file = os.path.join(script_dir, 'include', 'VisualEtherStyles.FDL')
@@ -218,7 +243,7 @@ def copy_include_file(args):
 
 
 # TODO: Bookmarks not generated in sequence diagram
-def generate_diagrams(args):
+def generate_diagrams(args: argparse.Namespace):
     eventhelix.generate_output_with_eventstudio(args.output)
 
 
