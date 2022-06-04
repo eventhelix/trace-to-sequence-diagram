@@ -10,7 +10,7 @@ The traces to be included in the visualization are selected by specifying the re
 
 Let's get started by converting a sample trace into a sequence diagram. We start with downloading a few tools:
 
-1. Download and install a free 45 day trial of [EventStudio System Designer](https://www.eventhelix.com/eventstudio/download/).
+1. Download and install the free Community Edition of [EventStudio System Designer](https://www.eventhelix.com/eventstudio/download/).
 1. Download and install the latest version of [Python 3.X](https://www.python.org/downloads/)
 1. Download and extract the latest release of the [trace to sequence diagram Python scripts](https://github.com/eventhelix/trace-to-sequence-diagram/releases)
    
