@@ -19,12 +19,17 @@ Let's get started by converting a sample trace into a sequence diagram. We start
 1. Navigate to the directory where to the Python scripts for this project were downloaded.
 1. Convert an included sample trace file into a sequence diagram by typing the following on the command prompt:
 	```
-	trace2sequence.py -i sample_trace.txt  
+	python trace2sequence.py -i sample_trace.txt   
 	```
-1. Click on the following generated diagrams:
+1. You should see the following output on the command prompt:
+	```
+	EventStudio Community Edition.
+	Generated sequence-diagram
+	Generated context-diagram
+	```
+1. Click on the following generated diagrams in the `document` directory:
 	* **`sequence-diagram.pdf`** - A sequence diagram showing object level interactions
 	* **`context-diagram.pdf`** - A context diagram of the object interactions.
-	* **`xml-export.xml`** - XML representation of the object interactions. Use this XML output to develop your custom tools.
 
 
 ## Step 2: Customize Regular Expressions to Map Traces to FDL
